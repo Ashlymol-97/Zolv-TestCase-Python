@@ -1014,4 +1014,35 @@
 
 
 
+import requests
+print("\033[1;34m LOGIN TESTCASE! Document ID: TP_001\033[0m")
+# print("\033[1;34m Login with valid Login Credentials! Document ID: TP_001\033[0m")
+login_url= "https://qa-oms.zolv.health/api/v1/user/oms-login"
+
+
+login_payload = {
+        "loginId":"AutotestOMS",
+        "password":"Smm@123"
+}
+
+
+response_login = requests.post(login_url,json=login_payload)
+if response_login.status_code == 200:
+    response_json = response_login.json()
+    name=response_json.get('name')
+    # print("...",response_login.text)
+    # print(f"\033[91m✅ Login successful! Welcome, {loginId} | Name: {name} | Status: {response_login.status_code}\033[0m",{"loginId":loginId,"password":pwd})
+    # print("Response JSON : ",json.dumps(response_json,indent=4))
+    token1= response_json.get('token',{}).get('token')
+    # print(f"\033[92m✅  Login successful for: {loginid} | Name: {name} | Status: {response_login.status_code}\033[0m")
+    print(f"\033[92m✅  TEST PASSED...!: Test Case ID - 001 \033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
+
+    # print(f"Token (Login): {token1}") 
+
+else:
+    # print(f"\033[91m❌ Login failed with status code {response_login.status_code}\033[0m",{"loginId":loginid,"password":pwd})
+    print(f"\033[91m❌ TEST FAILED...! - Test Case ID : 001 \033[0m",response_login.text,response_login.status_code) # login failed so test passed
+
+    # print("Response:", response_login.json())
+    # print(f"\033[92m✅ TEST PASSED...!\033[0m") # login failed so test passed
 
