@@ -7,6 +7,7 @@ import urllib.parse
 import base64
    
 
+base_url = "https://qa-oms.zolv.health/"
 
 login_url= "https://qa-oms.zolv.health/api/v1/user/oms-login"
 logout_url="https://qa-oms.zolv.health/api/v1/user/logout"
@@ -987,8 +988,8 @@ if admin_login.status_code == 200:
 
         # print(" "*200) # for space 
 
-        print("Count of Test faileds : ",failed_count,"/",total_count)
 
+print(f"\033[1;34m Count of Test Faileds : {failed_count}/{total_count}\033[0m")
 
 
 

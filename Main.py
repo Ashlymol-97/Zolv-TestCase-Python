@@ -7,7 +7,7 @@ sub_files = [f for f in os.listdir() if f.startswith("A") and f.endswith(".py")]
 print("Test case files found:")
 for i, file in enumerate(sub_files, start=1):
     print(f"\033[38;5;208m{i}. {file}\033[0m")
-print(f"\033[38;5;208m{len(sub_files)+1}. Run ALL test cases\033[0m")
+print(f"\033[38;5;208m{len(sub_files)+1}. Run ALL Test Cases\033[0m")
 
 choice = input("\033[38;5;129mEnter the number of the test case to run: \033[0m")
 
