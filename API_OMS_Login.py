@@ -859,7 +859,7 @@ else:
 
 long_payload ={
     "loginId":"AutotestOMS" + "a" * 1000, 
-    "password":"smm@1234" + "b" * 10000
+    "password":"Smm@1234" + "b" * 10000
 }                                  #extremely long inputs (potential buffer overflow)
 response_login = requests.post(login_url,json=long_payload)
 if response_login.status_code != 200:
