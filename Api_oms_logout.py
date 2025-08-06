@@ -520,12 +520,13 @@ if responsecon_login.status_code == 200:
                 # print("\033[92m✅ Logout attempt rejected as expected (session already terminated).\033[0m")
             elif status == 200:
                 c+=1
+                if c!=0 and c<=1:
+                    failed_count+=1
                 # print("\033[91mℹ️ Logout allowed again (API is idempotent).\033[0m")
                 print("\033[91m❌ Test Failed...!: Test Case ID - 011 \033[0m")
             else:
                 print("\033[91m❌ Unexpected status code on repeated logout.\033[0m")
-if c!=0 and c<=1:
-    failed_count+=1
+
         # print("-" * 50)
 
     # print("All logout validation completed.")
@@ -602,6 +603,8 @@ if response_login9.status_code == 200:
             # print("Response body:", response9.text)
             if response9.status_code == 200: 
                 c+=1
+                if c!=0 and c<=1:
+                    failed_count+=1
                 # print("\033[92mYou have been successfully logged out..\033[0m")
                 print("\033[91m❌ Test Failed...!: Test Case ID - 013 \033[0m")
 
@@ -609,8 +612,7 @@ if response_login9.status_code == 200:
                 # print("\033[91mRequest not sent due to invalid or missing Authorization.\033[0m")
                 print("\033[92m✅ Test Passed...!: Test Case ID - 013 \033[0m")
    
-if c!=0 and c<=1:
-    failed_count+=1
+
 
         # print("-" * 50)
 
@@ -751,5 +753,7 @@ print(f"\033[1;34m Count of Test Faileds : {failed_count}/{total_count}\033[0m")
 
 
 
+if failed_count == 0:
+    print("\033[92m ✅ All TEST PASSED \033[0m")
 
 
