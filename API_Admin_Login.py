@@ -6,7 +6,7 @@ import random
 import urllib.parse
 
 import base64
-   
+  
 
 
 failed_count=0
@@ -17,9 +17,10 @@ login_url= "https://qa-admin.zolv.health/api/v1/user/login"
 logout_url="https://qa-admin.zolv.health/api/v1/user/logout"
 
 
+
 # 1 : Login TestCase : Login with valid Login Credentials
 
-print("\033[1;34m LOGIN TESTCASE! Document ID: TP_001\033[0m")
+print("\033[1;34m ADMIN LOGIN TESTCASE! Document ID: TP_001\033[0m")
 # print("\033[1;34m Login with valid Login Credentials! Document ID: TP_001\033[0m")
 
 
@@ -43,7 +44,7 @@ if response_login.status_code == 200:
     # print(f"Token (Login): {token1}") 
 
 else:
- 
+
     failed_count+=1
     # print(f"\033[91m❌ Login failed with status code {response_login.text}\033[0m")
     print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 001 : Error - Invalid Credentials \033[0m") # login failed so test passed
@@ -63,7 +64,7 @@ else:
 
 # print("\033[1;34m Login with Invalid Login Credentials! \033[0m")
 
-   
+  
 Invalid_login_payload = {
         "login_id":"abcd",
         "password":"1234"
@@ -136,7 +137,7 @@ else:
 
 
 
- 
+
 # 4 : Login with missing password :
 
 
@@ -198,10 +199,10 @@ for user in Unauthorized_payload:
       
     else:
         c+=1
-           
+          
         if c!=0 and c<=1:
-           failed_count+=1
-           error_message={"Un"}
+          failed_count+=1
+          error_message={"Un"}
         #    print(failed_count,"f")
         print("\033[91m❌ TEST FAILED...! : Test Case ID - 005 : Error - Unauthorized user \033[0m")
 
@@ -264,7 +265,7 @@ if response_login.status_code == 200:
     # print("Response JSON : ",json.dumps(response_json,indent=4))
     print("\033[91m❌ TEST FAILED...! : Test Case ID - 007 : Error - Unauthorized user  \033[0m")
 else:
-    print("\033[92m✅ TEST PASSED...! :  Test Case ID - 007 \033[0m")
+    print("\033[92m✅ TEST PASSED...! : Test Case ID - 007 \033[0m")
 
 
 
@@ -365,6 +366,9 @@ for i in range(10):
 
 
 
+
+
+
 # 10 : Login with Inactive User  :
 
 # print("\033[1;34mLogin with Inactive User\033[0m")
@@ -372,11 +376,11 @@ for i in range(10):
 
 
 # 🔐 Target user credentials
-username_input = "TestOMS"
+username_input = "User1"
 password_input = "Smm@1234"
 
 # 🔒 Stored correct credentials (mocked for comparison)
-stored_username = "TestOMS"
+stored_username = "User1"
 stored_password = "Smm@1234"
 
 # 🔑 Admin credentials and login URL
@@ -411,7 +415,7 @@ if admin_login.status_code == 200:
                 is_active = user["isActive"]
 
                 if is_active:
-                    # print(f"\033[92m✅ User {username_input} is active. Attempting login...\033[0m")
+                    print(f"\033[92m✅ User {username_input} is active. Attempting login...\033[0m")
 
                     # Try to log in as the user
                     user_login = requests.post(login_url, json={"loginId": username_input, "password": password_input})
@@ -479,18 +483,15 @@ if admin_login.status_code == 200:
 
     # print("Logged ")
     
-
-# login_id = "TestDeleted"
-# password= "Smm@1234"
     
 
     create_user_payload= {
-    "name": "TestDeleted8",
+    "name": "TestDeleted22",
     "email": "",
     "phone": "",
-    "loginId": "TestDeleted8",
-    "employeeCode": "TD8",
-    "type": "module_user",
+    "loginId": "TestDeleted22",
+    "employeeCode": "TD22",
+    "type": "admin_user",
     "departmentId": "68709372293ae6389032a053",
     "privilegedAreas": [],
     "isActive": True,
@@ -506,7 +507,8 @@ if admin_login.status_code == 200:
     ],
     "password": "Smm@1234"
     }
-    create_user_url = f"https://qa-admin.zolv.health/api/v1/masters/user/web/{company_id}/create-user"
+
+    create_user_url = f"https://qa-admin.zolv.health/api/v1/masters/user/web/68709372293ae6389032a050/create-user"
     headers_admin = {
     "Authorization": f"Bearer {admin_token}"
     }
@@ -710,7 +712,7 @@ for invalid in Invalidparams_login_payload:
         # print("Response:", response_invalidlogin.json())
         # print(f"\033[92m✅ TEST PASSED...!\033[0m") # login failed so test passed
 
-   
+  
 if c!=0 and c<=1:
     failed_count+=1
 
@@ -841,11 +843,11 @@ if response_login.status_code == 200:
 
     # print("Response JSON : ",json.dumps(response_json,indent=4))
     # print("\033[1;91m❌  Login successful with extra field.! - Test Case ID : 016 \033[0m")
-    print(f"\033[91m❌ TEST FAILED...! :  Test Case ID - 018 : Error - Unexpected fields in payload \033[0m") # login failed so test passed
+    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 018 : Error - Unexpected fields in payload \033[0m") # login failed so test passed
 
 else:
     # print(f"\033[92m✅ Login failed due to extra field — API enforces strict schema. \033[0m",response_login.status_code) # login failed so test passed
-    print("\033[1;92m✅ TEST PASSED...! :  Test Case ID - 018 \033[0m")
+    print("\033[1;92m✅ TEST PASSED...! : Test Case ID - 018 \033[0m")
     # print("Response:", response_login.json())
 
 
@@ -866,7 +868,7 @@ long_payload ={
 response_login = requests.post(login_url,json=long_payload)
 if response_login.status_code != 200:
     # print("\033[1;92m✅ API couldn't handle long payload.! \033[0m",response_login.status_code)
-    print("\033[1;92m✅ TEST PASSED...! :  Test Case ID - 019 \033[0m")
+    print("\033[1;92m✅ TEST PASSED...! : Test Case ID - 019 \033[0m")
 
     # print("Response:", response_login.json())
 else:
@@ -897,7 +899,7 @@ else:
 
 
 
- 
+
 
 # 21 : Login when Redis is Down
         
@@ -930,7 +932,7 @@ if response_a.status_code == 200:
     response_json = response_a.json()
     token_a = response_json["token"]["token"]
     company_id = response_json["company"]["id"]
-    rest_id = response_json["restaurant"]["id"]
+    # rest_id = response_json["restaurant"]["id"]
     # print("\033[92m✅ Device A Login Successful.!\033[0m", response_a.status_code)
     # print("Token A:", token_a)
 else:
@@ -955,8 +957,8 @@ headers_a = {
     "Authorization": f"Bearer {token_a}",
     "Content-Type": "application/json"
 }
-url = f"https://qa-oms.zolv.health/api/v1/dashboard/orders/web/{company_id}/{rest_id}/get-order-progress"
-
+# url = f"https://qa-oms.zolv.health/api/v1/dashboard/orders/web/{company_id}/{rest_id}/get-order-progress"
+url= f"https://qa-admin.zolv.health/api/v1/masters/user/web/{company_id}/get-user-list"
 response_check_a = requests.get(url, headers=headers_a)
 
 if response_check_a.status_code == 200:
@@ -999,7 +1001,7 @@ if response_no_sql_injection.status_code != 200:
     no_sql_injection_token= no_sql_injection_json.get('token',{}).get('token')
     print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 023 \033[0m") 
 else:
- 
+
     failed_count+=1
     # print(f"\033[91m❌ Login failed with status code {response_no_sql_injection.text}\033[0m")
     print(f"\033[91m❌ TEST FAILED...! : Test Case ID : 023  :  Error - Suspicious input detected \033[0m") # login failed so test passed
@@ -1036,7 +1038,7 @@ if response_special_chars.status_code != 200:
     # print(f"Token (Login): {special_chars_token}") 
 
 else:
- 
+
     failed_count+=1
     # print(f"\033[91m❌ Login failed with status code {response_special_chars.text}\033[0m")
     print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 024  :  Error - Special characters not allowed in Login Id \033[0m") # login failed so test passed
@@ -1097,7 +1099,7 @@ if response_unicode.status_code != 200:
     # print(f"Token (Login): {response_unicode_token}") 
 
 else:
- 
+
     failed_count+=1
     # print("\033[1;31mTest for Unicode/emoji handling failed! Login succeeded with unusual characters.\033[0m")
     print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 026  :  Error - Invalid characters \033[0m") # login failed so test passed
@@ -1133,7 +1135,7 @@ if response_case_sensitivity.status_code != 200:
     # print(f"Token (Login): {case_sensitivity_token}") 
 
 else:
- 
+
     failed_count+=1
     # print("\033[1;93mUsername appears to be case-sensitive.\033[0m")
     print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 027  :  Error - Username appears to be case-insensitive  \033[0m") # login failed so test passed
@@ -1146,7 +1148,7 @@ else:
 
 
 
-print(f"\033[1;34mCount of TEST FAILED  : {failed_count}/{total_count}\033[0m")
+print(f"\033[1;34mTotal TEST FAILEDS  : {failed_count}/{total_count}\033[0m")
 
 if failed_count == 0:
     print("\033[92m ✅ All TEST PASSED \033[0m")

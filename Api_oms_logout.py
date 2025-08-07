@@ -22,7 +22,7 @@ logout_url ="https://qa-oms.zolv.health/api/v1/user/logout"
 
 # 1 : logout : Logout with valid session token  :
 
-print("\033[1;34m LOGOUT TESTCASE! Document ID: TP_002 \033[0m")
+print("\033[1;34m OMS LOGOUT TESTCASE! Document ID: TP_002 \033[0m")
 
 # print("\033[1;34m Logout with valid session token...............!\033[0m")
 
@@ -53,13 +53,13 @@ if response_login.status_code == 200:
         logout_json = response_logout.json()
         # print("Response JSON:", json.dumps(logout_json, indent=4))
         # print(f"Token (Logout): {token}")
-        print(f"\033[92m✅ TEST PASSED...!: Test Case ID - 001 \033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
+        print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 001 \033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
 
     else:
         failed_count+=1
         # print(f"Logout failed with status code {response_logout.status_code}")
         # print("Response:", response_logout.json())
-        print(f"\033[91m❌ TEST FAILED...! - Test Case ID : 001 \033[0m") # login failed so test passed
+        print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 001 : Error - Invalid or expired session token. \033[0m") # login failed so test passed
 
 else:
     print(f"\033[91m❌ Login failed with status code {response_login.status_code}\033[0m")
@@ -110,13 +110,13 @@ response_protected = requests.get(Get_url, headers=headers1)
 
 # print("\n=== Reusing Logged-out Token ===")
 if response_protected.status_code != 200:
-    print(f"\033[92m✅ TEST PASSED...!: Test Case ID - 002 \033[0m") 
+    print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 002 \033[0m") 
 
     # print("✅ Token is invalid after logout, as expected.",response_protected.status_code)
 elif response_protected.status_code == 200:
     failed_count+=1
     # print("❌ Token still works after logout – potential security issue!")
-    print(f"\033[91m❌ TEST FAILED...! - Test Case ID : 002 \033[0m") # login failed so test passed
+    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 002 : Error - Session expired. \033[0m") # login failed so test passed
 
 else:
     print(f"Received unexpected status code: {response_protected.status_code}")
@@ -162,10 +162,10 @@ else:
     response2 = requests.put(logout_url, headers=headers2)
     if response2.status_code != 200:
         # print("\033[92mInvalid token format. Logout rejected.\033[0m")
-        print(f"\033[92m✅ TEST PASSED...!: Test Case ID - 003 \033[0m") 
+        print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 003 \033[0m") 
     else:
         failed_count+=1
-        print(f"\033[91m❌ TEST FAILED...! - Test Case ID : 003 \033[0m") # login failed so test passed
+        print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 003 : Error - Invalid token. \033[0m") # login failed so test passed
  
 
 
@@ -198,12 +198,12 @@ else:
 
     # Expected: 401 Unauthorized or 403 Forbidden
     if response3.status_code == 401 or response3.status_code == 403:
-        print(f"\033[92m✅ TEST PASSED...!: Test Case ID - 004 \033[0m") 
+        print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 004 \033[0m") 
         # print("✅ Logout blocked without token, as expected.")
     elif response3.status_code == 200:
         failed_count+=1
         # print("❌ Logout succeeded without token – potential security issue!")
-        print(f"\033[91m❌ TEST FAILED...! - Test Case ID : 004 \033[0m") # login failed so test passed
+        print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 004 : Error -  Authentication required. \033[0m") # login failed so test passed
     else:
         print(f"Received unexpected status code: {response3.status_code}")
 
@@ -246,11 +246,11 @@ else:
     # Check how the server handles repeat logout
     if response4.status_code != 200:
         # print("\033[92m✅ Token expired or session already terminated — Unauthorized.\033[0m")
-        print(f"\033[92m✅ TEST PASSED...!: Test Case ID - 005 \033[0m") 
+        print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 005 \033[0m") 
 
     elif response4.status_code == 200:
         failed_count+=1
-        print(f"\033[91m❌ TEST FAILED...!  Test Case ID : 005 \033[0m") # login failed so test passed
+        print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 005 : Error -  Session expired. \033[0m") # login failed so test passed
         # print("\033[91mℹ️ Logout successful again — API may allow repeat logout.\033[0m")
     else:
         print("\033[91m❌ Unexpected response.\033[0m")
@@ -307,12 +307,12 @@ if response_login5.status_code == 200:
     # Step 3: Validate outcome
     if response_protected5.status_code == 401 or response_protected.status_code == 403:
         # print("\033[92m✅ Test Passed: Access denied as expected after logout.\033[0m",response_protected.status_code)
-        print("\033[92m✅ Test Passed...!: Test Case ID - 006 \033[0m")
+        print("\033[92m✅ Test Passed...! : Test Case ID - 006 \033[0m")
 
     else:
         failed_count+=1
         # print("\033[91m❌ Test Failed: Access still granted after logout.\033[0m")
-        print("\033[91m❌ Test Failed...!: Test Case ID - 006 \033[0m")
+        print("\033[91m❌ Test Failed...! : Test Case ID - 006 : Error -  Token invalid or expired. \033[0m")
 
 
 
@@ -357,12 +357,12 @@ if response_login6.status_code == 200:
         headers6["Authorization"] = ""  # Clear from headers
         # print("Token after cleanup:", repr(token5))
         # print("\033[92mAuthorization header after cleanup:", repr(headers6["Authorization"]), "\033[0m")
-        print("\033[92m✅ Test Passed...!: Test Case ID - 007 \033[0m")
+        print("\033[92m✅ Test Passed...! : Test Case ID - 007 \033[0m")
 
     else:
         failed_count+=1
         # print("\033[91mLogout failed. Token not cleared.\033[0m")
-        print("\033[91m❌ Test Failed...!: Test Case ID - 007 \033[0m")
+        print("\033[91m❌ Test Failed...! : Test Case ID - 007 : Error - Session token still exists in storage. \033[0m")
 
 
 
@@ -403,12 +403,12 @@ if response_login7.status_code == 200:
 
     if response_csrf.status_code == 200 or response_csrf.status_code == 204:
         # print("\033[92m✅ Logout successful with CSRF validation.\033[0m")
-        print("\033[92m✅ Test Passed...!: Test Case ID - 008 \033[0m")
+        print("\033[92m✅ Test Passed...! : Test Case ID - 008 \033[0m")
 
     elif response_csrf.status_code == 403:
         failed_count+=1
         # print("\033[91m❌ CSRF token missing or invalid — logout rejected.\033[0m")
-        print("\033[91m❌ Test Failed...!: Test Case ID - 008 \033[0m")
+        print("\033[91m❌ Test Failed...! : Test Case ID - 008 : Error - CSRF token missing or Invalid. \033[0m")
 
     else:
         print("\033[91mℹ️ Other response — possible issue or unexpected behavior. Test Case ID - 008 \033[0m")
@@ -456,17 +456,18 @@ if response_login8.status_code == 200:
 
     if response_protected8.status_code == 401 or response_protected8.status_code == 403:
         # print("\033[92m✅ Access denied after logout — back navigation prevented.\033[0m")
-        print("\033[92m✅ Test Passed...!: Test Case ID - 009 \033[0m")
+        print("\033[92m✅ Test Passed...! : Test Case ID - 009 \033[0m")
 
     else:
         failed_count+=1
         # print("\033[91m❌ Access granted — back navigation NOT prevented.\033[0m")
-        print("\033[91m❌ Test Failed...!: Test Case ID - 009 \033[0m")
+        print("\033[91m❌ Test Failed...! : Test Case ID - 009 : Error - Redirects to login screen. \033[0m")
 
 
 
 
 
+#10 : Logging verification : doubt
 
 
 
@@ -516,14 +517,14 @@ if responsecon_login.status_code == 200:
                 print("\033[91m❌ First logout should succeed, but it failed.\033[0m")
         else:
             if status in [401, 403]:
-                print("\033[92m✅ Test Passed...!: Test Case ID - 011 \033[0m")
+                print("\033[92m✅ Test Passed...! : Test Case ID - 011 \033[0m")
                 # print("\033[92m✅ Logout attempt rejected as expected (session already terminated).\033[0m")
             elif status == 200:
                 c+=1
                 if c!=0 and c<=1:
                     failed_count+=1
                 # print("\033[91mℹ️ Logout allowed again (API is idempotent).\033[0m")
-                print("\033[91m❌ Test Failed...!: Test Case ID - 011 \033[0m")
+                print("\033[91m❌ Test Failed...! : Test Case ID - 011 : Error - Token remained active after concurrent logout. \033[0m")
             else:
                 print("\033[91m❌ Unexpected status code on repeated logout.\033[0m")
 
@@ -532,6 +533,11 @@ if responsecon_login.status_code == 200:
     # print("All logout validation completed.")
 
 
+
+
+
+
+print("\033[1;93mTest Case ID -  012 :  Skipping Logout during poor internet connection....\033[0m")
 
 
 
@@ -585,16 +591,16 @@ if response_login9.status_code == 200:
                 if auth.startswith("Bearer ") and len(auth) > 7:
                     headers9["Authorization"] = auth
                     # print("Attempting logout with Authorization header...")
-                    print("\033[91m❌ Test Failed...!: Test Case ID - 013 \033[0m")
+                    print("\033[91m❌ Test Failed...! : Test Case ID - 013 : Error - Invalid parameter. \033[0m")
 
                 else:
-                    print("\033[92m✅ Test Passed...!: Test Case ID - 013 \033[0m")
+                    print("\033[92m✅ Test Passed...! : Test Case ID - 013 \033[0m")
                     # print("Invalid Authorization format. Logout not attempted.")
             else:
-                    print("\033[92m✅ Test Passed...!: Test Case ID - 013 \033[0m")
+                    print("\033[92m✅ Test Passed...! : Test Case ID - 013 \033[0m")
                 # print("Authorization value is not a string. Logout not attempted.")
         else:
-                    print("\033[92m✅ Test Passed...!: Test Case ID - 013 \033[0m")
+                    print("\033[92m✅ Test Passed...! : Test Case ID - 013 \033[0m")
             # print("'Authorization' header missing. Logout not attempted.")
 
         if "Authorization" in headers9:
@@ -606,11 +612,11 @@ if response_login9.status_code == 200:
                 if c!=0 and c<=1:
                     failed_count+=1
                 # print("\033[92mYou have been successfully logged out..\033[0m")
-                print("\033[91m❌ Test Failed...!: Test Case ID - 013 \033[0m")
+                print("\033[91m❌ Test Failed...! : Test Case ID - 013 : Error - Invalid parameter. \033[0m")
 
             else:
                 # print("\033[91mRequest not sent due to invalid or missing Authorization.\033[0m")
-                print("\033[92m✅ Test Passed...!: Test Case ID - 013 \033[0m")
+                print("\033[92m✅ Test Passed...! : Test Case ID - 013 \033[0m")
    
 
 
@@ -644,12 +650,12 @@ if response_login10.status_code == 200:
         # print("Response JSON:", json.dumps(logout_json, indent=4))
         # print(f"Token (Logout): {token}")
         failed_count+=1
-        print(f"\033[91m❌ TEST FAILED...!: Test Case ID - 014 \033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
+        print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 014 : Error - Invalid HTTP method. \033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
 
     else:
         # print(f"Logout failed with status code {response_logout.status_code}")
         # print("Response:", response_logout.json())
-        print(f"\033[92m✅ TEST PASSED...! - Test Case ID : 014 \033[0m") # login failed so test passed
+        print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 014 \033[0m") # login failed so test passed
 
 else:
     print(f"\033[91m❌ Login failed with status code {response_login.status_code}\033[0m")
@@ -738,17 +744,17 @@ response_logout_a = requests.put(logout_url, headers=response_logout_a)
 if response_logout_a.status_code == 200:
     failed_count+=1
     # print("\033[91m ❌Device A logout successful — Session remained valid after Device B logout.\033[0m")
-    print("\033[91m❌ Test Failed...!: Test Case ID - 015 \033[0m")
+    print("\033[91m❌ Test Failed...! : Test Case ID - 015 : Error - Session already expired. \033[0m")
 
 else:
     # print("\033[92m✅ Device A logout failed — Session may have been Expired by Device B logout.\033[0m")
     # print("Status Code:", response_logout_a.status_code)
     # print("Response:", response_logout_a.text)
-    print("\033[92m✅ Test Passed...!: Test Case ID - 015 \033[0m")
+    print("\033[92m✅ Test Passed...! : Test Case ID - 015 \033[0m")
 
 
 
-print(f"\033[1;34m Count of Test Faileds : {failed_count}/{total_count}\033[0m")
+print(f"\033[1;34mTotal TEST FAILEDS  : {failed_count}/{total_count}\033[0m")
 
 
 

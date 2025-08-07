@@ -17,7 +17,7 @@ total_count=25
 
 # 1 : Login TestCase : Login with valid Login Credentials
 
-print("\033[1;34m LOGIN TESTCASE! Document ID: TP_001\033[0m")
+print("\033[1;34m OMS LOGIN TESTCASE! Document ID: TP_001\033[0m")
 # print("\033[1;34m Login with valid Login Credentials! Document ID: TP_001\033[0m")
 
 
@@ -183,7 +183,7 @@ else:
 
 c=0
 Unauthorized_payload = [
-    {"loginId": "AutotestZolvGo", "password": "Smm@1234"},
+    # {"loginId": "AutotestZolvGo", "password": "Smm@1234"},
     {"loginId": "TestOMS", "password": "Smm@1234"},
     {"loginId": "user@example.com","password": "userpassword","userType": ""}, 
     {"loginId": "Testdeleteuser","password": "Testdeleteuser@1234"}
@@ -483,11 +483,11 @@ if admin_login.status_code == 200:
     
 
     create_user_payload= {
-    "name": "TestDeleted8",
+    "name": "TestDeleted1",
     "email": "",
     "phone": "",
-    "loginId": "TestDeleted8",
-    "employeeCode": "TD8",
+    "loginId": "TestDeleted",
+    "employeeCode": "TD",
     "type": "module_user",
     "departmentId": "68709372293ae6389032a053",
     "privilegedAreas": [],
@@ -1144,7 +1144,7 @@ else:
 
 
 
-print(f"\033[1;34mCount of TEST FAILED  : {failed_count}/{total_count}\033[0m")
+print(f"\033[1;34mTotal TEST FAILEDS  : {failed_count}/{total_count}\033[0m")
 
 if failed_count == 0:
     print("\033[92m ✅ All TEST PASSED \033[0m")
