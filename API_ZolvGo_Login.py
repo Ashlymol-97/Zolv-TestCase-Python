@@ -1,4 +1,3 @@
-
 import requests
 import time
 import json
@@ -6,27 +5,25 @@ import random
 import urllib.parse
 
 import base64
-  
+   
 
+
+base_url = "https://qa-go.zolv.health/"
+login_url= "https://qa-go.zolv.health/api/v1/user/go-login"
+logout_url = "https://qa-go.zolv.health/api/v1/user/logout"
 
 failed_count=0
 total_count=25
 
-base_url= "https://qa-admin.zolv.health/"
-login_url= "https://qa-admin.zolv.health/api/v1/user/login"
-logout_url="https://qa-admin.zolv.health/api/v1/user/logout"
-
-
-
 # 1 : Login TestCase : Login with valid Login Credentials
 
-print("\033[1;34m ADMIN LOGIN TESTCASE! Document ID: TP_001\033[0m")
+print("\033[1;34m ZOLVGO LOGIN TESTCASE! Document ID: TP_001\033[0m")
 # print("\033[1;34m Login with valid Login Credentials! Document ID: TP_001\033[0m")
 
 
 login_payload = {
-        "loginId":"AutotestAdmin",
-        "password":"Smm@1234"
+  "loginId":"AutotestZolvGo",
+  "password":"Smm@1234"
 }
 
   
@@ -35,28 +32,25 @@ if response_login.status_code == 200:
     response_json = response_login.json()
     name=response_json.get('name')
     # print("...",response_login.text)
-    valid_token= response_json.get('token',{}).get('token')
-
-    headers= {
-        "Authorization": f"Bearer {valid_token}",
-        "Content-Type": "application/json"
-    }
     # print(f"\033[91m✅ Login successful! Welcome, {loginId} | Name: {name} | Status: {response_login.status_code}\033[0m",{"loginId":loginId,"password":pwd})
     # print("Response JSON : ",json.dumps(response_json,indent=4))
+    token1= response_json.get('token',{}).get('token')
     # print(f"\033[92m✅  Login successful for: {loginid} | Name: {name} | Status: {response_login.status_code}\033[0m")
     print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 001 \033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
 
     # print(f"Token (Login): {token1}") 
 
 else:
-
+ 
     failed_count+=1
     # print(f"\033[91m❌ Login failed with status code {response_login.text}\033[0m")
-    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 001 : Error - Invalid Credentials \033[0m") # login failed so test passed
+    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 001 : Error - Invalid Credentials \033[0m",response_login.text) # login failed so test passed
 
     # print("Response:", response_login.json())
 
 
+
+# print(" "*200) # for space 
 
 
 
@@ -67,7 +61,7 @@ else:
 
 # print("\033[1;34m Login with Invalid Login Credentials! \033[0m")
 
-  
+   
 Invalid_login_payload = {
         "login_id":"abcd",
         "password":"1234"
@@ -140,14 +134,14 @@ else:
 
 
 
-
+ 
 # 4 : Login with missing password :
 
 
 # print("\033[1;34m Login with missing password\033[0m")
 
 Missingpwd_login_payload = {
-    "loginId":"AutotestAdmin",
+    "loginId":"AutotestZolvGo",
     "password":None
 }
 
@@ -178,12 +172,7 @@ else:
 
 
 
-
-
-
-
-
-#5 : Login with user having only KDS privilege  : 
+# 5 : Login with user having only KDS privilege  : 
 
 # print("\033[1;34mLogin with user having only KDS privilege\033[0m")
 
@@ -193,7 +182,7 @@ kds_privilege_payload ={
 }
 
 response_login = requests.post(login_url,json=kds_privilege_payload)
-if response_login.status_code == 201:
+if response_login.status_code == 200:
     response_json = response_login.json()
     failed_count+=1
     # print(failed_count,"f")
@@ -241,9 +230,6 @@ else:
 
 
 
-
-
-
 # 7 : Concurrent Login Attempts : 
 
 # print("\033[1;34m Concurrent Login Attempts : rate limiting (multiple attempts in quick succession)\033[0m")
@@ -255,7 +241,7 @@ headers = {
 
 # Payload with correct field names
 invalid_login_payload = {
-    "loginId": "AutotestAdmin",   # ✅ Use "loginId" only if this is accepted by the API (otherwise use "username")
+    "loginId": "AutotestZolvGo",   # ✅ Use "loginId" only if this is accepted by the API (otherwise use "username")
     "password": "Smm@1234"
 }
 
@@ -264,7 +250,7 @@ invalid_login_payload = {
 
 # Loop for repeated login attempts
 for i in range(10):
-    response = requests.post(login_url, json=invalid_login_payload)
+    response = requests.post(login_url, json=invalid_login_payload, headers=headers)
     # print(f"Attempt {i + 1} status code: {response.status_code}")
     # print(response.text)
     # print(response.status_code)
@@ -298,50 +284,46 @@ for i in range(10):
 
 
 
-
-
-
 # 8 : Login with Inactive User  :
 
 # print("\033[1;34mLogin with Inactive User\033[0m")
 
-time.sleep(0.1 )
 
 
 # 🔐 Target user credentials
-username_input = "Testinactive"
+username_input = "TestDeletedgo"
 password_input = "Smm@1234"
 
 # 🔒 Stored correct credentials (mocked for comparison)
-stored_username = "Testinactive"
+stored_username = "TestDeletedgo"
 stored_password = "Smm@1234"
 
 # 🔑 Admin credentials and login URL
 admin_url = "https://qa-admin.zolv.health/api/v1/user/login"
 
 # 🔐 Admin login
-admin_login = requests.post(login_url, json={"loginId": "AutotestAdmin", "password": "Smm@1234"})
+admin_login = requests.post(admin_url, json={"loginId": "AutotestAdmin", "password": "Smm@1234"})
 
 if admin_login.status_code == 200:
     admin_json = admin_login.json()
-    token_admin = admin_json['token']['token']
+    admintoken = admin_json['token']['token']
     name = admin_json['name']
     company_id = admin_json['company']['id']
 
     # print("\033[92m✅ Admin login successful:\033[0m", name, company_id)
 
     # 📋 Get user list
-    user_url = f"https://qa-admin.zolv.health/api/v1/masters/user/web/{company_id}/get-user-list?page=2&size=10&sort=1&ignorePaging=false&roleId=&name=&isActive="
-    user_header = {
-        "Authorization": f"Bearer {token_admin}",
-        "Content-Type": "application/json"
+    user_url = f"https://qa-admin.zolv.health/api/v1/masters/user/web/{company_id}/get-user-list"
+    users_header = {"Authorization": f"Bearer {admintoken}",
+    "Content-Type": "application/json"
     }
 
-    user_responses = requests.get(user_url,headers=user_header)
-    # print(user_responses.status_code)
-    if user_responses.status_code == 200:
-        user_list = user_responses.json().get('users', [])
-        # print("🔎 Sample user object:", user_list[-1])  # For debugging structure
+
+    users_response = requests.get(user_url, headers=users_header)
+
+    if users_response.status_code == 200:
+        user_list = users_response.json().get('users', [])
+        # print("🔎 Sample user object:", user_list[0])  # For debugging structure
 
         user_found = False
 
@@ -351,19 +333,19 @@ if admin_login.status_code == 200:
                 is_active = user["isActive"]
 
                 if is_active:
-                    print(f"\033[92m✅ User {username_input} is active. Attempting login...\033[0m")
+                    # print(f"\033[92m✅ User {username_input} is active. Attempting login...\033[0m")
 
                     # Try to log in as the user
                     user_login = requests.post(login_url, json={"loginId": username_input, "password": password_input})
 
                     if user_login.status_code == 200:
                         print(f"\033[92m✅ Login successful for active user: {username_input}\033[0m")
-                    #    print(f"\033[92m✅ Test Passed: - Test Case ID : 010\033[0m")
+                    #    print(f"\033[92m✅ Test Passed: - Test Case ID : 008\033[0m")
 
                     else:
-                        # print(f"\033[91m❌ Test Failed:- Test Case ID : 010\033[0m")
-                        print(f"\033[91m❌ Login failed for active user: {username_input} (unexpected)\033[0m")
-                        # print(user_login.text)
+                        # print(f"\033[91m❌ Test Failed:- Test Case ID : 008\033[0m")
+                        print(f"\033[91m❌ Login failed for active user: {username_input} (unexpected)\033[0m",user_login.text)
+                        user_login.status_code
 
 
                 else:
@@ -374,23 +356,27 @@ if admin_login.status_code == 200:
 
                     if user_login.status_code != 200:
                         # print(f"\033[92m✅ Test Passed: Inactive user {username_input} was blocked from login.\033[0m") 
-                        print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 008 \033[0m")
-                        # print(user_login.text)
+                        print(f"\033[92m✅ Test Passed...! : Test Case ID - 008 \033[0m")
 
                     else:
                         # print(f"\033[91m❌ Test Failed: Inactive user {username_input} was able to login!\033[0m")
                         failed_count+=1
-                        print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 008 : Error - The user is currently inactive\033[0m")
-                        # print(user_login.text)
+                        print(f"\033[91m❌ Test Failed...! : Test Case ID - 008 : Error - The user is currently inactive\033[0m")
 
         if not user_found:
             print(f"\033[91m❌ User {username_input} not found in user list\033[0m")
 
     else:
-        print("\033[91m❌ Failed to fetch user list.\033[0m", user_responses.status_code)
+        print("\033[91m❌ Failed to fetch user list.\033[0m", users_response.status_code)
 
 else:
     print("\033[91m❌ Admin login failed.\033[0m", admin_login.status_code)
+
+
+
+
+
+
 
 
 
@@ -407,13 +393,13 @@ else:
 # print("\033[1;34m LOGIN DELETED USER TESTCASE!\033[0m")
 
 
-# admin_url = "https://qa-admin.zolv.health/api/v1/user/login"
+admin_url = "https://qa-admin.zolv.health/api/v1/user/login"
 admin_logout = "https://qa-admin.zolv.health/api/v1/user/logout"
 
-admin_login = requests.post(login_url, json={"loginId": "AutotestAdmin", "password": "Smm@1234"})
+admin_login = requests.post(admin_url, json={"loginId": "AutotestAdmin", "password": "Smm@1234"})
 if admin_login.status_code == 200:
     admin_json = admin_login.json()
-    admin_tokens = admin_json['token']['token']
+    admin_toke = admin_json['token']['token']
     company_json = admin_login.json()
 
     company_id = company_json["company"]["id"]
@@ -421,42 +407,43 @@ if admin_login.status_code == 200:
 
     # print("Logged ")
     
-    login_id = "Testdeladmin"
+
+    login_id = "gotest"
     password= "Smm@1234"
+    
 
-
-
-    create_user_payload =  {
-        "name": "Testdeladmin",
-        "email": "",
-        "phone": "",
-        "loginId": "Testdeladmin",
-        "employeeCode": "td4",
-        "type": "admin_user",
-        "departmentId": "68709372293ae6389032a052",
-        "privilegedAreas": [
-            "68a6b1ba89c43b6512ea7925"
-        ],
-        "isActive": True,
-        "isEmployee": True,
-        "isStudent": False,
-        "subscriptionEnabled": True,
-        "employeeCreditApplicable": False,
-        "employeeWalletApplicable": False,
-        "password": "Smm@1234"
+    create_user_payload= {
+    "name": "gotest",
+    "email": "",
+    "phone": "",
+    "loginId": "gotest",
+    "employeeCode": "go",
+    "type": "module_user",
+    "departmentId": "68709372293ae6389032a053",
+    "privilegedAreas": [],
+    "isActive": True,
+    "isEmployee": True,
+    "employeeCreditApplicable": False,
+    "employeeWalletApplicable": False,
+    "restaurantId": "68709372293ae6389032a05f",
+    "accessLevel": [
+    {
+        "module": "686f510c6e7e978b9132a03c",
+        "role": "68709372293ae6389032a057"
     }
-        
-    # create_user_url = f"https://qa-admin.zolv.health/api/v1/masters/user/web/{company_id}/create-user"
-    headers_admin =  {
-        "Authorization": f"Bearer {admin_tokens}",
-        "Content-Type": "application/json"
+    ],
+    "password": "Smm@1234"
     }
-
-    response_create=requests.post(base_url + f"api/v1/masters/user/web/{company_id}/create-user",json=create_user_payload,headers=headers_admin)
+    create_user_url = f"https://qa-admin.zolv.health/api/v1/masters/user/web/{company_id}/create-user"
+    headers_admin = {
+    "Authorization": f"Bearer {admin_toke}",
+    "Content-Type": "application/json"
+    }
+    response_create=requests.post(create_user_url,json=create_user_payload,headers=headers_admin)
     if response_create.status_code != 201:
     
-        print("Failed user creation...",response_create.text)
-        # print(response_create.text,"................")
+        print("Failed user creation...")
+        print(response_create.status_code,"................")
         response_create.status_code
     else:
         user_token = admin_json['token']['token']
@@ -470,8 +457,10 @@ if admin_login.status_code == 200:
         # ----------------------
         # Login as test user
         # ----------------------
-        user1 = requests.post(login_url, json={"loginId": login_id, "password": password})
+        user_id=None
 
+        user1 = requests.post(login_url, json={"loginId":"gotest" , "password":"Smm@1234"})
+        # print(user1.status_code,user1.text)
         if user1.status_code == 200:
             user1_json = user1.json()
             # print("Response JSON :", json.dumps(user1_json, indent=4))
@@ -486,13 +475,19 @@ if admin_login.status_code == 200:
             
 
             # Step 2: Logout test user
-            headers = {"Authorization": f"Bearer {toke}"}
+            headers = {
+                "Authorization": f"Bearer {toke}",
+                "Content-Type": "application/json"
+            }
             logout_response = requests.put(logout_url, headers=headers)
+            user_id=user_id
+
             if logout_response.status_code == 200:
                 S=logout_response.status_code
+
                 # print("\033[92m✅ Test user logout successful\033[0m")
             else:
-                # print("\033[91m❌ Test user logout failed with status code:\033[0m")
+                # print("\033[91m❌ Test user logout failed with status code:\033[0m",logout_response.status_code)
                 logout_response.text
 
         else:
@@ -508,33 +503,37 @@ if admin_login.status_code == 200:
             admin_token = admin_json['token']['token']
             name = admin_json['name']
 
-            # print("\033[92m✅ Admin login successful:\033[0m", name)
+            # print("\033[92m✅ Admin login successful/....:\033[0m", name)
 
             # Step 4: Delete the user
-            delete_url = "https://qa-admin.zolv.health/api/v1/masters/user/web/{company_id}/delete-user/{user_id}"
+            delete_url = "https://qa-admin.zolv.health/api/v1/masters/user/web/{company_id}/delete-user/{user_id}?"
 
             delete_urls = delete_url.format(company_id=company_id, user_id=user_id)
-            headers = {"Authorization": f"Bearer {admin_token}"}
-            delete_response = requests.patch(delete_urls, headers=headers)
+            headers1 = {
+                "Authorization": f"Bearer {admin_token}",
+                "Content-Type": "application/json"
+
+            }
+            delete_response = requests.patch(delete_urls, headers=headers1)
 
             if delete_response.status_code == 200:
                 # print("\033[92m✅ Test user deleted successfully\033[0m")
 
                 # Step 5: Logout admin
-                logout_admin_response = requests.put(admin_logout, headers=headers)
+                logout_admin_response = requests.put(admin_logout, headers=headers1)
                 if logout_admin_response.status_code == 200:
                     logout_res=logout_admin_response.json()
                     # print("\033[92m✅ Admin logout successful\033[0m")
                 else:
                     # print("\033[91m❌ Admin logout failed with status code:\033[0m")
-                    # print(logout_admin_response.text)
+                    print(logout_admin_response.text)
                     msg=logout_admin_response.text
 
 
                 # Step 6: Try to log in as deleted user
                 deleted_login = requests.post(login_url, json=create_user_payload)
                 if deleted_login.status_code != 200:
-                    print("\033[92m✅ TEST PASSED...! : Test Case ID - 009\033[0m")
+                    print("\033[92m✅ TEST PASSED...! : Test Case ID - 009 \033[0m")
                     # print("\033[92m✅ TEST PASSED :  Deleted user login correctly blocked (401 Unauthorized) : Test Case ID - 009\033[0m")
                 else:
                     failed_count+=1
@@ -552,7 +551,7 @@ if admin_login.status_code == 200:
             # print(admin_login.text)
 
 
-        # print(" "*200) # for space 
+
 
 
 
@@ -564,7 +563,7 @@ if admin_login.status_code == 200:
 # print("\033[1;34m Login with additional field in payload \033[0m")
 
 extrafield_payload ={
-    "loginId": "AutotestAdmin",
+    "loginId": "AutotestZolvGo",
     "password": "Smm@1234", 
     "extraField": "unexpected"
 }
@@ -591,12 +590,14 @@ else:
 
 
 
+
+
 #  11 : Login with extremely long payload :
 
 # print("\033[1;34m Login with extremely long payload \033[0m")
 
 long_payload ={
-    "loginId":"AutotestAdmin" + "a" * 1000, 
+    "loginId":"AutotestZolvGo" + "a" * 1000, 
     "password":"Smm@1234" + "b" * 10000
 }                                  #extremely long inputs (potential buffer overflow)
 response_login = requests.post(login_url,json=long_payload)
@@ -616,6 +617,8 @@ else:
 
 
 
+
+
 #12 : Login from Device B using same credentials while Device A login is active (multiple device Login behaviour) :
 
 
@@ -627,48 +630,54 @@ else:
 
 
 login = {
-    "loginId": "AutotestAdmin",
-    "password": "Smm@1234"
+    "loginId":"AutotestZolvGo",
+    "password":"Smm@1234"
 }
 
 # Step 1: Login from Device A
 # print("🔐 Logging in from Device A...")
-response_a = requests.post(login_url, json=login)
+response_A = requests.post(login_url, json=login)
 
-if response_a.status_code == 200:
-    response_json = response_a.json()
-    token_a = response_json["token"]["token"]
-    company_id = response_json["company"]["id"]
-    headers_a = {
-    "Authorization": f"Bearer {token_a}",
-    "Content-Type": "application/json"
-    }
-    # rest_id = response_json["restaurant"]["id"]
-    # print("\033[92m✅ Device A Login Successful.!\033[0m", response_a.status_code)
-    # print("Token A:", token_a)
+if response_A.status_code == 200:
+    A_json = response_A.json()
+    token_A = A_json["token"]["token"]
+    company_id = A_json["company"]["id"]
+    rest_id = A_json["restaurant"]["id"]
+    # print("\033[92m✅ Device A Login Successful.!\033[0m", response_A.status_code)
+    # print("Token A:", token_A)
+    # print("Response JSON : ",json.dumps(response_json,indent=4))
 else:
     # print("\033[91m❌ Device A Login Failed.\033[0m")
-      response_a.status_code
+    response_A.status_code
 
 # Step 2: Login from Device B using same credentials
 # print("\n🔐 Logging in from Device B (same credentials)...")
-response_b = requests.post(login_url, json=login)
+response_B = requests.post(login_url, json=login)
 
-if response_b.status_code == 200:
-    token_b = response_b.json()["token"]["token"]
-    # print("\033[92m✅ Device B Login Successful.!\033[0m", response_b.status_code)
-    # print("Token B:", token_b)
+if response_B.status_code == 200:
+    token_B = response_B.json()["token"]["token"]
+    # print("\033[92m✅ Device B Login Successful.!\033[0m", response_B.status_code)
+    # print("Token B:", token_B)
 else:
-    # print("\033[91m❌ Device B Login Failed — multiple login incorrectly blocked.\033[0m")
+    print("\033[91m❌ Device B Login Failed — multiple login incorrectly blocked.\033[0m")
     exit()
 
 # Step 3: Use Device A token to access protected endpoint
 # print("\n🔄 Verifying Device A token is still valid...")
+headers_A = {
+    "Authorization": f"Bearer {token_A}",
+    "Content-Type": "application/json"
+}
+url = f"https://qa-kds.zolv.health/api/v1/food/order/web/{company_id}/{rest_id}/get-order-list"
 
-url= f"https://qa-admin.zolv.health/api/v1/company/web/get-module-list/{company_id}"
-response_check_a = requests.get(url, headers=headers_a)
+payload={
+  "status": [],
+  "ignorePaging": True,
+  "type": "kds"
+}
+response_check_A = requests.post(url, headers=headers_A,json=payload)
 
-if response_check_a.status_code == 200:
+if response_check_A.status_code == 200:
     failed_count+=1
     # print(failed_count,"f")
 
@@ -681,6 +690,14 @@ else:
 
     # print("Status Code:", response_check_a.status_code)
     # print("Response:", response_check_a.text)
+
+
+
+
+
+
+
+
 
 
 
@@ -710,12 +727,11 @@ if response_special_chars.status_code != 200:
     # print(f"Token (Login): {special_chars_token}") 
 
 else:
-
+ 
     failed_count+=1
     # print(f"\033[91m❌ Login failed with status code {response_special_chars.text}\033[0m")
     print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 013  :  Error - Special characters not allowed in Login Id \033[0m") # login failed so test passed
     # print("Test for special characters in username failed! Login succeeded with special characters.")
-
 
 
 
@@ -772,10 +788,11 @@ if response_unicode.status_code != 200:
     # print(f"Token (Login): {response_unicode_token}") 
 
 else:
-
+ 
     failed_count+=1
     # print("\033[1;31mTest for Unicode/emoji handling failed! Login succeeded with unusual characters.\033[0m")
     print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 015  :  Error - Invalid characters \033[0m") # login failed so test passed
+
 
 
 
@@ -792,7 +809,7 @@ else:
 
 
 case_sensitivity_payload = {
-    "loginId": "AutotestAdmin".upper(),
+    "loginId": "AutotestZolvGo".upper(),
     "password": "Smm@1234"
 }
 
@@ -807,7 +824,7 @@ if response_case_sensitivity.status_code != 200:
     # print(f"Token (Login): {case_sensitivity_token}") 
 
 else:
-
+ 
     failed_count+=1
     # print("\033[1;93mUsername appears to be case-sensitive.\033[0m")
     print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 016  :  Error - Username appears to be case-insensitive  \033[0m") # login failed so test passed
@@ -822,9 +839,7 @@ else:
 
 
 
-
-# General Considerations :
-
+# General Consideration : 
 
 
 
@@ -835,7 +850,6 @@ else:
 
 c=0
 Unauthorized_payload = [
-    {"loginId": "AutotestZolvGo", "password": "Smm@1234"},
     {"loginId": "TestOMS", "password": "Smm@1234"},
     {"loginId": "user@example.com","password": "userpassword","userType": ""}, 
     {"loginId": "Testdeleteuser","password": "Testdeleteuser@1234"}
@@ -848,10 +862,10 @@ for user in Unauthorized_payload:
       
     else:
         c+=1
-          
+           
         if c!=0 and c<=1:
-          failed_count+=1
-          error_message={"Un"}
+           failed_count+=1
+           error_message={"Un"}
         #    print(failed_count,"f")
         print("\033[91m❌ TEST FAILED...! : Test Case ID - 111 : Error - Unauthorized user \033[0m")
 
@@ -865,14 +879,16 @@ for user in Unauthorized_payload:
 
 
 
+
+
 # 2 :   Invalid API endpoint (intentionally wrong) : 
 
 # print("\033[1;34mLOGIN TESTCASE - Invalid Endpoint, Minimal Payload\033[0m")
 
-invalidlogin_url = "https://qa-admin.zolv.health/api/v1/user/invalid_login"  # Example: endpoint is incorrect
+invalidlogin_url = "https://qa-oms.zolv.health/api/v1/user/invalid_login"  # Example: endpoint is incorrect
 
 login_payload = {
-        "loginId":"AutotestAdmin",
+        "loginId":"AutotestZolvGo",
         "password":"Smm@1234"
 }
 
@@ -888,7 +904,7 @@ if response.status_code == 200:
     failed_count+=1
     print("\033[91m❌ TEST FAILED...! : Test Case ID - 112 : Error - Invalid API endpoint\033[0m")
 else:
-    print("\033[92m✅ TEST PASSED...! : Test Case ID - 112 \033[0m")
+    print("\033[92m✅ TEST PASSED...! : Test Case ID - 112\033[0m")
     # print(response.text,"Invalid API endpoint")
     # print(response.status_code)
 
@@ -949,7 +965,7 @@ for invalid in Invalidparams_login_payload:
         # print("Response:", response_invalidlogin.json())
         # print(f"\033[92m✅ TEST PASSED...!\033[0m") # login failed so test passed
 
-  
+   
 if c!=0 and c<=1:
     failed_count+=1
 
@@ -1030,13 +1046,12 @@ else:
 
 
 
-
 # 6 : No SQL Injection Attempt : 
 
 # print("\033[1;34m No SQL Injection Attempt! \033[0m")
 
 no_sql_injection= {
-  "username": "oms' || 1==1 //",
+  "username": "Gos' || 1==1 //",
   "password": "anything"
 }
 response_no_sql_injection = requests.post(login_url,json=no_sql_injection)
@@ -1047,7 +1062,7 @@ if response_no_sql_injection.status_code != 200:
     no_sql_injection_token= no_sql_injection_json.get('token',{}).get('token')
     print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 116 \033[0m") 
 else:
-
+ 
     failed_count+=1
     # print(f"\033[91m❌ Login failed with status code {response_no_sql_injection.text}\033[0m")
     print(f"\033[91m❌ TEST FAILED...! : Test Case ID : 116  :  Error - Suspicious input detected \033[0m") # login failed so test passed
@@ -1095,6 +1110,7 @@ else:
 
 
 
+
 # 8 :  Login Test with invalid HTTP method : 
 
 # print("\033[1;34mLOGIN TESTCASE - Invalid  HTTP method\033[0m")
@@ -1109,6 +1125,9 @@ else:
 
 
 
+
+
+ 
 
 
 # 9 : XML Injection Attempt : 
@@ -1137,19 +1156,20 @@ else:
 
 
 
-# 9 : Database down during login 
+
+
+
+
+# 10 : Database down during login 
 
 print("\033[1;93mTest Case ID -  120 :  Skipping DB Availability....\033[0m")
 
 
+ 
 
-
-
-
-# 10 : Login when Redis is Down
+# 11 : Login when Redis is Down
         
 print("\033[1;93mTest Case ID -  121 : Skipping Cache...\033[0m")
-
 
 
 
@@ -1163,7 +1183,6 @@ print(f"\033[1;34mTotal TEST FAILEDS  : {failed_count}/{total_count}\033[0m")
 
 if failed_count == 0:
     print("\033[92m ✅ All TEST PASSED \033[0m")
-
 
 
 

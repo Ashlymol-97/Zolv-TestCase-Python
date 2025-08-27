@@ -1041,68 +1041,68 @@ login_payload = {
 
 # else:
 #     # print(f"\033[91m❌ Login failed with status code {response_login.status_code}\033[0m",{"loginId":loginid,"password":pwd})
-#     print(f"\033[91m❌ TEST FAILED...! - Test Case ID : 001 \033[0m",response_login.text,response_login.status_code) # login failed so test passed
+# #     print(f"\033[91m❌ TEST FAILED...! - Test Case ID : 001 \033[0m",response_login.text,response_login.status_code) # login failed so test passed
 
-#     # print("Response:", response_login.json())
-#     # print(f"\033[92m✅ TEST PASSED...!\033[0m") # login failed so test passed
-
-
-
-# Logout using unsupported/ Invalid HTTP Method :
-
-print("\033[1;34m Logout using unsupported/ Invalid HTTP Method\033[0m")
-
-
-response_login10 = requests.post(login_url,json=login_payload)
-if response_login10.status_code == 200:
-    response_json10 = response_login10.json()
-    # print(f"\033[91m✅ Login successful! Welcome, {loginId} )
-    # print("Response JSON : ",json.dumps(response_json,indent=4))
-    token= response_json10.get('token',{}).get('token')
-
-    headers= {
-        "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json"
-    }
+# #     # print("Response:", response_login.json())
+# #     # print(f"\033[92m✅ TEST PASSED...!\033[0m") # login failed so test passed
 
 
 
-    # List of HTTP methods to test
-    http_methods = ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
+# # Logout using unsupported/ Invalid HTTP Method :
 
-    print("Logout endpoint HTTP method validation:\n")
-
-    for method in http_methods:
-        print(f"Testing {method} request...")
-
-        # Send the request using the appropriate requests method
-        if method == "GET":
-            response = requests.get(logout_url, headers=headers)
-        elif method == "POST":
-            response = requests.post(logout_url, headers=headers)
-        elif method == "PUT":
-            response = requests.put(logout_url, headers=headers)
-        elif method == "DELETE":
-            response = requests.delete(logout_url, headers=headers)
-        elif method == "PATCH":
-            response = requests.patch(logout_url, headers=headers)
-        elif method == "OPTIONS":
-            response = requests.options(logout_url, headers=headers)
-
-        # Analyze the response
-        if response.status_code == 405:
-            print(f"{method} → \033[91mMethod Not Allowed ✅ (Expected)\033[0m")
-        elif response.status_code in [200, 204]:
-            print(f"{method} → \033[92mLogout Successful ✅\033[0m")
-            print("Response body:", response.text)
-        elif response.status_code == 401:
-            print(f"{method} → \033[91mUnauthorized ❌ (Check API key or token)\033[0m")
-        else:
-            print(f"{method} → \033[91mUnexpected status code ❌\033[0m")
-            print("Status code:", response.status_code)
+# print("\033[1;34m Logout using unsupported/ Invalid HTTP Method\033[0m")
 
 
-        print("-" * 50)
+# response_login10 = requests.post(login_url,json=login_payload)
+# if response_login10.status_code == 200:
+#     response_json10 = response_login10.json()
+#     # print(f"\033[91m✅ Login successful! Welcome, {loginId} )
+#     # print("Response JSON : ",json.dumps(response_json,indent=4))
+#     token= response_json10.get('token',{}).get('token')
+
+#     headers= {
+#         "Authorization": f"Bearer {token}",
+#         "Content-Type": "application/json"
+#     }
+
+
+
+#     # List of HTTP methods to test
+#     http_methods = ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
+
+#     print("Logout endpoint HTTP method validation:\n")
+
+#     for method in http_methods:
+#         print(f"Testing {method} request...")
+
+#         # Send the request using the appropriate requests method
+#         if method == "GET":
+#             response = requests.get(logout_url, headers=headers)
+#         elif method == "POST":
+#             response = requests.post(logout_url, headers=headers)
+#         elif method == "PUT":
+#             response = requests.put(logout_url, headers=headers)
+#         elif method == "DELETE":
+#             response = requests.delete(logout_url, headers=headers)
+#         elif method == "PATCH":
+#             response = requests.patch(logout_url, headers=headers)
+#         elif method == "OPTIONS":
+#             response = requests.options(logout_url, headers=headers)
+
+#         # Analyze the response
+#         if response.status_code == 405:
+#             print(f"{method} → \033[91mMethod Not Allowed ✅ (Expected)\033[0m")
+#         elif response.status_code in [200, 204]:
+#             print(f"{method} → \033[92mLogout Successful ✅\033[0m")
+#             print("Response body:", response.text)
+#         elif response.status_code == 401:
+#             print(f"{method} → \033[91mUnauthorized ❌ (Check API key or token)\033[0m")
+#         else:
+#             print(f"{method} → \033[91mUnexpected status code ❌\033[0m")
+#             print("Status code:", response.status_code)
+
+
+#         print("-" * 50)
 
 
 
@@ -1143,4 +1143,194 @@ if response_login10.status_code == 200:
 
 # except ValueError:
 #     print("❌ Please enter a valid number.")
+
+
+# # 11 :  Login with Deleted User Credentials : 
+
+base_url = "https://qa-kds.zolv.health/"
+login_url= "https://qa-kds.zolv.health/api/v1/user/kds-login"
+logout_url = "https://qa-kds.zolv.health/api/v1/user/logout"
+
+# print("\033[1;34m LOGIN DELETED USER TESTCASE!\033[0m")
+
+
+admin_url = "https://qa-admin.zolv.health/api/v1/user/login"
+admin_logout = "https://qa-admin.zolv.health/api/v1/user/logout"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# print("\033[1;34m LOGIN DELETED USER TESTCASE!\033[0m")
+
+
+admin_url = "https://qa-admin.zolv.health/api/v1/user/login"
+admin_logout = "https://qa-admin.zolv.health/api/v1/user/logout"
+
+admin_login = requests.post(admin_url, json={"loginId": "AutotestAdmin", "password": "Smm@1234"})
+if admin_login.status_code == 200:
+    admin_json = admin_login.json()
+    admin_token = admin_json['token']['token']
+    company_json = admin_login.json()
+
+    company_id = company_json["company"]["id"]
+    # print("Response JSON :", json.dumps(company_json, indent=4))
+
+    # print("Logged ")
+    
+
+    login_id = "Testdeletea"
+    password= "Smm@1234"
+
+    create_user_payload= {
+    "name": "Testdeletea",
+    "email": "",
+    "phone": "",
+    "loginId": "Testdeletea",
+    "employeeCode": "T",
+    "type": "module_user",
+    "departmentId": "68709372293ae6389032a053",
+    "privilegedAreas": [],
+    "isActive": True,
+    "isEmployee": True,
+    "employeeCreditApplicable": False,
+    "employeeWalletApplicable": False,
+    "restaurantId": "68709372293ae6389032a05f",
+    "accessLevel": [
+    {
+        "module": "686f510c6e7e978b9132a03c",
+        "role": "68709372293ae6389032a054"
+    }
+    ],
+    "password": "Smm@1234"
+    }
+
+
+
+
+
+
+    create_user_url = f"https://qa-admin.zolv.health/api/v1/masters/user/web/{company_id}/create-user"
+    headers_admin = {
+    "Authorization": f"Bearer {admin_token}",
+    "Content-Type": "application/json"
+    }
+    response_create=requests.post(create_user_url,json=create_user_payload,headers=headers_admin)
+    print(response_create)
+
+    if response_create.status_code != 201:
+    
+        print("Failed user creation...")
+        # print(response_create.text,"................")
+        response_create.status_code
+    else:
+        user_token = admin_json['token']['token']
+        ceateuser_json = response_create.json()
+        print("User Creation successfull...")
+        # print("Response JSON :", json.dumps(ceateuser_json, indent=4))
+
+
+    
+
+        # ----------------------
+        # Login as test user
+        # ----------------------
+        user1 = requests.post(login_url, json={"loginId": login_id, "password": password}
+)
+
+        if user1.status_code == 200:
+            user1_json = user1.json()
+            # print("Response JSON :", json.dumps(user1_json, indent=4))
+            name_user1 = user1_json['name']
+            company_id = user1_json['company']['id']
+            toke = user1_json['token']['token']
+            user_id = user1_json['id']
+
+            print("\033[92m✅User login successful\033[0m")
+            # print("Company ID:", company_id)
+            # print("Response JSON:")
+            
+
+            # Step 2: Logout test user
+            headers = {"Authorization": f"Bearer {toke}",
+                       "Content-Type": "application/json"
+            }
+            logout_response = requests.put(logout_url, headers=headers)
+            if logout_response.status_code == 200:
+                S=logout_response.status_code
+                print("\033[92m✅ Test user logout successful\033[0m")
+            else:
+                print("\033[91m❌ Test user logout failed with status code:\033[0m")
+                logout_response.text
+
+        else:
+            print("\033[92m✅ Test user login failed with status code: Test Case ID - 009 \033[0m")
+            user1.text
+
+        # ----------------------
+        # Step 3: Admin login
+        # ----------------------
+        admin_login = requests.post(admin_url, json={"loginId": "AutotestAdmin", "password": "Smm@1234"})
+        if admin_login.status_code == 200:
+            admin_json = admin_login.json()
+            admin_token = admin_json['token']['token']
+            name = admin_json['name']
+
+            print("\033[92m✅ Admin login successful:\033[0m", name)
+
+            # Step 4: Delete the user
+            delete_url = f"https://qa-admin.zolv.health/api/v1/masters/user/web/{company_id}/delete-user/{user_id}?"
+
+            delete_urls = delete_url.format(company_id=company_id,user_id=user_id)
+            headers_userdel = {"Authorization": f"Bearer {admin_token}"}
+            delete_response = requests.patch(delete_urls, headers=headers_userdel)
+
+            if delete_response.status_code == 200:
+                print("\033[92m✅ Test user deleted successfully\033[0m")
+
+                # Step 5: Logout admin
+                logout_admin_response = requests.put(admin_logout, headers=headers_userdel)
+                if logout_admin_response.status_code == 200:
+                    logout_res=logout_admin_response.json()
+                    print("\033[92m✅ Admin logout successful\033[0m")
+                else:
+                    print("\033[91m❌ Admin logout failed with status code:\033[0m")
+                    # print(logout_admin_response.text)
+                    msg=logout_admin_response.text
+
+
+                # Step 6: Try to log in as deleted user
+                deleted_login = requests.post(login_url, json=create_user_payload)
+                if deleted_login.status_code != 200:
+                    print("\033[92m✅ TEST PASSED...! : Test Case ID - 011\033[0m")
+                    # print("\033[92m✅ TEST PASSED :  Deleted user login correctly blocked (401 Unauthorized) : Test Case ID - 009\033[0m")
+                else:
+                    print("\033[91m❌ TEST FAILED...! : Test Case ID - 011 : Error - User not found \033[0m")
+
+                    # print("\033[91m❌ TEST FAILED : Unexpected login status for deleted user: Test Case ID - 009 \033[0m")
+                    # print(deleted_login.text)
+
+            else:
+                print("\033[91m❌ Failed to delete test user. Status:\033[0m")
+                # print(delete_response.text)
+
+        else:
+            print("\033[91m❌ Admin login failed with status code:\033[0m")
+            # print(admin_login.text)
+
+
+        # print(" "*200) # for space 
+
+
 

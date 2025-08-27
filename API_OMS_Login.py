@@ -176,44 +176,7 @@ else:
 
 
 
-# 5 : Un Authorized User (Privilege) :
-
-
-# print("\033[1;34m Un Authorized User (Privilege)![0m")
-
-c=0
-Unauthorized_payload = [
-    # {"loginId": "AutotestZolvGo", "password": "Smm@1234"},
-    {"loginId": "TestOMS", "password": "Smm@1234"},
-    {"loginId": "user@example.com","password": "userpassword","userType": ""}, 
-    {"loginId": "Testdeleteuser","password": "Testdeleteuser@1234"}
-]
-for user in Unauthorized_payload:
-    login_Auth = requests.post(login_url,json=user)
-    # print(Unauthorized_payload,login_Auth)
-    if login_Auth.status_code != 200:
-        print("\033[92m✅ TEST PASSED...! : Test Case ID - 005 \033[0m")
-      
-    else:
-        c+=1
-           
-        if c!=0 and c<=1:
-           failed_count+=1
-           error_message={"Un"}
-        #    print(failed_count,"f")
-        print("\033[91m❌ TEST FAILED...! : Test Case ID - 005 : Error - Unauthorized user \033[0m")
-
-
-
-    # time.sleep(0.1)  # Small delay between requests
-
-
-
-
-
-
-
-#6 : Login with user having only KDS privilege  : 
+#5 : Login with user having only KDS privilege  : 
 
 # print("\033[1;34mLogin with user having only KDS privilege\033[0m")
 
@@ -231,9 +194,9 @@ if response_login.status_code == 200:
 
     # print("Response JSON : ",json.dumps(response_json,indent=4))
 
-    print("\033[91m❌ TEST FAILED...! : Test Case ID - 006 : Error - Unauthorized user \033[0m")
+    print("\033[91m❌ TEST FAILED...! : Test Case ID - 005 : Error - Unauthorized user \033[0m")
 else:
-    print("\033[92m✅ TEST PASSED...! : Test Case ID - 006 \033[0m")
+    print("\033[92m✅ TEST PASSED...! : Test Case ID - 005 \033[0m")
 
 
 
@@ -243,7 +206,7 @@ else:
 
 
 
-# 7 : Login with user having only Go privilege :
+# 6 : Login with user having only Go privilege :
 
 # print("\033[1;34mLogin with user having only Go privilege\033[0m")
 
@@ -260,45 +223,9 @@ if response_login.status_code == 200:
 
 
     # print("Response JSON : ",json.dumps(response_json,indent=4))
-    print("\033[91m❌ TEST FAILED...! : Test Case ID - 007 : Error - Unauthorized user  \033[0m")
+    print("\033[91m❌ TEST FAILED...! : Test Case ID - 006 : Error - Unauthorized user  \033[0m")
 else:
-    print("\033[92m✅ TEST PASSED...! :  Test Case ID - 007 \033[0m")
-
-
-
-
-
-
-
-# 8 : Login with null field in payload : 
-
-
-# print("\033[1;34m Login with null field in payload\033[0m")
-
-null_login_payload = {
-        "loginId":None,
-        "password": None
-}
-
-
-response_login = requests.post(login_url,json=null_login_payload)
-if response_login.status_code == 200:
-    response_json = response_login.json()
-    name=response_json.get('name')
-    # print(f"\033[91m✅ Login successful! Welcome, {loginId} | Name: {name} | Status: {response_login.status_code}\033[0m",{"loginId":loginId,"password":pwd})
-    # print("Response JSON : ",json.dumps(response_json,indent=4))
-    token1= response_json.get('token',{}).get('token')
-    failed_count+=1
-    # print(f"\033[91m❌  Login successful for: {loginid} | Name: {name} | Status: {response_login.status_code}\033[0m")
-    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 008 : Error -  Username and Password fields are required\033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
-
-    # print(f"Token (Login): {token1}") 
-
-else:
-    # print(f"\033[92m✅ Login failed with status code {response_login.status_code}\033[0m",{"loginId":loginid,"password":pwd})
-    print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 008 \033[0m") # login failed so test passed
-    # print("Response:", response_login.json())
-    # print(f"\033[92m✅ TEST PASSED...!\033[0m") # login failed so test passed
+    print("\033[92m✅ TEST PASSED...! :  Test Case ID - 006 \033[0m")
 
 
 
@@ -309,7 +236,7 @@ else:
 
 
 
-# 9 : Concurrent Login Attempts : 
+# 7 : Concurrent Login Attempts : 
 
 # print("\033[1;34m Concurrent Login Attempts : rate limiting (multiple attempts in quick succession)\033[0m")
 c=0
@@ -336,7 +263,7 @@ for i in range(10):
 
     if response.status_code == 429:
         # print("\033[1;92m  Rate limiting correctly implemented!\033[0m")
-        print("\033[1;92m✅ TEST PASSED...! : Test Case ID - 009 \033[0m")
+        print("\033[1;92m✅ TEST PASSED...! : Test Case ID - 007 \033[0m")
 
         break
     elif response.status_code == 200:
@@ -347,7 +274,7 @@ for i in range(10):
             # print(failed_count,"f")
         # print("\033[1;91m❌ Unexpected success \033[0m",response_login.status_code)
     
-        print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 009 : Error - Concurrent login attempt denied for user.  \033[0m")
+        print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 007 : Error - Concurrent login attempt denied for user.  \033[0m")
     
     elif response.status_code == 400:
         print("\033[1;91m❌ Request format is invalid (400 Bad Request). Fix payload.\033[0m")
@@ -363,7 +290,7 @@ for i in range(10):
 
 
 
-# 10 : Login with Inactive User  :
+# 8 : Login with Inactive User  :
 
 # print("\033[1;34mLogin with Inactive User\033[0m")
 
@@ -393,8 +320,10 @@ if admin_login.status_code == 200:
 
     # 📋 Get user list
     user_url = f"https://qa-admin.zolv.health/api/v1/masters/user/web/{company_id}/get-user-list"
-    user_headers = {"Authorization": f"Bearer {admin_token}"}
-
+    user_headers = {
+        "Authorization": f"Bearer {admin_token}",
+        "Content-Type": "application/json"
+    }
     user_response = requests.get(user_url, headers=user_headers)
 
     if user_response.status_code == 200:
@@ -432,12 +361,12 @@ if admin_login.status_code == 200:
 
                     if user_login.status_code != 200:
                         # print(f"\033[92m✅ Test Passed: Inactive user {username_input} was blocked from login.\033[0m") 
-                        print(f"\033[92m✅ Test Passed...! : Test Case ID - 010 \033[0m")
+                        print(f"\033[92m✅ Test Passed...! : Test Case ID - 008 \033[0m")
 
                     else:
                         # print(f"\033[91m❌ Test Failed: Inactive user {username_input} was able to login!\033[0m")
                         failed_count+=1
-                        print(f"\033[91m❌ Test Failed...! : Test Case ID - 010 : Error - The user is currently inactive\033[0m")
+                        print(f"\033[91m❌ Test Failed...! : Test Case ID - 008 : Error - The user is currently inactive\033[0m")
 
         if not user_found:
             print(f"\033[91m❌ User {username_input} not found in user list\033[0m")
@@ -456,7 +385,7 @@ else:
 
 
 
-# # 11 :  Login with Deleted User Credentials : 
+# # 9 :  Login with Deleted User Credentials : 
 
 
 
@@ -478,16 +407,16 @@ if admin_login.status_code == 200:
     # print("Logged ")
     
 
-# login_id = "TestDeleted"
-# password= "Smm@1234"
-    
+    login_id = "Test4"
+    password= "Smm@1234"
+        
 
     create_user_payload= {
-    "name": "TestDeleted1",
+    "name": "Test4",
     "email": "",
     "phone": "",
-    "loginId": "TestDeleted",
-    "employeeCode": "TD",
+    "loginId": "Test4",
+    "employeeCode": "TD4",
     "type": "module_user",
     "departmentId": "68709372293ae6389032a053",
     "privilegedAreas": [],
@@ -511,7 +440,7 @@ if admin_login.status_code == 200:
     response_create=requests.post(create_user_url,json=create_user_payload,headers=headers_admin)
     if response_create.status_code != 201:
     
-        # print("Failed user creation...")
+        print("Failed user creation...",response_create.text)
         # print(response_create.text,"................")
         response_create.status_code
     else:
@@ -526,7 +455,7 @@ if admin_login.status_code == 200:
         # ----------------------
         # Login as test user
         # ----------------------
-        user1 = requests.post(login_url, json=create_user_payload)
+        user1 = requests.post(login_url, json={"loginId": login_id, "password": password})
 
         if user1.status_code == 200:
             user1_json = user1.json()
@@ -590,11 +519,11 @@ if admin_login.status_code == 200:
                 # Step 6: Try to log in as deleted user
                 deleted_login = requests.post(login_url, json=create_user_payload)
                 if deleted_login.status_code != 200:
-                    print("\033[92m✅ TEST PASSED...! : Test Case ID - 011\033[0m")
+                    print("\033[92m✅ TEST PASSED...! : Test Case ID - 009\033[0m")
                     # print("\033[92m✅ TEST PASSED :  Deleted user login correctly blocked (401 Unauthorized) : Test Case ID - 009\033[0m")
                 else:
                     failed_count+=1
-                    print("\033[91m❌ TEST FAILED...! : Test Case ID - 011 : Error - User not found \033[0m")
+                    print("\033[91m❌ TEST FAILED...! : Test Case ID - 009 : Error - User not found \033[0m")
 
                     # print("\033[91m❌ TEST FAILED : Unexpected login status for deleted user: Test Case ID - 009 \033[0m")
                     # print(deleted_login.text)
@@ -614,17 +543,317 @@ if admin_login.status_code == 200:
 
 
 
+# # 10 : Login with additional field in payload : 
 
-# 12 : Database down during login 
+# print("\033[1;34m Login with additional field in payload \033[0m")
 
-print("\033[1;93mTest Case ID -  012 :  Skipping DB Availability....\033[0m")
+extrafield_payload ={
+    "loginId": "AutotestOMS",
+    "password": "Smm@1234", 
+    "extraField": "unexpected"
+}
+response_login = requests.post(login_url,json=extrafield_payload)
+if response_login.status_code == 200:
+    token = response_login.json()["token"]["token"]
+    # print(token,"...")
+    response_json = response_login.json()
+    failed_count+=1
+    # print(failed_count,"f")
+
+
+    # print("Response JSON : ",json.dumps(response_json,indent=4))
+    # print("\033[1;91m❌  Login successful with extra field.! - Test Case ID : 016 \033[0m")
+    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 010 : Error - Unexpected fields in payload \033[0m") # login failed so test passed
+
+else:
+    # print(f"\033[92m✅ Login failed due to extra field — API enforces strict schema. \033[0m",response_login.status_code) # login failed so test passed
+    print("\033[1;92m✅ TEST PASSED...! : Test Case ID - 010 \033[0m")
+    # print("Response:", response_login.json())
 
 
 
 
 
 
-# 13 :   Invalid API endpoint (intentionally wrong) : 
+#  11 : Login with extremely long payload :
+
+# print("\033[1;34m Login with extremely long payload \033[0m")
+
+long_payload ={
+    "loginId":"AutotestOMS" + "a" * 1000, 
+    "password":"Smm@1234" + "b" * 10000
+}                                  #extremely long inputs (potential buffer overflow)
+response_login = requests.post(login_url,json=long_payload)
+if response_login.status_code != 200:
+    # print("\033[1;92m✅ API couldn't handle long payload.! \033[0m",response_login.status_code)
+    print("\033[1;92m✅ TEST PASSED...! : Test Case ID - 011 \033[0m")
+
+    # print("Response:", response_login.json())
+else:
+    failed_count+=1
+    # print(f"\033[91m❌ Login succeeded with long credentials. \033[0m",response_login.status_code) # login failed so test passed
+    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 011 : Error - Payload too large \033[0m") # login failed so test passed
+
+
+
+
+
+#12 : Login from Device B using same credentials while Device A login is active (multiple device Login behaviour) :
+
+
+# print("\n")
+
+
+# print("\033[1;34m System must allow simultaneous logins from multiple devices using same credentials! \033[0m")
+
+
+
+login = {
+    "loginId": "AutotestOMS",
+    "password": "Smm@1234"
+}
+
+# Step 1: Login from Device A
+# print("🔐 Logging in from Device A...")
+response_a = requests.post(login_url, json=login)
+
+if response_a.status_code == 200:
+    response_json = response_a.json()
+    token_a = response_json["token"]["token"]
+    company_id = response_json["company"]["id"]
+    rest_id = response_json["restaurant"]["id"]
+    headers_a = {
+    "Authorization": f"Bearer {token_a}",
+    "Content-Type": "application/json"
+    }
+    # print("\033[92m✅ Device A Login Successful.!\033[0m", response_a.status_code)
+    # print("Token A:", token_a)
+else:
+    # print("\033[91m❌ Device A Login Failed.\033[0m")
+      response_a.status_code
+
+# Step 2: Login from Device B using same credentials
+# print("\n🔐 Logging in from Device B (same credentials)...")
+response_b = requests.post(login_url, json=login)
+
+if response_b.status_code == 200:
+    token_b = response_b.json()["token"]["token"]
+    # print("\033[92m✅ Device B Login Successful.!\033[0m", response_b.status_code)
+    # print("Token B:", token_b)
+else:
+    # print("\033[91m❌ Device B Login Failed — multiple login incorrectly blocked.\033[0m")
+    exit()
+
+# Step 3: Use Device A token to access protected endpoint
+# print("\n🔄 Verifying Device A token is still valid...")
+
+url = f"https://qa-oms.zolv.health/api/v1/dashboard/orders/web/{company_id}/{rest_id}/get-order-progress"
+response_check_a = requests.get(url, headers=headers_a)
+
+if response_check_a.status_code == 200:
+    failed_count+=1
+    # print(failed_count,"f")
+
+    # print("\033[91m❌ Device A token is still valid after Device B login — simultaneous login allowed. : Test Case ID - 020 \033[0m")
+    print("\033[91m❌ TEST FAILED...! : Test Case ID - 012  :  Error - Unauthorized \033[0m")
+
+else:
+    # print("\033[92m✅ Device A token was rejected after Device B login. : Test Case ID - 020 \033[0m")
+    print("\033[92m✅ TEST PASSED...! : Test Case ID - 012 \033[0m")
+
+    # print("Status Code:", response_check_a.status_code)
+    # print("Response:", response_check_a.text)
+
+
+
+
+
+
+
+
+
+
+# 13 : Login with special characters input in Login ID (username):
+
+# print("\033[1;34m Login with special characters input in Login ID (username)! \033[0m")
+
+special_chars_username_payload = {
+    "loginId": "user@#$%^&*()",
+    "password": "Smm@1234"
+}
+
+  
+response_special_chars = requests.post(login_url,json=special_chars_username_payload)
+if response_special_chars.status_code != 200:
+    special_chars_json = response_special_chars.json()
+    name=special_chars_json.get('name')
+    # print("\033[1;92mTest for special characters in username passed!\033[0m")
+    # print("Response:", response_special_chars.json())
+
+    # print("...",response_special_chars.text)
+    # print("Response JSON : ",json.dumps(special_chars_json,indent=4))
+    special_chars_token= special_chars_json.get('token',{}).get('token')
+    print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 013 \033[0m") 
+    # print(f"Token (Login): {special_chars_token}") 
+
+else:
+ 
+    failed_count+=1
+    # print(f"\033[91m❌ Login failed with status code {response_special_chars.text}\033[0m")
+    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 013  :  Error - Special characters not allowed in Login Id \033[0m") # login failed so test passed
+    # print("Test for special characters in username failed! Login succeeded with special characters.")
+
+
+
+
+
+
+
+
+# 14 : Login with malformed JSON request : 
+
+
+# print("\033[1;34m  Login with malformed JSON request! \033[0m")
+
+
+headers_without_content_type = {"Authorization": ""}
+response_malformed_json = requests.post(
+    login_url + "/api/v1/user/login",
+    data="This is not valid JSON",
+    headers=headers_without_content_type
+)
+if response_malformed_json.status_code != 200:
+    # print("\033[1;92mTest for malformed JSON passed!\033[0m")
+    print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 014 \033[0m") 
+    # print("Status code:................", response_malformed_json.status_code)
+else:
+    failed_count+=1
+    # print("\033[1;91mTest for malformed JSON failed! Server accepted malformed input.\033[0m")
+    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 014  :  Error - Invalid JSON \033[0m") # login failed so test passed
+
+
+
+
+
+
+
+
+# 15 :Login with emoji characters input : 
+
+
+# print("\033[1;34m  Login with emoji characters input! \033[0m")
+
+
+unicode_payload = {
+    "loginId": "用户名😊",
+    "password": "密码🔒"
+}
+
+response_unicode = requests.post(login_url,json=unicode_payload)
+if response_unicode.status_code != 200:
+    response_unicode_json = response_unicode.json()
+    # print("\033[1;92mTest for Unicode/emoji handling passed!\033[0m")
+    # print("Response JSON : ",json.dumps(response_unicode_json,indent=4))
+    response_unicode_token= response_unicode_json.get('token',{}).get('token')
+    print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 015 \033[0m") 
+    # print(f"Token (Login): {response_unicode_token}") 
+
+else:
+ 
+    failed_count+=1
+    # print("\033[1;31mTest for Unicode/emoji handling failed! Login succeeded with unusual characters.\033[0m")
+    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 015  :  Error - Invalid characters \033[0m") # login failed so test passed
+
+
+
+
+
+
+
+
+
+
+# 16 : Case sensitivity in Login :
+
+
+# print("\033[1;34m  ase Case sensitivity in Login! \033[0m")
+
+
+case_sensitivity_payload = {
+    "loginId": "AutotestOMS".upper(),
+    "password": "Smm@1234"
+}
+
+  
+response_case_sensitivity = requests.post(login_url,json=case_sensitivity_payload)
+if response_case_sensitivity.status_code != 200:
+    case_sensitivity_json = response_case_sensitivity.json()
+    # print("\033[1;93mUsername appears to be case-insensitive.\033[0m")
+    # print("Response JSON : ",json.dumps(case_sensitivity_json,indent=4))
+    case_sensitivity_token= special_chars_json.get('token',{}).get('token')
+    print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 016 \033[0m") 
+    # print(f"Token (Login): {case_sensitivity_token}") 
+
+else:
+ 
+    failed_count+=1
+    # print("\033[1;93mUsername appears to be case-sensitive.\033[0m")
+    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 016  :  Error - Username appears to be case-insensitive  \033[0m") # login failed so test passed
+    # print("Test for case sensitivity in username failed! Login succeeded with case sensitivity.")
+
+  
+
+
+
+
+
+
+
+# General Considerations :
+ 
+
+
+
+# 1 : Un Authorized User (Privilege) :
+
+
+# print("\033[1;34m Un Authorized User (Privilege)![0m")
+
+c=0
+Unauthorized_payload = [
+    # {"loginId": "AutotestZolvGo", "password": "Smm@1234"},
+    {"loginId": "TestOMS", "password": "Smm@1234"},
+    {"loginId": "user@example.com","password": "userpassword","userType": ""}, 
+    {"loginId": "Testdeleteuser","password": "Testdeleteuser@1234"}
+]
+for user in Unauthorized_payload:
+    login_Auth = requests.post(login_url,json=user)
+    # print(Unauthorized_payload,login_Auth)
+    if login_Auth.status_code != 200:
+        print("\033[92m✅ TEST PASSED...! : Test Case ID - 111 \033[0m")
+      
+    else:
+        c+=1
+           
+        if c!=0 and c<=1:
+           failed_count+=1
+           error_message={"Un"}
+        #    print(failed_count,"f")
+        print("\033[91m❌ TEST FAILED...! : Test Case ID - 111 : Error - Unauthorized user \033[0m")
+
+
+
+    # time.sleep(0.1)  # Small delay between requests
+
+
+
+
+
+
+
+
+
+# 2 :   Invalid API endpoint (intentionally wrong) : 
 
 # print("\033[1;34mLOGIN TESTCASE - Invalid Endpoint, Minimal Payload\033[0m")
 
@@ -645,9 +874,9 @@ response = requests.post(invalidlogin_url, json=login_payload)
 if response.status_code == 200:
     # print(response.text,"Login with Invalid API endpoint")
     failed_count+=1
-    print("\033[91m❌ TEST FAILED...! : Test Case ID - 013 : Error - Invalid API endpoint\033[0m")
+    print("\033[91m❌ TEST FAILED...! : Test Case ID - 112 : Error - Invalid API endpoint\033[0m")
 else:
-    print("\033[92m✅ TEST PASSED...! : Test Case ID - 013\033[0m")
+    print("\033[92m✅ TEST PASSED...! : Test Case ID - 112 \033[0m")
     # print(response.text,"Invalid API endpoint")
     # print(response.status_code)
 
@@ -657,7 +886,7 @@ else:
 
 
 
-# 14 : Invalid Parameters :
+# 3 : Invalid Parameters :
 
 # print("\033[1;34mLOGIN TESTCASE - Invalid Parameters\033[0m")
 
@@ -697,13 +926,13 @@ for invalid in Invalidparams_login_payload:
         # print("Response JSON : ",json.dumps(response_json,indent=4))
         token1= invalid_json.get('token',{}).get('token')
         # print(f"\033[91m❌  Login successful for: {loginid} | Name: {name} | Status: {response_login.status_code}\033[0m")
-        print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 014 : Error - Invalid Input Format\033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
+        print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 113 : Error - Invalid Input Format\033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
 
         # print(f"Token (Login): {token1}") 
 
     else:
         # print(f"\033[92m✅  Login failed with status code {response_login.status_code}\033[0m",{"loginId":loginid,"password":pwd})
-        print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 014 \033[0m") # login failed so test passed
+        print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 113 \033[0m") # login failed so test passed
 
         # print("Response:", response_invalidlogin.json())
         # print(f"\033[92m✅ TEST PASSED...!\033[0m") # login failed so test passed
@@ -721,7 +950,7 @@ if c!=0 and c<=1:
 
 
 
-# 15 : Login with empty field in payload  : 
+# 4 : Login with empty field in payload  : 
 
 
 # print("\033[1;34m Login with empty field in payload\033[0m")
@@ -742,13 +971,13 @@ if response_login.status_code == 200:
     # print("Response JSON : ",json.dumps(response_json,indent=4))
     token1= response_json.get('token',{}).get('token')
     # print(f"\033[91m❌  Login successful for: {loginid} | Name: {name} | Status: {response_login.status_code}\033[0m")
-    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 015 : Error -  Fields cannot be empty \033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
+    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 114 : Error -  Fields cannot be empty \033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
 
     # print(f"Token (Login): {token1}") 
 
 else:
     # print(f"\033[92m✅ Login failed with status code {response_login.status_code}\033[0m",{"loginId":loginid,"password":pwd})
-    print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 015 \033[0m") # login failed so test passed
+    print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 114 \033[0m") # login failed so test passed
 
     # print("Response:", response_login.json())
     # print(f"\033[92m✅ TEST PASSED...!\033[0m") # login failed so test passed
@@ -761,9 +990,7 @@ else:
 
 
 
-
-
-# 16 : SQL Injection Attempt : 
+# 5 : SQL Injection Attempt : 
 
 
 # print("\033[1;34m SQL Injection Attempt\033[0m")
@@ -774,12 +1001,12 @@ sql_injection_payload = {
 }
 response_login = requests.post(login_url,json=sql_injection_payload)
 if response_login.status_code != 200:
-    print("\033[1;92m✅ TEST PASSED...! : Test Case ID - 016 \033[0m")
+    print("\033[1;92m✅ TEST PASSED...! : Test Case ID - 115 \033[0m")
     # print("Response:", response_login.json())
 else:
     failed_count+=1
     # print("TEST PASSED : Test for SQL injection protection failed! SQL injection might be possible.014")
-    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 016 : Error - SQL injection detected \033[0m") # login failed so test passed
+    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 115 : Error - SQL injection detected \033[0m") # login failed so test passed
 
 
 
@@ -790,198 +1017,9 @@ else:
 
 
 
-# 17 : XML Injection Attempt : 
 
-# print("\033[1;34m XML Injection Attempt \033[0m")
 
-
-xml_injection_payload = {
-    "loginId": "<script>alert(1)</script>",
-    "password": "anypassword"
-}
-response_xml_injection = requests.post(login_url,json=xml_injection_payload)
-if response_xml_injection.status_code != 200:
-    # print("\033[1;92m ✅ TEST PASSED : Test for XML/XSS injection protection passed..!  - Test Case ID : 015 \033[0m")
-    print("\033[1;92m✅ TEST PASSED...! : Test Case ID - 017 \033[0m")
-
-    # print("Response:", response_xml_injection.json())
-else:
-    failed_count+=1
-    # print("\033[91m❌ TEST FAILED...! Test for XML/XSS injection protection failed! XML/XSS injection might be possible.  - Test Case ID : 015 \033[0m")
-    print("\033[91m❌ TEST FAILED...! : Test Case ID - 017 : Error - XML injection detected \033[0m")
-#     print(f") # login failed so test passed
-
-
-
-
-
-
-
-
-
-# # 18 : Login with additional field in payload : 
-
-# print("\033[1;34m Login with additional field in payload \033[0m")
-
-extrafield_payload ={
-    "loginId": "AutotestOMS",
-    "password": "Smm@1234", 
-    "extraField": "unexpected"
-}
-response_login = requests.post(login_url,json=extrafield_payload)
-if response_login.status_code == 200:
-    token = response_login.json()["token"]["token"]
-    # print(token,"...")
-    response_json = response_login.json()
-    failed_count+=1
-    # print(failed_count,"f")
-
-
-    # print("Response JSON : ",json.dumps(response_json,indent=4))
-    # print("\033[1;91m❌  Login successful with extra field.! - Test Case ID : 016 \033[0m")
-    print(f"\033[91m❌ TEST FAILED...! :  Test Case ID - 018 : Error - Unexpected fields in payload \033[0m") # login failed so test passed
-
-else:
-    # print(f"\033[92m✅ Login failed due to extra field — API enforces strict schema. \033[0m",response_login.status_code) # login failed so test passed
-    print("\033[1;92m✅ TEST PASSED...! :  Test Case ID - 018 \033[0m")
-    # print("Response:", response_login.json())
-
-
-
-
-
-
-
-
-#  19 : Login with extremely long payload :
-
-# print("\033[1;34m Login with extremely long payload \033[0m")
-
-long_payload ={
-    "loginId":"AutotestOMS" + "a" * 1000, 
-    "password":"Smm@1234" + "b" * 10000
-}                                  #extremely long inputs (potential buffer overflow)
-response_login = requests.post(login_url,json=long_payload)
-if response_login.status_code != 200:
-    # print("\033[1;92m✅ API couldn't handle long payload.! \033[0m",response_login.status_code)
-    print("\033[1;92m✅ TEST PASSED...! :  Test Case ID - 019 \033[0m")
-
-    # print("Response:", response_login.json())
-else:
-    failed_count+=1
-    # print(f"\033[91m❌ Login succeeded with long credentials. \033[0m",response_login.status_code) # login failed so test passed
-    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 019 : Error - Payload too large \033[0m") # login failed so test passed
-
-
-
-
-
-
-
-
-# 20 :  Login Test with invalid HTTP method : 
-
-# print("\033[1;34mLOGIN TESTCASE - Invalid Endpoint, Minimal Payload\033[0m")
-
-response_invalid_method = requests.put(login_url,json=login_payload)
-if response_invalid_method.status_code != 200:
-    # print("\033[1;92mTest for invalid HTTP method passed!\033[0m",response_invalid_method.status_code)
-    print("\033[1;92m✅ TEST PASSED...! : Test Case ID - 020 \033[0m")
-else:
-    failed_count+=1
-    print("\033[1;91m❌ TEST FAILED...! : Test Case ID -  020  : Error - API should only allow POST for login \033[0m")
-
-
-
-
-
- 
-
-# 21 : Login when Redis is Down
-        
-print("\033[1;93mTest Case ID -  021 : Skipping Cache...\033[0m")
-
-
-
-
-
-#22 : Login from Device B using same credentials while Device A login is active (multiple device Login behaviour) :
-
-
-# print("\n")
-
-
-# print("\033[1;34m System must allow simultaneous logins from multiple devices using same credentials! \033[0m")
-
-
-
-login = {
-    "loginId": "AutotestOMS",
-    "password": "Smm@1234"
-}
-
-# Step 1: Login from Device A
-# print("🔐 Logging in from Device A...")
-response_a = requests.post(login_url, json=login)
-
-if response_a.status_code == 200:
-    response_json = response_a.json()
-    token_a = response_json["token"]["token"]
-    company_id = response_json["company"]["id"]
-    rest_id = response_json["restaurant"]["id"]
-    # print("\033[92m✅ Device A Login Successful.!\033[0m", response_a.status_code)
-    # print("Token A:", token_a)
-else:
-    # print("\033[91m❌ Device A Login Failed.\033[0m")
-      response_a.status_code
-
-# Step 2: Login from Device B using same credentials
-# print("\n🔐 Logging in from Device B (same credentials)...")
-response_b = requests.post(login_url, json=login)
-
-if response_b.status_code == 200:
-    token_b = response_b.json()["token"]["token"]
-    # print("\033[92m✅ Device B Login Successful.!\033[0m", response_b.status_code)
-    # print("Token B:", token_b)
-else:
-    # print("\033[91m❌ Device B Login Failed — multiple login incorrectly blocked.\033[0m")
-    exit()
-
-# Step 3: Use Device A token to access protected endpoint
-# print("\n🔄 Verifying Device A token is still valid...")
-headers_a = {
-    "Authorization": f"Bearer {token_a}",
-    "Content-Type": "application/json"
-}
-url = f"https://qa-oms.zolv.health/api/v1/dashboard/orders/web/{company_id}/{rest_id}/get-order-progress"
-
-response_check_a = requests.get(url, headers=headers_a)
-
-if response_check_a.status_code == 200:
-    failed_count+=1
-    # print(failed_count,"f")
-
-    # print("\033[91m❌ Device A token is still valid after Device B login — simultaneous login allowed. : Test Case ID - 020 \033[0m")
-    print("\033[91m❌ TEST FAILED...! : Test Case ID - 022  :  Error - Unauthorized \033[0m")
-
-else:
-    # print("\033[92m✅ Device A token was rejected after Device B login. : Test Case ID - 020 \033[0m")
-    print("\033[92m✅ TEST PASSED...! : Test Case ID - 022 \033[0m")
-
-    # print("Status Code:", response_check_a.status_code)
-    # print("Response:", response_check_a.text)
-
-
-
-
-
-
-
-
-
-
-
-# 23 : No SQL Injection Attempt : 
+# 6 : No SQL Injection Attempt : 
 
 # print("\033[1;34m No SQL Injection Attempt! \033[0m")
 
@@ -995,12 +1033,12 @@ if response_no_sql_injection.status_code != 200:
     # print("...",response_no_sql_injection.text)
     # print("Response JSON : ",json.dumps(response_no_sql_injection_json,indent=4))
     no_sql_injection_token= no_sql_injection_json.get('token',{}).get('token')
-    print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 023 \033[0m") 
+    print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 116 \033[0m") 
 else:
  
     failed_count+=1
     # print(f"\033[91m❌ Login failed with status code {response_no_sql_injection.text}\033[0m")
-    print(f"\033[91m❌ TEST FAILED...! : Test Case ID : 023  :  Error - Suspicious input detected \033[0m") # login failed so test passed
+    print(f"\033[91m❌ TEST FAILED...! : Test Case ID : 116  :  Error - Suspicious input detected \033[0m") # login failed so test passed
     # print("Test for special characters in username failed! Login succeeded with special characters.")
 
 
@@ -1010,134 +1048,100 @@ else:
 
 
 
-# 24 : Login with special characters input in Login ID (username):
+# 7 : Login with null field in payload : 
 
-# print("\033[1;34m Login with special characters input in Login ID (username)! \033[0m")
 
-special_chars_username_payload = {
-    "loginId": "user@#$%^&*()",
-    "password": "Smm@1234"
+# print("\033[1;34m Login with null field in payload\033[0m")
+
+null_login_payload = {
+        "loginId":None,
+        "password": None
 }
 
-  
-response_special_chars = requests.post(login_url,json=special_chars_username_payload)
-if response_special_chars.status_code != 200:
-    special_chars_json = response_special_chars.json()
-    name=special_chars_json.get('name')
-    # print("\033[1;92mTest for special characters in username passed!\033[0m")
-    # print("Response:", response_special_chars.json())
 
-    # print("...",response_special_chars.text)
-    # print("Response JSON : ",json.dumps(special_chars_json,indent=4))
-    special_chars_token= special_chars_json.get('token',{}).get('token')
-    print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 024 \033[0m") 
-    # print(f"Token (Login): {special_chars_token}") 
+response_login = requests.post(login_url,json=null_login_payload)
+if response_login.status_code == 200:
+    response_json = response_login.json()
+    name=response_json.get('name')
+    # print(f"\033[91m✅ Login successful! Welcome, {loginId} | Name: {name} | Status: {response_login.status_code}\033[0m",{"loginId":loginId,"password":pwd})
+    # print("Response JSON : ",json.dumps(response_json,indent=4))
+    token1= response_json.get('token',{}).get('token')
+    failed_count+=1
+    # print(f"\033[91m❌  Login successful for: {loginid} | Name: {name} | Status: {response_login.status_code}\033[0m")
+    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 117 : Error -  Username and Password fields are required\033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
+
+    # print(f"Token (Login): {token1}") 
 
 else:
+    # print(f"\033[92m✅ Login failed with status code {response_login.status_code}\033[0m",{"loginId":loginid,"password":pwd})
+    print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 117 \033[0m") # login failed so test passed
+    # print("Response:", response_login.json())
+    # print(f"\033[92m✅ TEST PASSED...!\033[0m") # login failed so test passed
+
+
+
+
+
+
+
+
+
+# 8 :  Login Test with invalid HTTP method : 
+
+# print("\033[1;34mLOGIN TESTCASE - Invalid  HTTP method\033[0m")
+
+response_invalid_method = requests.put(login_url,json=login_payload)
+if response_invalid_method.status_code != 200:
+    # print("\033[1;92mTest for invalid HTTP method passed!\033[0m",response_invalid_method.status_code)
+    print("\033[1;92m✅ TEST PASSED...! : Test Case ID - 118 \033[0m")
+else:
+    failed_count+=1
+    print("\033[1;91m❌ TEST FAILED...! : Test Case ID -  118  : Error - API should only allow POST for login \033[0m")
+
+
+
+
+
  
-    failed_count+=1
-    # print(f"\033[91m❌ Login failed with status code {response_special_chars.text}\033[0m")
-    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 024  :  Error - Special characters not allowed in Login Id \033[0m") # login failed so test passed
-    # print("Test for special characters in username failed! Login succeeded with special characters.")
 
 
+# 9 : XML Injection Attempt : 
+
+# print("\033[1;34m XML Injection Attempt \033[0m")
 
 
-
-
-
-# 25 : Login with malformed JSON request : 
-
-
-# print("\033[1;34m  Login with malformed JSON request! \033[0m")
-
-
-headers_without_content_type = {"Authorization": ""}
-response_malformed_json = requests.post(
-    login_url + "/api/v1/user/login",
-    data="This is not valid JSON",
-    headers=headers_without_content_type
-)
-if response_malformed_json.status_code != 200:
-    # print("\033[1;92mTest for malformed JSON passed!\033[0m")
-    print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 025 \033[0m") 
-    # print("Status code:................", response_malformed_json.status_code)
-else:
-    failed_count+=1
-    # print("\033[1;91mTest for malformed JSON failed! Server accepted malformed input.\033[0m")
-    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 025  :  Error - Invalid JSON \033[0m") # login failed so test passed
-
-
-
-
-
-
-
-
-# 26 :Login with emoji characters input : 
-
-
-# print("\033[1;34m  Login with emoji characters input! \033[0m")
-
-
-unicode_payload = {
-    "loginId": "用户名😊",
-    "password": "密码🔒"
+xml_injection_payload = {
+    "loginId": "<script>alert(1)</script>",
+    "password": "anypassword"
 }
+response_xml_injection = requests.post(login_url,json=xml_injection_payload)
+if response_xml_injection.status_code != 200:
+    # print("\033[1;92m ✅ TEST PASSED : Test for XML/XSS injection protection passed..!  - Test Case ID : 015 \033[0m")
+    print("\033[1;92m✅ TEST PASSED...! : Test Case ID - 119 \033[0m")
 
-response_unicode = requests.post(login_url,json=unicode_payload)
-if response_unicode.status_code != 200:
-    response_unicode_json = response_unicode.json()
-    # print("\033[1;92mTest for Unicode/emoji handling passed!\033[0m")
-    # print("Response JSON : ",json.dumps(response_unicode_json,indent=4))
-    response_unicode_token= response_unicode_json.get('token',{}).get('token')
-    print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 026 \033[0m") 
-    # print(f"Token (Login): {response_unicode_token}") 
-
+    # print("Response:", response_xml_injection.json())
 else:
- 
     failed_count+=1
-    # print("\033[1;31mTest for Unicode/emoji handling failed! Login succeeded with unusual characters.\033[0m")
-    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 026  :  Error - Invalid characters \033[0m") # login failed so test passed
+    # print("\033[91m❌ TEST FAILED...! Test for XML/XSS injection protection failed! XML/XSS injection might be possible.  - Test Case ID : 015 \033[0m")
+    print("\033[91m❌ TEST FAILED...! : Test Case ID - 119 : Error - XML injection detected \033[0m")
+#     print(f") # login failed so test passed
 
 
 
 
 
 
+# 10 : Database down during login 
+
+print("\033[1;93mTest Case ID -  120 :  Skipping DB Availability....\033[0m")
 
 
 
 
-# 27 : Case sensitivity in Login :
 
-
-# print("\033[1;34m  ase Case sensitivity in Login! \033[0m")
-
-
-case_sensitivity_payload = {
-    "loginId": "AutotestOMS".upper(),
-    "password": "Smm@1234"
-}
-
-  
-response_case_sensitivity = requests.post(login_url,json=case_sensitivity_payload)
-if response_case_sensitivity.status_code != 200:
-    case_sensitivity_json = response_case_sensitivity.json()
-    # print("\033[1;93mUsername appears to be case-insensitive.\033[0m")
-    # print("Response JSON : ",json.dumps(case_sensitivity_json,indent=4))
-    case_sensitivity_token= special_chars_json.get('token',{}).get('token')
-    print(f"\033[92m✅ TEST PASSED...! : Test Case ID - 027 \033[0m") 
-    # print(f"Token (Login): {case_sensitivity_token}") 
-
-else:
- 
-    failed_count+=1
-    # print("\033[1;93mUsername appears to be case-sensitive.\033[0m")
-    print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 027  :  Error - Username appears to be case-insensitive  \033[0m") # login failed so test passed
-    # print("Test for case sensitivity in username failed! Login succeeded with case sensitivity.")
-
-
+# 11 : Login when Redis is Down
+        
+print("\033[1;93mTest Case ID -  121 : Skipping Cache...\033[0m")
 
 
 
@@ -1150,3 +1154,8 @@ if failed_count == 0:
     print("\033[92m ✅ All TEST PASSED \033[0m")
 
 
+
+
+
+time.sleep(0.1)
+print("\n")

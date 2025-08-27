@@ -14,29 +14,27 @@ total_count=12
 
 print(" "*600) # for space
 
-base_url = "https://qa-oms.zolv.health/"
-login_url= "https://qa-oms.zolv.health/api/v1/user/oms-login"
-logout_url ="https://qa-oms.zolv.health/api/v1/user/logout"   
 
+base_url = "https://qa-kds.zolv.health/"
+login_url= "https://qa-kds.zolv.health/api/v1/user/kds-login"
+logout_url = "https://qa-kds.zolv.health/api/v1/user/logout"
 
 
 # 1 : logout : Logout with valid session token  :
 
-print("\033[1;34m OMS LOGOUT TESTCASE! Document ID: TP_002 \033[0m")
+print("\033[1;34m KDS LOGOUT TESTCASE! Document ID: TP_002 \033[0m")
 
 # print("\033[1;34m Logout with valid session token...............!\033[0m")
 
 
 login_payload = {
-        "loginId":"AutotestOMS",
-        "password":"Smm@1234"
+    "loginId":"AutotestKDS",
+    "password":"Smm@1234"
 }
 
-  
 response_login = requests.post(login_url,json=login_payload)
 if response_login.status_code == 200:
     response_json = response_login.json()
-    name=response_json.get('name')
     # print(f"\033[91m✅ Login successful! Welcome, {loginId} | Name: {name} | Status: {response_login.status_code}\033[0m",{"loginId":loginId,"password":pwd})
     # print("Response JSON : ",json.dumps(response_json,indent=4))
     token= response_json.get('token',{}).get('token')
@@ -74,7 +72,7 @@ else:
 
 # print("\033[1;34m LOGOUT AGAIN WITH USED TOKEN !\033[0m")
 user = {
-    "loginId":"AutotestOMS",
+    "loginId":"AutotestKDS",
     "password":"Smm@1234"
 }
 
@@ -103,10 +101,15 @@ else:
 
         # print("Successfully logged out.")
 
-Get_url = f"https://qa-oms.zolv.health/api/v1/dashboard/orders/web/{company_id}/{rest_id}/get-order-progress"
 
+payload_exprd={
+  "status": [],
+  "ignorePaging": True,
+  "type": "kds"
+}
+url = f"https://qa-kds.zolv.health/api/v1/food/order/web/{company_id}/{rest_id}/get-order-list"
 # Step 3: Attempt to access a protected resource with the **now invalid** token
-response_protected = requests.get(Get_url, headers=headers1)
+response_protected = requests.post(url, headers=headers1,json=payload_exprd)
 
 # print("\n=== Reusing Logged-out Token ===")
 if response_protected.status_code != 200:
@@ -138,7 +141,7 @@ invalid_token = "23434=rr=..#//.....-invalid-token"  # Invalid format example
 # Prepare headers dictionary
 headers2 = {}
 login_payload = {
-        "loginId":"AutotestOMS",
+        "loginId":"AutotestKDS",
         "password":"Smm@1234"
 }
 
@@ -270,7 +273,8 @@ else:
 
 # print("\033[1;34m  Access protected resource after logout...................................\033[0m")
 
-protected_url = base_url + "api/v1/food/order/web/{company_id}/{restaurant_id}/get-order-list"
+protected_url = f"https://qa-kds.zolv.health/api/v1/food/order/web/{company_id}/{rest_id}/get-order-list"
+
 
 response_login5 = requests.post(login_url,json=login_payload)
 if response_login5.status_code == 200:
@@ -320,11 +324,13 @@ if response_login5.status_code == 200:
 
 
 
-
 # 7 : Client-side session/token cleanup logout : 
 
 
 print("\033[1;93mTest Case ID -  007 :  Skipping  Token Cleanup....\033[0m")
+
+
+
 
 
 
@@ -387,7 +393,8 @@ print("\033[1;93mTest Case ID -  008 :  Skipping CSRF Validation....\033[0m")
 
 # print("\033[1;34m Prevent back navigation post-logout\033[0m")
 
-protected_urls = f"https://qa-oms.zolv.health/api/v1/food/menu-item/web/{company_id}/{rest_id}/get-menu-item-counts"
+protected_urls = f"https://qa-kds.zolv.health/api/v1/food/order/web/{company_id}/{rest_id}/get-order-list"
+
 
 response_login8 = requests.post(login_url,json=login_payload)
 if response_login8.status_code == 200:
@@ -639,7 +646,7 @@ else:
 
 
 logins = {
-    "loginId": "AutotestOMS",
+    "loginId": "AutotestKDS",
     "password": "Smm@1234"
 }
 
@@ -706,7 +713,8 @@ headers_a = {
 }
 
 
-get_urls = f"https://qa-oms.zolv.health/api/v1/food/menu-item/web/{company_id}/{rest_id}/get-menu-item-counts"
+get_urls = f"https://qa-kds.zolv.health/api/v1/food/order/web/{company_id}/{rest_id}/get-order-list"
+
 response_logout_a = requests.get(get_urls,headers=headers_a)
 # print(response_logout_a.status_code)
 if response_logout_a.status_code != 401:
