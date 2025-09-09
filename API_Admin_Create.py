@@ -10,7 +10,7 @@ import base64
 
 
 failed_count=0
-total_count=25
+total_count=18
 
 base_url= "https://qa-admin.zolv.health/"
 login_url= "https://qa-admin.zolv.health/api/v1/user/login"
@@ -124,7 +124,7 @@ else:
        print(f"\033[92m✅ Test Case ID - 002 : Area Creation (Parent)                                                 : TEST PASSED...!  \033[0m")
     else:
        failed_count+=1
-
+       
        print(f"\033[91m❌ Test Case ID - 002 : Area Creation (Parent)                                                 : TEST FAILED...! : Invalid data or missing fields  \033[0m")
  
     #    print("Failed Creation.",create_parentarea.text) 
