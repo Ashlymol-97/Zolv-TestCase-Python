@@ -25,7 +25,7 @@ print("\033[1;34m ADMIN LOGIN TESTCASE! Document ID: TP_001\033[0m")
 
 
 login_payload = {
-        "loginId":"AutotestAdmin",
+        "loginId":"ZolvQAAdmin",
         "password":"Smm@1234"
 }
 
@@ -255,7 +255,7 @@ headers = {
 
 # Payload with correct field names
 invalid_login_payload = {
-    "loginId": "AutotestAdmin",   # ✅ Use "loginId" only if this is accepted by the API (otherwise use "username")
+    "loginId": "ZolvQAAdmin",   # ✅ Use "loginId" only if this is accepted by the API (otherwise use "username")
     "password": "Smm@1234"
 }
 
@@ -277,22 +277,19 @@ for i in range(10):
     elif response.status_code == 200:
         c+=1
         
-        if c!=0 and c<=1:
-            failed_count+=1  
-            # print(failed_count,"f")
-        # print("\033[1;91m❌ Unexpected success \033[0m",response_login.status_code)
-    
+        # print(c)
+
         print(f"\033[91m❌ TEST FAILED...! : Test Case ID - 007 : Error - Concurrent login attempt denied for user.  \033[0m")
-    
     elif response.status_code == 400:
         print("\033[1;91m❌ Request format is invalid (400 Bad Request). Fix payload.\033[0m")
     
     elif response.status_code >= 500:
         print("\033[1;91m❌ Server error — something is wrong on the backend.\033[0m")
 
-
-    time.sleep(0.1 )
-
+        
+if c!=0 and c<=10:
+    failed_count+=1
+time.sleep(0.1 )
 
 
 
@@ -320,7 +317,7 @@ stored_password = "Smm@1234"
 admin_url = "https://qa-admin.zolv.health/api/v1/user/login"
 
 # 🔐 Admin login
-admin_login = requests.post(login_url, json={"loginId": "AutotestAdmin", "password": "Smm@1234"})
+admin_login = requests.post(login_url, json={"loginId": "ZolvQAAdmin", "password": "Smm@1234"})
 
 if admin_login.status_code == 200:
     admin_json = admin_login.json()
@@ -410,7 +407,7 @@ else:
 # admin_url = "https://qa-admin.zolv.health/api/v1/user/login"
 admin_logout = "https://qa-admin.zolv.health/api/v1/user/logout"
 
-admin_login = requests.post(login_url, json={"loginId": "AutotestAdmin", "password": "Smm@1234"})
+admin_login = requests.post(login_url, json={"loginId": "ZolvQAAdmin", "password": "Smm@1234"})
 if admin_login.status_code == 200:
     admin_json = admin_login.json()
     admin_tokens = admin_json['token']['token']
@@ -435,7 +432,7 @@ if admin_login.status_code == 200:
         "type": "admin_user",
         "departmentId": "68709372293ae6389032a052",
         "privilegedAreas": [
-            "68a6b1ba89c43b6512ea7925"
+            "68ac344d386d2a3a01cc05a3"
         ],
         "isActive": True,
         "isEmployee": True,
@@ -455,8 +452,8 @@ if admin_login.status_code == 200:
     response_create=requests.post(base_url + f"api/v1/masters/user/web/{company_id}/create-user",json=create_user_payload,headers=headers_admin)
     if response_create.status_code != 201:
     
-        print("Failed user creation...",response_create.text)
-        # print(response_create.text,"................")
+        print("Failed user creation...")
+        print(response_create.text,"................")
         response_create.status_code
     else:
         user_token = admin_json['token']['token']
@@ -502,7 +499,7 @@ if admin_login.status_code == 200:
         # ----------------------
         # Step 3: Admin login
         # ----------------------
-        admin_login = requests.post(admin_url, json={"loginId": "AutotestAdmin", "password": "Smm@1234"})
+        admin_login = requests.post(admin_url, json={"loginId": "ZolvQAAdmin", "password": "Smm@1234"})
         if admin_login.status_code == 200:
             admin_json = admin_login.json()
             admin_token = admin_json['token']['token']
@@ -627,7 +624,7 @@ else:
 
 
 login = {
-    "loginId": "AutotestAdmin",
+    "loginId": "ZolvQAAdmin",
     "password": "Smm@1234"
 }
 
@@ -792,7 +789,7 @@ else:
 
 
 case_sensitivity_payload = {
-    "loginId": "AutotestAdmin".upper(),
+    "loginId": "ZolvQAAdmin".upper(),
     "password": "Smm@1234"
 }
 
@@ -852,7 +849,7 @@ for user in Unauthorized_payload:
         if c!=0 and c<=1:
           failed_count+=1
           error_message={"Un"}
-        #    print(failed_count,"f")
+        #   print(failed_count,"f")
         print("\033[91m❌ TEST FAILED...! : Test Case ID - 111 : Error - Unauthorized user \033[0m")
 
 
@@ -872,7 +869,7 @@ for user in Unauthorized_payload:
 invalidlogin_url = "https://qa-admin.zolv.health/api/v1/user/invalid_login"  # Example: endpoint is incorrect
 
 login_payload = {
-        "loginId":"AutotestAdmin",
+        "loginId":"ZolvQAAdmin",
         "password":"Smm@1234"
 }
 

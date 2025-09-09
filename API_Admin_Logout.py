@@ -28,7 +28,7 @@ print("\033[1;34m ADMIN LOGOUT TESTCASE! Document ID: TP_002 \033[0m")
 
 
 login_payload = {
-        "loginId":"AutotestAdmin",
+        "loginId":"ZolvQAAdmin",
         "password":"Smm@1234"
 }
 
@@ -74,7 +74,7 @@ else:
 
 # print("\033[1;34m LOGOUT AGAIN WITH USED TOKEN !\033[0m")
 user = {
-    "loginId":"AutotestAdmin",
+    "loginId":"ZolvQAAdmin",
     "password":"Smm@1234"
 }
 
@@ -138,7 +138,7 @@ invalid_token = "23434=rr=..#//.....-invalid-token"  # Invalid format example
 # Prepare headers dictionary
 headers2 = {}
 login_payload = {
-        "loginId":"AutotestAdmin",
+        "loginId":"ZolvQAAdmin",
         "password":"Smm@1234"
 }
 
@@ -599,7 +599,7 @@ else:
 
 
 logins = {
-    "loginId": "AutotestAdmin",
+    "loginId": "ZolvQAAdmin",
     "password": "Smm@1234"
 }
 

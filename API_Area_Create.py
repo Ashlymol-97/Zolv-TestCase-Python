@@ -37,7 +37,7 @@ response_login = requests.post(login_url,json=login_payload)
 if response_login.status_code != 200:
     failed_count+=1
     # print(f"\033[91m❌ Login failed with status code {response_login.text}\033[0m")
-    print(f"\033[91m❌  Test Case ID - 001 : Login        : TEST FAILED...! :  Error - Invalid Credentials \033[0m") # login failed so test passed
+    print(f"\033[91m❌  Test Case ID - 001 : Login                     : TEST FAILED...! :  Error - Invalid Credentials \033[0m") # login failed so test passed
 else:
     response_json = response_login.json()
     names=response_json.get('name')
@@ -51,7 +51,7 @@ else:
     }
     # print(f"\033[91m✅ Login successful! Welcome, {loginId} | Name: {name} | Status: {response_login.status_code}\033[0m",{"loginId":loginId,"password":pwd})
     # print("Response JSON : ",json.dumps(response_json,indent=4))
-    print(f"\033[92m✅ Test Case ID - 001 : Login          : TEST PASSED...! \033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
+    print(f"\033[92m✅ Test Case ID - 001 : Login                       : TEST PASSED...! \033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
 
 
 
@@ -145,7 +145,7 @@ def valid_test_case(valid_name, code, areatype, parent_id, building_id, floor_id
 
         if response.status_code == 200:
             create_json = response.json()
-            print(f"\033[92m✅ Test Case ID - 00{test_case_id} : Valid value                 : TEST PASSED...! \033[0m ")
+            print(f"\033[92m✅ Test Case ID - 00{test_case_id} : Valid value                       : TEST PASSED...! \033[0m ")
             # print(response.text, valid_name)
             area_id = create_json.get('id')
             if area_id:
@@ -157,7 +157,7 @@ def valid_test_case(valid_name, code, areatype, parent_id, building_id, floor_id
                     del_response.text
                     # print("🗑️ Area Deleted")
         else:
-            print(f"\033[91m❌ Test Case ID - 00{test_case_id} : Valid value                  : TEST FAILED...!  : : Invalid data or missing fields \033[0m {response.text} {valid_name}")
+            print(f"\033[91m❌ Test Case ID - 00{test_case_id} : Valid value                       : TEST FAILED...!  : : Invalid data or missing fields \033[0m {response.text} {valid_name}")
 
 
 valid_test_case(
@@ -236,7 +236,7 @@ for test,description in test_cases:
 
         if response.status_code == 200:
             create_json = response.json()
-            print(f"\033[91m❌ Test Case ID - 00{test_case_id} : {description}                  :   TEST FAILED...!   : Invalid data or missing fields \033[0m ")
+            print(f"\033[91m❌ Test Case ID - 00{test_case_id} : {description}                     :   TEST FAILED...!   : Invalid data or missing fields \033[0m ")
             # print(response.text, test)
 
             area_id = create_json.get('id')
@@ -249,7 +249,7 @@ for test,description in test_cases:
                     del_response.text
                     # print("🗑️ Area Deleted")
         else:
-            print(f"\033[92m✅ Test Case ID - 00{test_case_id} : {description}                 : TEST PASSED...! \033[0m ")
+            print(f"\033[92m✅ Test Case ID - 00{test_case_id} : {description}                     : TEST PASSED...! \033[0m ")
             # print(response.text, test)
 
     common_test_cases(

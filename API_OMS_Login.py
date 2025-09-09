@@ -171,7 +171,7 @@ stored_password = "Smm@1234"
 admin_url = "https://qa-admin.zolv.health/api/v1/user/login"
 
 # 🔐 Admin login
-admin_login = requests.post(admin_url, json={"loginId": "AutotestAdmin", "password": "Smm@1234"})
+admin_login = requests.post(admin_url, json={"loginId": "ZolvQAAdmin", "password": "Smm@1234"})
 
 if admin_login.status_code == 200:
     admin_json = admin_login.json()
@@ -248,8 +248,7 @@ else:
 
 
 
-# # 5 :  Login with Deleted User Credentials : 
-
+# # 5 :  Login with Deleted User Credentials :  DOUBT
 
 
 # print("\033[1;34m LOGIN DELETED USER TESTCASE!\033[0m")
@@ -258,7 +257,7 @@ else:
 admin_url = "https://qa-admin.zolv.health/api/v1/user/login"
 admin_logout = "https://qa-admin.zolv.health/api/v1/user/logout"
 
-admin_login = requests.post(admin_url, json={"loginId": "AutotestAdmin", "password": "Smm@1234"})
+admin_login = requests.post(admin_url, json={"loginId": "ZolvQAAdmin", "password": "Smm@1234"})
 if admin_login.status_code == 200:
     admin_json = admin_login.json()
     admin_token = admin_json['token']['token']
@@ -303,7 +302,7 @@ if admin_login.status_code == 200:
     response_create=requests.post(create_user_url,json=create_user_payload,headers=headers_admin)
     if response_create.status_code != 201:
     
-        print("Failed user creation...",response_create.text)
+        # print("Failed user creation...")
         # print(response_create.text,"................")
         response_create.status_code
     else:
@@ -350,7 +349,7 @@ if admin_login.status_code == 200:
         # ----------------------
         # Step 3: Admin login
         # ----------------------
-        admin_login = requests.post(admin_url, json={"loginId": "AutotestAdmin", "password": "Smm@1234"})
+        admin_login = requests.post(admin_url, json={"loginId": "ZolvQAAdmin", "password": "Smm@1234"})
         if admin_login.status_code == 200:
             admin_json = admin_login.json()
             admin_token = admin_json['token']['token']
