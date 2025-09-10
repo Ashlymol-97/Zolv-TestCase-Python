@@ -236,9 +236,9 @@ for test,description in test_cases:
 
         if response.status_code == 200:
             create_json = response.json()
-            print(f"\033[91m❌ Test Case ID - 00{test_case_id} : {description}             :            TEST FAILED...! : Invalid data or missing fields \033[0m ")
-            print(response.text, test)
-            print(response.status_code, test)
+            print(f"\033[91m❌ Test Case ID - 00{test_case_id} : {description}             :           TEST FAILED...! : Invalid data or missing fields \033[0m ")
+            # print(response.text, test)
+            print(response.status_code)
 
             area_id = create_json.get('id')
             if area_id:
@@ -250,9 +250,9 @@ for test,description in test_cases:
                     del_response.text
                     # print("🗑️ Area Deleted")
         else:
-            print(f"\033[92m✅ Test Case ID - 00{test_case_id} : {description}           :             TEST PASSED...! \033[0m ")
-            print(response.text, test)
-            print(response.status_code, test)
+            print(f"\033[92m✅ Test Case ID - 00{test_case_id} : {description}           :            TEST PASSED...! \033[0m ")
+            # print(response.text, test)
+            print(response.status_code)
 
 
     common_test_cases(
