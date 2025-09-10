@@ -86,9 +86,6 @@ else:
 
 
 
-
-
-
 def to_bool(value):
     """Converts value into a strict boolean True/False."""
     if isinstance(value, bool):   # Already a boolean
@@ -102,9 +99,12 @@ def to_bool(value):
 
 
 
+
+
 print("\n")
 print("\033[1;34m ADMIN AREA CREATION TESTCASE! Document ID: TP_002\033[0m")
 
+print("\033[1;34m  Area Creation with Name Field ! Document ID: TP_002\033[0m")
 
 # 2 : Create : Area : Valid name Field :
 
@@ -145,7 +145,7 @@ def valid_test_case(valid_name, code, areatype, parent_id, building_id, floor_id
 
         if response.status_code == 200:
             create_json = response.json()
-            print(f"\033[92m✅ Test Case ID - 00{test_case_id} : Valid value                       : TEST PASSED...! \033[0m ")
+            print(f"\033[92m✅ Test Case ID - 00{test_case_id} : Valid value        :        TEST PASSED...! \033[0m ")
             # print(response.text, valid_name)
             area_id = create_json.get('id')
             if area_id:
@@ -157,7 +157,7 @@ def valid_test_case(valid_name, code, areatype, parent_id, building_id, floor_id
                     del_response.text
                     # print("🗑️ Area Deleted")
         else:
-            print(f"\033[91m❌ Test Case ID - 00{test_case_id} : Valid value                       : TEST FAILED...!  : : Invalid data or missing fields \033[0m {response.text} {valid_name}")
+            print(f"\033[91m❌ Test Case ID - 00{test_case_id} : Valid value        :       TEST FAILED...!  : : Invalid data or missing fields \033[0m {response.text} {valid_name}")
 
 
 valid_test_case(
@@ -236,8 +236,9 @@ for test,description in test_cases:
 
         if response.status_code == 200:
             create_json = response.json()
-            print(f"\033[91m❌ Test Case ID - 00{test_case_id} : {description}                     :   TEST FAILED...!   : Invalid data or missing fields \033[0m ")
-            # print(response.text, test)
+            print(f"\033[91m❌ Test Case ID - 00{test_case_id} : {description}             :            TEST FAILED...! : Invalid data or missing fields \033[0m ")
+            print(response.text, test)
+            print(response.status_code, test)
 
             area_id = create_json.get('id')
             if area_id:
@@ -249,8 +250,10 @@ for test,description in test_cases:
                     del_response.text
                     # print("🗑️ Area Deleted")
         else:
-            print(f"\033[92m✅ Test Case ID - 00{test_case_id} : {description}                     : TEST PASSED...! \033[0m ")
-            # print(response.text, test)
+            print(f"\033[92m✅ Test Case ID - 00{test_case_id} : {description}           :             TEST PASSED...! \033[0m ")
+            print(response.text, test)
+            print(response.status_code, test)
+
 
     common_test_cases(
         test, 33, "parent", "", "68709372293ae6389032a058",
@@ -273,6 +276,7 @@ for test,description in test_cases:
  #******************************************************** Create Area : code ************************************************
 
 
+# print("\033[1;34m  Area Creation with Code Field ! Document ID: TP_002\033[0m")
 
 
 # 4 : Create : Area : Valid Code Field :
@@ -296,22 +300,6 @@ valid_test_case(
 # 5  : Create Area : code with invalid input : 
 
 test_case_id=15
-
-# invalid_code_values = [
-#         "abc",                                # String                             Test Case ID - 016
-#         "@#$%",                               # Special characters                 Test Case ID - 017
-#         None,                                 # Null                               Test Case ID - 018
-#         "",                                   # Empty                              Test Case ID - 019
-#         "   ",                                # Space                              Test Case ID - 020
-#         -7,                                   # Negative value                     Test Case ID - 021
-#         123.456,                              # Decimal value                      Test Case ID - 022
-#         0,                                    # Zero value                         Test Case ID - 023  
-#         886666666666666660000009999*1000,      # Large Number                      Test Case ID - 024
-#         12e34,                                # Invalid format                     Test Case ID - 025
-#         True,                                 # Boolean                            Test Case ID - 026
-#         "' OR '1'='1" ,                       # SQL Injection                      Test Case ID - 027
-#         5                                    # duplicates                          Test Case ID - 028
-#     ]
 
 
 
@@ -355,13 +343,14 @@ for invalid_code,descriptions  in invalid_code_values:
 
 
 # 6 : Create area with valid area type :  Parent  :
+print("\033[1;34m  Area Creation with Area Type Field ! Document ID: TP_002\033[0m")
 
 
 test_case_id=29
 valid_area_type="parent"
 
 valid_test_case(
-    "Invalid areatype", 45, valid_area_type, "", "68709372293ae6389032a058",
+    "areatype", 45, valid_area_type, "", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
     "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
@@ -377,6 +366,125 @@ valid_test_case(
 
 
 
+test_case_id=30
+valid_area_type="child"
+
+valid_test_case(
+    "areatype", 47, valid_area_type, "68709372293ae6389032a05e", "68709372293ae6389032a058",
+    "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
+    "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+    "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+    base_url, company_id, headers
+)
+
+
+
+
+
+# 8 : Create area with invalid area type : 
+
+test_case_id=30
+
+for test,description in test_cases:
+    test_case_id += 1
+    common_test_cases(
+            "AreaType", 53, test, "", "68709372293ae6389032a058",
+            "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
+            "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+            "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+            base_url, company_id, headers,description 
+    )
+
+
+
+
+
+
+
+# ********************************************************Create Area : Building ID *******************************************************************
+
+
+
+
+
+print("\033[1;34m  Area Creation with Building ID Field ! Document ID: TP_002\033[0m")
+
+# 9 : Create area with valid Building Id : 
+
+test_case_id=43
+valid_Building_id="68709372293ae6389032a058"
+
+valid_test_case(
+    "Buildtest", 470,"parent","", valid_Building_id,
+    "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
+    "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+    "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+    base_url, company_id, headers
+)
+
+
+
+
+
+
+
+# 10 : Create area with invalid Building Id : 
+
+test_cases = [
+    ("68709372293ae6389032a057", "Invalid Building ID"),    # Test Case ID - 044
+    (22, "Integer Value"),                                  # Test Case ID - 045
+    ("@%&#+-+=54a%", "Special Characters"),                 # Test Case ID - 046
+    (None, "Null"),                                         # Test Case ID - 047
+    (True, "Boolean"),                                      # Test Case ID - 048
+    ("  AreaStart", "Leading Space"),                       # Test Case ID - 049
+    ("AreaEnd  ", "Trailing Space"),                        # Test Case ID - 050
+    ("", "Empty String"),                                   # Test Case ID - 051
+    ("   ", "Only Spaces"),                                 # Test Case ID - 052
+    ("用户名😊", "Emoji / Unicode"),                        # Test Case ID - 053
+    ("' OR '1'='1", "SQL Injection Attempt"),               # Test Case ID - 054
+    ( "Areanametest".upper(), "Case Sensitivity"),           # Test Case ID - 055
+]
+
+test_case_id=43
+
+for test,description in test_cases:
+    test_case_id += 1
+    common_test_cases(
+            "Buildtest", 536,"parent","", test,
+            "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
+            "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+            "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+            base_url, company_id, headers,description 
+    )
+
+
+
+
+
+
+
+
+
+# ********************************************************Create Area : Floor ID *******************************************************************
+
+
+
+
+
+print("\033[1;34m  Area Creation with Floor ID Field ! Document ID: TP_002\033[0m")
+
+# 11 : Create area with valid Floor Id : 
+
+test_case_id=56
+valid_Floor_id="68709372293ae6389032a05a"
+
+valid_test_case(
+    "Buildtest", 470,"parent","", "68709372293ae6389032a058",
+    valid_Floor_id,to_bool(True), "68709372293ae6389032a05b",
+    "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+    "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+    base_url, company_id, headers
+)
 
 
 
@@ -389,7 +497,165 @@ valid_test_case(
 
 
 
+# 12 : Create area with invalid Floor Id : 
+
+test_cases = [
+    ("68709372293ae6389032abb", "Invalid Floor ID"),       # Test Case ID - 056
+    (22, "Integer Value"),                                  # Test Case ID - 057
+    ("@%&#+-+=54a%", "Special Characters"),                 # Test Case ID - 058
+    (None, "Null"),                                         # Test Case ID - 059
+    (True, "Boolean"),                                      # Test Case ID - 060
+    ("  AreaStart", "Leading Space"),                       # Test Case ID - 061
+    ("AreaEnd  ", "Trailing Space"),                        # Test Case ID - 062
+    ("", "Empty String"),                                   # Test Case ID - 063
+    ("   ", "Only Spaces"),                                 # Test Case ID - 064
+    ("用户名😊", "Emoji / Unicode"),                        # Test Case ID - 065
+    ("' OR '1'='1", "SQL Injection Attempt"),               # Test Case ID - 066
+    ( "Areanametest".upper(), "Case Sensitivity"),           # Test Case ID - 067
+]
+
+test_case_id=56
+
+for test,description in test_cases:
+    test_case_id += 1
+    common_test_cases(
+            "Buildtest", 536,"parent","","68709372293ae6389032a058" ,
+            test,to_bool(True), "68709372293ae6389032a05b",
+            "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+            "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+            base_url, company_id, headers,description 
+    )
 
 
 
 
+
+
+
+
+
+
+# ********************************************************Create Area : Is active Field *******************************************************************
+
+
+
+
+
+print("\033[1;34m  Area Creation with  Is Active Field ! Document ID: TP_002\033[0m")
+
+# 13 : Create area with valid  Is Active  : 
+
+test_case_id=69
+valid_isactive=to_bool(True)
+
+valid_test_case(
+    "Buildtest", 490,"parent","", "68709372293ae6389032a058",
+    "68709372293ae6389032a05a",valid_isactive, "68709372293ae6389032a05b",
+    "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+    "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+    base_url, company_id, headers
+)
+
+
+
+
+
+# 14 : Create area with invalid Is Active  : 
+
+test_case = [
+    (27, "Integer Values"),                                  # Test Case ID - 070
+    ("@%&#+-+=54a%", "Special Characters"),                 # Test Case ID - 071
+    (None, "Null"),                                         # Test Case ID - 072
+    (True, "Boolean"),                                      # Test Case ID - 073
+    ("  AreaStart", "Leading Space"),                       # Test Case ID - 074
+    ("AreaEnd  ", "Trailing Space"),                        # Test Case ID - 075
+    ("", "Empty String"),                                   # Test Case ID - 076
+    ("   ", "Only Spaces"),                                 # Test Case ID - 077
+    ("用户名😊", "Emoji / Unicode"),                        # Test Case ID - 078
+    ("' OR '1'='1", "SQL Injection Attempt"),               # Test Case ID - 079
+    ( "Areanametest".upper(), "Case Sensitivity"),          # Test Case ID - 080
+]
+
+test_case_id=69
+
+for t,description in test_case:
+    test_case_id += 1
+    test=t
+    common_test_cases(
+            "Isactive", 536,"parent","","68709372293ae6389032a058" ,
+            "68709372293ae6389032a05a",test, "68709372293ae6389032a05b",
+            "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+            "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+            base_url, company_id, headers,description 
+    )
+
+
+
+
+
+# ********************************************************Create Area : Module Group ID *******************************************************************
+
+
+
+
+
+print("\033[1;34m  Area Creation with   Module Group ID  Field ! Document ID: TP_002\033[0m")
+
+# 15 : Create area with valid  Module Group ID  : 
+
+test_case_id=81
+valid_module_group_id="68709372293ae6389032a05b"
+
+valid_test_case(
+    "Buildtest", 490,"parent","", "68709372293ae6389032a058",
+    "68709372293ae6389032a05a",to_bool(True), valid_module_group_id,
+    "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+    "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+    base_url, company_id, headers
+)
+
+
+
+
+
+
+
+
+# 16 : Create area with invalid  Module Group ID  : 
+
+
+
+test_case = [
+    (27, "Integer Values"),                                  # Test Case ID - 082
+    ("@%&#+-+=54a%", "Special Characters"),                 # Test Case ID - 083
+    (None, "Null"),                                         # Test Case ID - 084
+    (True, "Boolean"),                                      # Test Case ID - 085
+    ("  AreaStart", "Leading Space"),                       # Test Case ID - 086
+    ("AreaEnd  ", "Trailing Space"),                        # Test Case ID - 087
+    ("", "Empty String"),                                   # Test Case ID - 088
+    ("   ", "Only Spaces"),                                 # Test Case ID - 089
+    ("用户名😊", "Emoji / Unicode"),                        # Test Case ID - 090
+    ("' OR '1'='1", "SQL Injection Attempt"),               # Test Case ID - 100
+    ( "Areanametest".upper(), "Case Sensitivity"),          # Test Case ID - 101
+]
+
+test_case_id=81
+
+for t,description in test_case:
+    test_case_id += 1
+    test=t
+    common_test_cases(
+            "Isactive", 536,"parent","","68709372293ae6389032a058" ,
+            "68709372293ae6389032a05a",to_bool(True),test,
+            "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+            "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+            base_url, company_id, headers,description 
+    )
+
+
+
+
+
+
+
+17 : 
