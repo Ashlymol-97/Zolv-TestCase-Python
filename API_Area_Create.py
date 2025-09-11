@@ -1081,7 +1081,7 @@ valid_Delivery_mode2_enabled=to_bool(True)
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
-    "paymentGateway",to_bool(True),"payOnDelivery",valid_Payment_mode2_enabled, "roomCredit",to_bool(True),
+    "paymentGateway",to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
     "roomDelivery",to_bool(True), "takeAway",valid_Delivery_mode2_enabled, "dineIn",to_bool(True),to_bool(False),
     base_url, company_id, headers
 )
@@ -1103,7 +1103,7 @@ for t,description in test_case:
     common_test_cases(
             "Paymentmode", 636,"parent","","68709372293ae6389032a058" ,
             "68709372293ae6389032a05a",to_bool(True),"68709372293ae6389032a05b",
-            "paymentGateway",to_bool(True),"payOnDelivery",to_bool(test), "roomCredit",to_bool(True),
+            "paymentGateway",to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
             "roomDelivery",to_bool(True), "takeAway",to_bool(test), "dineIn",to_bool(True),to_bool(False),
             base_url, company_id, headers,description 
     )
@@ -1176,8 +1176,8 @@ valid_Delivery_mode3_enabled=to_bool(True)
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
-    "paymentGateway",to_bool(True),"payOnDelivery",valid_Payment_mode2_enabled, "roomCredit",to_bool(True),
-    "roomDelivery",to_bool(True), "takeAway",valid_Delivery_mode2_enabled, "dineIn",valid_Delivery_mode3_enabled,to_bool(False),
+    "paymentGateway",to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+    "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",valid_Delivery_mode3_enabled,to_bool(False),
     base_url, company_id, headers
 )
 
@@ -1198,8 +1198,8 @@ for t,description in test_case:
     common_test_cases(
             "Paymentmode", 636,"parent","","68709372293ae6389032a058" ,
             "68709372293ae6389032a05a",to_bool(True),"68709372293ae6389032a05b",
-            "paymentGateway",to_bool(True),"payOnDelivery",to_bool(test), "roomCredit",to_bool(True),
-            "roomDelivery",to_bool(True), "takeAway",to_bool(test), "dineIn",to_bool(test),to_bool(False),
+            "paymentGateway",to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+            "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(test),to_bool(False),
             base_url, company_id, headers,description 
     )
 
@@ -1211,3 +1211,46 @@ for t,description in test_case:
 
 
  # ********************************************************Create Area : Preorder  status *******************************************************************
+
+
+
+
+
+
+
+# 31 : Create area with valid Preorder status  : 
+
+print("\033[1;34m  Area Creation with Preorder status Field  \033[0m")
+
+test_case_id=248
+valid_Preorder=to_bool(False)
+valid_test_case(
+    "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
+    "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
+    "paymentGateway",to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+    "roomDelivery",to_bool(True),"takeAway",to_bool(True), "dineIn",to_bool(True),valid_Preorder,
+    base_url, company_id, headers
+)
+
+
+
+
+# 32 : Create area with invalid Preorder status Field : 
+
+
+
+
+
+test_case_id=248
+
+for t,description in test_case:
+    test_case_id += 1
+    test=t
+    common_test_cases(
+            "Paymentmode", 636,"parent","","68709372293ae6389032a058" ,
+            "68709372293ae6389032a05a",to_bool(True),"68709372293ae6389032a05b",
+            "paymentGateway",to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+            "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(test),
+            base_url, company_id, headers,description 
+    )
+
