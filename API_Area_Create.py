@@ -109,7 +109,7 @@ print("\033[1;34m  Area Creation with Name Field ! Document ID: TP_002\033[0m")
 # 2 : Create : Area : Valid name Field :
 
 test_case_id=2
-valid_name="Areanametest"
+valid_value="Areanametest"
 def valid_test_case(valid_name, code, areatype, parent_id, building_id, floor_id,isactive,
                           modulegroup_id, paymentmode_name1,paymentMode1,paymentmode_name2,paymentMode2,paymentmode_name3,paymentMode3,
                           delivery_mode_name1,delivery_mode1, delivery_mode_name2,delivery_mode2,
@@ -146,8 +146,8 @@ def valid_test_case(valid_name, code, areatype, parent_id, building_id, floor_id
         if response.status_code == 200:
             create_json = response.json()
             print(f"\033[92m✅ Test Case ID - 00{test_case_id} : Valid value        :        TEST PASSED...! \033[0m ")
-            # print(response.text, valid_name)
-            # print(response.status_code, valid_name)
+            # print(response.text, valid_value)
+            # print(response.status_code)
             area_id = create_json.get('id')
             if area_id:
                 del_response = requests.patch(
@@ -159,10 +159,11 @@ def valid_test_case(valid_name, code, areatype, parent_id, building_id, floor_id
                     # print("🗑️ Area Deleted")
         else:
             print(f"\033[91m❌ Test Case ID - 00{test_case_id} : Valid value        :       TEST FAILED...!  : : Invalid data or missing fields \033[0m {response.text} {valid_name}")
+            # print(response.status_code, valid_value)
 
 
 valid_test_case(
-    valid_name, 33, "parent", "", "68709372293ae6389032a058",
+    valid_value, 33, "parent", "", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
     "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
@@ -349,10 +350,10 @@ print("\033[1;34m  Area Creation with Area Type Field ! Document ID: TP_002\033[
 
 
 test_case_id=30
-valid_area_type="parent"
+valid_value="parent"
 
 valid_test_case(
-    "areatype", 45, valid_area_type, "", "68709372293ae6389032a058",
+    "areatype", 45, valid_value, "", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
     "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
@@ -369,10 +370,10 @@ valid_test_case(
 
 
 test_case_id=31
-valid_area_type="child"
+valid_value="child"
 
 valid_test_case(
-    "areatype", 47, valid_area_type, "68709372293ae6389032a05e", "68709372293ae6389032a058",
+    "areatype", 47, valid_value, "68709372293ae6389032a05e", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
     "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
@@ -414,10 +415,10 @@ print("\033[1;34m  Area Creation with Building ID Field ! Document ID: TP_002\03
 # 9 : Create area with valid Building Id : 
 
 test_case_id=45
-valid_Building_id="68709372293ae6389032a058"
+valid_value="68709372293ae6389032a058"
 
 valid_test_case(
-    "Buildtest", 470,"parent","", valid_Building_id,
+    "Buildtest", 470,"parent","", valid_value,
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
     "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
@@ -478,11 +479,11 @@ print("\033[1;34m  Area Creation with Floor ID Field ! Document ID: TP_002\033[0
 # 11 : Create area with valid Floor Id : 
 
 test_case_id=58
-valid_Floor_id="68709372293ae6389032a05a"
+valid_value="68709372293ae6389032a05a"
 
 valid_test_case(
     "Buildtest", 470,"parent","", "68709372293ae6389032a058",
-    valid_Floor_id,to_bool(True), "68709372293ae6389032a05b",
+    valid_value,to_bool(True), "68709372293ae6389032a05b",
     "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
     base_url, company_id, headers
@@ -548,11 +549,11 @@ print("\033[38;5;208mm  Area Creation with  Is Active Field ! Document ID: TP_00
 # 13 : Create area with valid  Is Active  : 
 
 test_case_id=71
-valid_isactive=to_bool(True)
+valid_value=to_bool(True)
 
 valid_test_case(
     "Buildtest", 490,"parent","", "68709372293ae6389032a058",
-    "68709372293ae6389032a05a",valid_isactive, "68709372293ae6389032a05b",
+    "68709372293ae6389032a05a",valid_value, "68709372293ae6389032a05b",
     "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
     base_url, company_id, headers
@@ -606,11 +607,11 @@ print("\033[1;34m  Area Creation with   Module Group ID  Field ! Document ID: TP
 # 15 : Create area with valid  Module Group ID  : 
 
 test_case_id=83
-valid_module_group_id="68709372293ae6389032a05b"
+valid_value="68709372293ae6389032a05b"
 
 valid_test_case(
     "Buildtest", 490,"parent","", "68709372293ae6389032a058",
-    "68709372293ae6389032a05a",to_bool(True), valid_module_group_id,
+    "68709372293ae6389032a05a",to_bool(True), valid_value,
     "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
     base_url, company_id, headers
@@ -672,11 +673,11 @@ print("\033[1;34m  Area Creation with   Payment Mode 1 Name Field  \033[0m")
 # 17 : Create area with valid Payment Modes 1 name : 
 
 test_case_id=95
-valid_Payment_mode1="paymentGateway"
+valid_value="paymentGateway"
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
-    valid_Payment_mode1, to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+    valid_value, to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
     base_url, company_id, headers
 )
@@ -714,11 +715,11 @@ for t,description in test_case:
 print("\033[1;34m  Area Creation with   Payment Mode 1 Enabled Field  \033[0m")
 
 test_case_id=118
-valid_Payment_mode1_enabled=to_bool(True)
+valid_value=to_bool(True)
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
-    "paymentGateway",valid_Payment_mode1_enabled,"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+    "paymentGateway",valid_value,"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
     base_url, company_id, headers
 )
@@ -754,11 +755,11 @@ for t,description in test_case:
 print("\033[1;34m  Area Creation with   Payment Mode 2 Name Field \033[0m")
 
 test_case_id=130
-valid_Payment_mode2="payOnDelivery"
+valid_value="payOnDelivery"
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
-    "paymentGateway", to_bool(True),valid_Payment_mode2,to_bool(True), "roomCredit",to_bool(True),
+    "paymentGateway", to_bool(True),valid_value,to_bool(True), "roomCredit",to_bool(True),
     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
     base_url, company_id, headers
 )
@@ -800,11 +801,11 @@ for t,description in test_case:
 print("\033[1;34m  Area Creation with   Payment Mode 2 Enabled Field  \033[0m")
 
 test_case_id=142
-valid_Payment_mode2_enabled=to_bool(True)
+valid_value=to_bool(True)
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
-    "paymentGateway",to_bool(True),"payOnDelivery",valid_Payment_mode2_enabled, "roomCredit",to_bool(True),
+    "paymentGateway",to_bool(True),"payOnDelivery",valid_value, "roomCredit",to_bool(True),
     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
     base_url, company_id, headers
 )
@@ -844,11 +845,11 @@ for t,description in test_case:
 print("\033[1;34m  Area Creation with   Payment Mode 3 Name Field \033[0m")
 
 test_case_id=154
-valid_Payment_mode3="roomCredit"
+valid_value="roomCredit"
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
-    "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), valid_Payment_mode3,to_bool(True),
+    "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), valid_value,to_bool(True),
     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
     base_url, company_id, headers
 )
@@ -886,11 +887,11 @@ for t,description in test_case:
 print("\033[1;34m  Area Creation with   Payment Mode 3 Enabled Field  \033[0m")
 
 test_case_id=166
-valid_Payment_mode3_enabled=to_bool(True)
+valid_value=to_bool(True)
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
-    "paymentGateway",valid_Payment_mode1_enabled,"payOnDelivery",to_bool(True), "roomCredit",valid_Payment_mode3_enabled,
+    "paymentGateway",to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",valid_value,
     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
     base_url, company_id, headers
 )
@@ -912,7 +913,7 @@ for t,description in test_case:
     common_test_cases(
             "Paymentmode", 636,"parent","","68709372293ae6389032a058" ,
             "68709372293ae6389032a05a",to_bool(True),"68709372293ae6389032a05b",
-            "paymentGateway",to_bool(test),"payOnDelivery",to_bool(True), "roomCredit",to_bool(test),
+            "paymentGateway",to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(test),
             "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
             base_url, company_id, headers,description 
     )
@@ -940,12 +941,12 @@ print("\033[1;34m  Area Creation with   Delivery Mode 1 Name Field  \033[0m")
 
 
 test_case_id=178
-valid_Delivery_mode1="roomDelivery"
+valid_value="roomDelivery"
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
     "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
-    valid_Delivery_mode1,to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+    valid_value,to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
     base_url, company_id, headers
 )
 
@@ -981,12 +982,12 @@ for t,description in test_case:
 print("\033[1;34m  Area Creation with   Delivery Mode 1 Enabled Field  \033[0m")
 
 test_case_id=190
-valid_delivery_mode1_enabled=to_bool(True)
+valid_value=to_bool(True)
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
     "paymentGateway",to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
-    "roomDelivery",valid_delivery_mode1_enabled,"takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+    "roomDelivery",valid_value,"takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
     base_url, company_id, headers
 )
 
@@ -1031,12 +1032,12 @@ for t,description in test_case:
 print("\033[1;34m  Area Creation with   Delivery Mode 2 Name Field \033[0m")
 
 test_case_id=201
-valid_Delivery_mode2="takeAway"
+valid_value="takeAway"
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
     "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
-    "roomDelivery",to_bool(True),valid_Delivery_mode2,to_bool(True), "dineIn",to_bool(True),to_bool(False),
+    "roomDelivery",to_bool(True),valid_value,to_bool(True), "dineIn",to_bool(True),to_bool(False),
     base_url, company_id, headers
 )
 
@@ -1077,12 +1078,12 @@ for t,description in test_case:
 print("\033[1;34m  Area Creation with   Delivery Mode 2 Enabled Field  \033[0m")
 
 test_case_id=213
-valid_Delivery_mode2_enabled=to_bool(True)
+valid_value=to_bool(True)
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
     "paymentGateway",to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
-    "roomDelivery",to_bool(True), "takeAway",valid_Delivery_mode2_enabled, "dineIn",to_bool(True),to_bool(False),
+    "roomDelivery",to_bool(True), "takeAway",valid_value, "dineIn",to_bool(True),to_bool(False),
     base_url, company_id, headers
 )
 
@@ -1126,12 +1127,12 @@ for t,description in test_case:
 print("\033[1;34m  Area Creation with   Delivery Mode 3  Name Field \033[0m")
 
 test_case_id=224
-valid_Delivery_mode3="dineIn"
+valid_value="dineIn"
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
     "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
-    "roomDelivery",to_bool(True),"takeAway",to_bool(True),valid_Delivery_mode3,to_bool(True),to_bool(False),
+    "roomDelivery",to_bool(True),"takeAway",to_bool(True),valid_value,to_bool(True),to_bool(False),
     base_url, company_id, headers
 )
 
@@ -1172,12 +1173,12 @@ for t,description in test_case:
 print("\033[1;34m  Area Creation with   Delivery Mode 3 Enabled Field  \033[0m")
 
 test_case_id=236
-valid_Delivery_mode3_enabled=to_bool(True)
+valid_value=to_bool(True)
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
     "paymentGateway",to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
-    "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",valid_Delivery_mode3_enabled,to_bool(False),
+    "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",valid_value,to_bool(False),
     base_url, company_id, headers
 )
 
@@ -1218,24 +1219,24 @@ for t,description in test_case:
 
 
 
-# 31 : Create area with valid Preorder status  : 
+# 41 : Create area with valid Preorder status  : 
 
 print("\033[1;34m  Area Creation with Preorder status Field  \033[0m")
 
 test_case_id=248
-valid_Preorder=to_bool(False)
+valid_value=to_bool(False)
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
     "paymentGateway",to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
-    "roomDelivery",to_bool(True),"takeAway",to_bool(True), "dineIn",to_bool(True),valid_Preorder,
+    "roomDelivery",to_bool(True),"takeAway",to_bool(True), "dineIn",to_bool(True),valid_value,
     base_url, company_id, headers
 )
 
 
 
 
-# 32 : Create area with invalid Preorder status Field : 
+# 42 : Create area with invalid Preorder status Field : 
 
 
 
@@ -1251,6 +1252,65 @@ for t,description in test_case:
             "68709372293ae6389032a05a",to_bool(True),"68709372293ae6389032a05b",
             "paymentGateway",to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
             "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(test),
+            base_url, company_id, headers,description 
+    )
+
+
+
+
+
+
+
+
+
+
+
+ # ********************************************************Create Area : Parent Area ID  *******************************************************************
+
+
+
+# 43 : Create area with valid Parent Area ID   :
+
+
+print("\033[1;34m  Area Creation with Parent ID Field  \033[0m")
+
+
+test_case_id=260
+valid_value="68709372293ae6389032a05e"
+
+valid_test_case(
+    "areatype", 47, "child", valid_value, "68709372293ae6389032a058",
+    "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
+    "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+    "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+    base_url, company_id, headers
+)
+
+
+
+
+
+
+
+
+
+
+# 44 : Create area with invalid ParentArea ID Field : 
+
+
+
+
+
+test_case_id=260
+
+for t,description in test_case:
+    test_case_id += 1
+    test=t
+    common_test_cases(
+            "Paymentmode", 636,"child",test,"68709372293ae6389032a058" ,
+            "68709372293ae6389032a05a",to_bool(True),"68709372293ae6389032a05b",
+            "paymentGateway",to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+            "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
             base_url, company_id, headers,description 
     )
 
