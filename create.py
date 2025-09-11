@@ -153,7 +153,6 @@ else:
 #             "' OR '1'='1",             # SQL Injection Attempt     Test Case ID - 013
 #             "Areanametest",            # Duplicate values          Test Case ID - 014
 #             "Areanametest".upper(),    # case sensitivity          Test Case ID - 015
-#             # "Areanametest".lower()
 #     ]
 #     def test_field(base_url, company_id, headers,test_cases, failed_count,test_case_id,c,field_name="name"):
         
@@ -1028,65 +1027,65 @@ print("\033[1;34m ADMIN AREA CREATION TESTCASE! Document ID: TP_002\033[0m")
 
 # # 2 : Create : Area : Valid name Field :
 
-# test_case_id=2
-# valid_name="Areanametest"
-# def valid_test_case(valid_name, code, areatype, parent_id, building_id, floor_id,isactive,
-#                           modulegroup_id, paymentmode_name1,paymentMode1,paymentmode_name2,paymentMode2,paymentmode_name3,paymentMode3,
-#                           delivery_mode_name1,delivery_mode1, delivery_mode_name2,delivery_mode2,
-#                           delivery_mode_name3,delivery_mode3,preorder, base_url, company_id, headers):
+test_case_id=2
+valid_name="Areanametest"
+def valid_test_case(valid_name, code, areatype, parent_id, building_id, floor_id,isactive,
+                          modulegroup_id, paymentmode_name1,paymentMode1,paymentmode_name2,paymentMode2,paymentmode_name3,paymentMode3,
+                          delivery_mode_name1,delivery_mode1, delivery_mode_name2,delivery_mode2,
+                          delivery_mode_name3,delivery_mode3,preorder, base_url, company_id, headers):
 
-#         common_payload = {
-#             "name": valid_name,
-#             "code": code,
-#             "areaType": areatype,
-#             "parentAreaId": parent_id, 
-#             "buildingId": building_id,
-#             "floorId": floor_id,
-#             "isActive": to_bool(isactive),   # ✅ converted boolean
-#             "moduleGroupId": modulegroup_id,
-#             "paymentModes": [
-#                 {"name": paymentmode_name1, "enabled": to_bool(paymentMode1)},
-#                 {"name": paymentmode_name2, "enabled": to_bool(paymentMode2)},
-#                 {"name": paymentmode_name3, "enabled": to_bool(paymentMode3)},
-#             ],
-#             "deliveryModes": [
-#                 {"name": delivery_mode_name1, "enabled": to_bool(delivery_mode1)},
-#                 {"name": delivery_mode_name2, "enabled": to_bool(delivery_mode2)},
-#                 {"name": delivery_mode_name3, "enabled": to_bool(delivery_mode3)},
-#             ],
-#             "preOrderStatus": to_bool(preorder)  # ✅ converted boolean
-#         }
+        common_payload = {
+            "name": valid_name,
+            "code": code,
+            "areaType": areatype,
+            "parentAreaId": parent_id, 
+            "buildingId": building_id,
+            "floorId": floor_id,
+            "isActive": to_bool(isactive),   # ✅ converted boolean
+            "moduleGroupId": modulegroup_id,
+            "paymentModes": [
+                {"name": paymentmode_name1, "enabled": to_bool(paymentMode1)},
+                {"name": paymentmode_name2, "enabled": to_bool(paymentMode2)},
+                {"name": paymentmode_name3, "enabled": to_bool(paymentMode3)},
+            ],
+            "deliveryModes": [
+                {"name": delivery_mode_name1, "enabled": to_bool(delivery_mode1)},
+                {"name": delivery_mode_name2, "enabled": to_bool(delivery_mode2)},
+                {"name": delivery_mode_name3, "enabled": to_bool(delivery_mode3)},
+            ],
+            "preOrderStatus": to_bool(preorder)  # ✅ converted boolean
+        }
 
-#         response = requests.post(
-#             base_url + f"api/v1/masters/area/web/{company_id}/create-area",
-#             json=common_payload,
-#             headers=headers
-#         )
+        response = requests.post(
+            base_url + f"api/v1/masters/area/web/{company_id}/create-area",
+            json=common_payload,
+            headers=headers
+        )
 
-#         if response.status_code == 200:
-#             create_json = response.json()
-#             print(f"\033[92m✅ Test Case ID - 00{test_case_id} : Valid value {valid_name:<25} : TEST PASSED...! \033[0m ")
-#             # print(response.text, valid_name)
-#             area_id = create_json.get('id')
-#             if area_id:
-#                 del_response = requests.patch(
-#                     base_url + f"api/v1/masters/area/web/{company_id}/delete-area/{area_id}",
-#                     headers=headers
-#                 )
-#                 if del_response.status_code == 200:
-#                     del_response.text
-#                     # print("🗑️ Area Deleted")
-#         else:
-#             print(f"\033[91m❌ Test Case ID - 00{test_case_id} : Valid value  {valid_name:<25} : TEST FAILED...!  : : Invalid data or missing fields \033[0m {response.text} {valid_name}")
+        if response.status_code == 200:
+            create_json = response.json()
+            print(f"\033[92m✅ Test Case ID - 00{test_case_id} : Valid value {valid_name:<25} : TEST PASSED...! \033[0m ")
+            # print(response.text, valid_name)
+            area_id = create_json.get('id')
+            if area_id:
+                del_response = requests.patch(
+                    base_url + f"api/v1/masters/area/web/{company_id}/delete-area/{area_id}",
+                    headers=headers
+                )
+                if del_response.status_code == 200:
+                    del_response.text
+                    # print("🗑️ Area Deleted")
+        else:
+            print(f"\033[91m❌ Test Case ID - 00{test_case_id} : Valid value  {valid_name:<25} : TEST FAILED...!  : : Invalid data or missing fields \033[0m {response.text} {valid_name}")
 
 
-# valid_test_case(
-#     valid_name, 33, "parent", "", "68709372293ae6389032a058",
-#     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
-#     "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
-#     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
-#     base_url, company_id, headers
-# )
+valid_test_case(
+    valid_name, 33, "parent", "", "68709372293ae6389032a058",
+    "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
+    "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+    "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+    base_url, company_id, headers
+)
 
 
 
@@ -1201,13 +1200,13 @@ for test,description in test_cases:
 test_case_id=15
 valid_code=37
 
-valid_test_case(
-    "Invalid code", valid_code, "parent", "", "68709372293ae6389032a058",
-    "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
-    "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
-    "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
-    base_url, company_id, headers
-)
+# # valid_test_case(
+#     "Invalid code", valid_code, "parent", "", "68709372293ae6389032a058",
+#     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
+#     "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+#     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+#     base_url, company_id, headers
+# )
 
 
 
@@ -1280,13 +1279,13 @@ for invalid_code,descriptions  in invalid_code_values:
 test_case_id=29
 valid_area_type="parent"
 
-valid_test_case(
-    "Invalid areatype", 45, valid_area_type, "", "68709372293ae6389032a058",
-    "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
-    "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
-    "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
-    base_url, company_id, headers
-)
+# valid_test_case(
+#     "Invalid areatype", 45, valid_area_type, "", "68709372293ae6389032a058",
+#     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",
+#     "paymentGateway", to_bool(True),"payOnDelivery",to_bool(True), "roomCredit",to_bool(True),
+#     "roomDelivery",to_bool(True), "takeAway",to_bool(True), "dineIn",to_bool(True),to_bool(False),
+#     base_url, company_id, headers
+# )
 
 
 
@@ -1297,6 +1296,24 @@ valid_test_case(
 
 
 
+valid_payment_modes = [
+    {"name": "paymentGateway", "enabled": to_bool(True)},
+    {"name": "payOnDelivery", "enabled": to_bool(True)},
+    {"name": "roomCredit", "enabled": to_bool(True)}
+]
+
+valid_delivery_modes = [
+    {"name": "roomDelivery", "enabled": to_bool(True)},
+    {"name": "takeAway", "enabled": to_bool(True)},
+    {"name": "dineIn", "enabled": to_bool(True)}
+]
+
+valid_test_case(
+    "Buildtest", 490, "parent", "", "68709372293ae6389032a058",
+    "68709372293ae6389032a05a", to_bool(True), "68709372293ae6389032a05b",
+    valid_payment_modes, valid_delivery_modes, to_bool(False),
+    base_url, company_id, headers
+)
 
 
 
