@@ -305,26 +305,27 @@ for test,description in test_cases:
 
 
 
-# # 4 : Update department with OMS user token : 
-# print("\033[1;34m  Department Updation with OMS USER Privilege ! Document ID: TP_002\033[0m")
-# test_case_id=14
+# 4 : Update department with OMS user token : 
+print("\033[1;34m  Department Updation with OMS USER Privilege ! Document ID: TP_002\033[0m")
+test_case_id=14
 
-# OMS_login_payload = {
-#         "loginId":"AutotestOMS",
-#         "password":"Smm@1234"
-# }
-# valid_value="Head Dep"
+OMS_login_payload = {
+        "loginId":"AutotestOMS",
+        "password":"Smm@1234"
+}
 
-# Update_name_payload={
-#     "name":valid_value,
-#     "isActive": True
-# }
-# response_OMS_login = requests.post(login_url,json=OMS_login_payload)
-# if response_OMS_login.status_code == 200:
-#     response_update_isactive=requests.put(base_url + f"api/v1/masters/department/web/{company_id}/update-department/{dep_id}",headers=headers,json=Update_name_payload)
-#     token1= response_json.get('token',{}).get('token')
-#     user_headers = {
-#         "Authorization": f"Bearer {token1}",
-#         "Content-Type": "application/json"
-#     }
-#     valid_test_case(response_update_isactive, company_id, headers, failed_count)
+valid_value="Head Dep"
+
+Update_name_payload={
+    "name":valid_value,
+    "isActive": True
+}
+response_OMS_login = requests.post(login_url,json=OMS_login_payload)
+if response_OMS_login.status_code == 200:
+    response_update_isactive=requests.put(base_url + f"api/v1/masters/department/web/{company_id}/update-department/{dep_id}",headers=headers,json=Update_name_payload)
+    token1= response_json.get('token',{}).get('token')
+    user_headers = {
+        "Authorization": f"Bearer {token1}",
+        "Content-Type": "application/json"
+    }
+    valid_test_case(response_update_isactive, company_id, headers, failed_count)

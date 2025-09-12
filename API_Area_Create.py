@@ -89,21 +89,21 @@ else:
 
 def to_bool(value):
     """Converts value into a strict boolean True/False."""
-    # if isinstance(value, bool):   # Already a boolean
-    #     return value
-    # if isinstance(value, str): 
-    #     if str in ["True","False","true","false"]:  # Strings like "true", "false", "1", "0"
-    #        return value.strip().lower() in ("true", "1", "yes", "y", "t")
+    if isinstance(value, bool):   # Already a boolean
+        return value
+    if isinstance(value, str): 
+        if str in ["True","False","true","false"]:  # Strings like "true", "false", "1", "0"
+           return value.strip().lower() in ("true", "1", "yes", "y", "t")
         
 
-    # if isinstance(value, (int, float)):  # Numbers: 1 → True, 0 → False
-    #     return value == 1
-    # return False  # Anything else defaults to False
+    if isinstance(value, (int, float)):  # Numbers: 1 → True, 0 → False
+        return value == 1
+    return False  # Anything else defaults to False
 
-    value=["True","False","true","false"]
-    if "True" or "true" or "False" or "false" in value:
-        return value
-    return False
+    # value=["True","False","true","false"]
+    # if "True" or "true" or "False" or "false" in value:
+    #     return value
+    # return False
 
 
 
@@ -163,7 +163,7 @@ def valid_test_case(valid_name, code, areatype, parent_id, building_id, floor_id
                 )
                 if del_response.status_code == 200:
                     del_response.text
-                    print("🗑️ Area Deleted")
+                    # print("🗑️ Area Deleted")
         else:
             print(f"\033[91m❌ Test Case ID - 00{test_case_id} : Valid value        :       TEST FAILED...!  : : Invalid data or missing fields \033[0m")
             # print(response.status_code, valid_data)
@@ -263,7 +263,7 @@ for test,description in test_cases:
                 )
                 if del_response.status_code == 200:
                     del_response.text
-                    print("🗑️ Area Deleted")
+                    # print("🗑️ Area Deleted")
         else:
             print(f"\033[92m✅ Test Case ID - 00{test_case_id} : {description}           :            TEST PASSED...! \033[0m ")
             # print(response.text, test)
