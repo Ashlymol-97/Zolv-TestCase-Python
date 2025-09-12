@@ -162,7 +162,7 @@ for test,description in test_cases:
              update_invalid__json = response.json()
              print(f"\033[91m❌ Test Case ID - 00{test_case_id} : {description}             :           TEST FAILED...! : Invalid data or missing fields \033[0m ")
         #      print(response.text, test)
-             print(response.status_code)
+        #      print(response.status_code)
              failed_count+=1
 
 

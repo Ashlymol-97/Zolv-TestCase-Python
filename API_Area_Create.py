@@ -153,8 +153,8 @@ def valid_test_case(valid_name, code, areatype, parent_id, building_id, floor_id
         if response.status_code == 200:
             create_json = response.json()
             print(f"\033[92m✅ Test Case ID - 00{test_case_id} : Valid value        :        TEST PASSED...! \033[0m ")
-            print(response.text)
-            print(response.status_code)
+            # print(response.text)
+            # print(response.status_code)
             area_id = create_json.get('id')
             if area_id:
                 del_response = requests.patch(
@@ -166,8 +166,8 @@ def valid_test_case(valid_name, code, areatype, parent_id, building_id, floor_id
                     print("🗑️ Area Deleted")
         else:
             print(f"\033[91m❌ Test Case ID - 00{test_case_id} : Valid value        :       TEST FAILED...!  : : Invalid data or missing fields \033[0m")
-            print(response.status_code, valid_data)
-            print(response.text,"{response.text} {valid_name}")
+            # print(response.status_code, valid_data)
+            # print(response.text,"{response.text} {valid_name}")
             failed_count+=1
 
 
@@ -250,8 +250,8 @@ for test,description in test_cases:
         if response.status_code == 200:
             create_json = response.json()
             print(f"\033[91m❌ Test Case ID - 00{test_case_id} : {description}             :           TEST FAILED...! : Invalid data or missing fields \033[0m ")
-            print(response.text, test)
-            print(response.status_code)
+            # print(response.text, test)
+            # print(response.status_code)
             failed_count+=1
 
 
@@ -266,8 +266,8 @@ for test,description in test_cases:
                     print("🗑️ Area Deleted")
         else:
             print(f"\033[92m✅ Test Case ID - 00{test_case_id} : {description}           :            TEST PASSED...! \033[0m ")
-            print(response.text, test)
-            print(response.status_code)
+            # print(response.text, test)
+            # print(response.status_code)
 
 
     common_test_cases(
