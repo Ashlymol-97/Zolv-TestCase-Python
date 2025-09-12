@@ -440,9 +440,12 @@ if admin_login.status_code == 200:
         "subscriptionEnabled": True,
         "employeeCreditApplicable": False,
         "employeeWalletApplicable": False,
+        "subscriptionGroup": "68a59e1403cfe84816ecd0ca",
         "password": "Smm@1234"
     }
-        
+
+
+
     # create_user_url = f"https://qa-admin.zolv.health/api/v1/masters/user/web/{company_id}/create-user"
     headers_admin =  {
         "Authorization": f"Bearer {admin_tokens}",
@@ -452,7 +455,7 @@ if admin_login.status_code == 200:
     response_create=requests.post(base_url + f"api/v1/masters/user/web/{company_id}/create-user",json=create_user_payload,headers=headers_admin)
     if response_create.status_code != 201:
     
-        print("Failed user creation...")
+        # print("Failed user creation...")
         print(response_create.text,"................")
         response_create.status_code
     else:
