@@ -155,6 +155,7 @@ else:
 
 
 
+
 # 4 : Get Department list with Unexpected Parameters :
 
 print("\033[1;34m GET DEPARTMENT LIST with Invalid Parameters \033[0m")
@@ -234,6 +235,7 @@ else:
 
 
 
+
 # 6 : Get Department with Empty token : 
 
 
@@ -254,9 +256,9 @@ if invalid_empty_login.status_code == 200:
     # print("Response JSON : ",json.dumps(resp_json,indent=4))
     response_empty_token = requests.get(Get_url,header_dep7)
     if response_empty_token.status_code == 200:
+        failed_count+=1
         print("\033[1;91m❌ TEST FAILED...! : Test Case ID -  006  : Empty Token \033[0m")
     else:
-        failed_count+=1
         print("\033[1;92m✅ TEST PASSED...! : Test Case ID - 006 \033[0m")
 
 else:

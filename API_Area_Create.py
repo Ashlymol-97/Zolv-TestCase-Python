@@ -614,7 +614,7 @@ for t,description in test_case:
 
 
 
-
+# doubt : boolean
 print("\033[1;34m  Area Creation with   Module Group ID  Field ! Document ID: TP_002\033[0m")
 
 # 15 : Create area with valid  Module Group ID  : 
@@ -729,6 +729,7 @@ print("\033[1;34m  Area Creation with   Payment Mode 1 Enabled Field  \033[0m")
 
 test_case_id=118
 valid_data=to_bool(True)
+
 valid_test_case(
     "Paymentmode", 490,"parent","", "68709372293ae6389032a058",
     "68709372293ae6389032a05a",to_bool(True), "68709372293ae6389032a05b",

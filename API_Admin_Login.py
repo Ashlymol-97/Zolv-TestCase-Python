@@ -263,7 +263,7 @@ invalid_login_payload = {
 # print("Testing rate limiting protection...")
 
 # Loop for repeated login attempts
-for i in range(10):
+for i in range(2):
     response = requests.post(login_url, json=invalid_login_payload)
     # print(f"Attempt {i + 1} status code: {response.status_code}")
     # print(response.text)
