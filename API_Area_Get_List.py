@@ -98,7 +98,7 @@ else:
 
     print("\033[1;34m Get Area List Invalid API end point \033[0m")
 
-    invalid_api_url = base_url + f"api/v1/masters/area/web/{invalid_company_id}/get-area-list?page=1&size=10&sort=1&name=&buildingId=&floorId=&moduleGroupId=&ignorePaging=false/invalid" 
+    invalid_api_url = base_url + f"api/v1/masters/area/web/{invalid_company_id}/get-area-list/invalid" 
 
     response_invalid_APi = requests.get(invalid_api_url,headers=header_dep)
     # print(f"Status Code: {response_login.status_code}")
@@ -250,7 +250,7 @@ valid_params = {
 
 
 valid_para_url=f"https://qa-admin.zolv.health/api/v1/masters/area/web/{company_id}/get-area-list?"
-response_validparams = requests.get(Get_url,params=valid_params,headers=header_dep)
+response_validparams = requests.get(valid_para_url,params=valid_params,headers=header_dep)
 if response_validparams.status_code == 200:
     valid_json = response_validparams.json()
     # print("Response JSON : ",json.dumps(valid_json,indent=4))
@@ -788,6 +788,8 @@ invalidparams(invalid_para_url,invalid_params,test_cases,header_disable,count)
 
 if count in [0,10]:
     failed_count+=1
+
+
 
 
 
