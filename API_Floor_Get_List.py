@@ -13,9 +13,9 @@ login_url= "https://qa-admin.zolv.health/api/v1/user/login"
 logout_url="https://qa-admin.zolv.health/api/v1/user/logout"
 
 failed_count=0
-total_count=10
+total_count=13
 
-print("\033[1;34m Get Department LIST  TESTCASE! Document ID: \033[0m")
+print("\033[1;34m Get Floor LIST  TESTCASE! Document ID: \033[0m")
 
 
 login_payload = {
@@ -25,10 +25,10 @@ login_payload = {
 
 
 
-# 1 : Get Area  : Get Department list with valid company ID :
+# 1 : Get Area  : Get Floor list with valid company ID :
 
 
-print("\033[1;34m Get Department List with valid company ID \033[0m")
+print("\033[1;34m Get Floor List with valid company ID \033[0m")
 
 
 response_login = requests.post(login_url,json=login_payload)
@@ -47,16 +47,16 @@ else:
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json"
     }
-    Get_url=base_url + f"api/v1/masters/department/web/{company_id}/get-department-list?isActive=&name=&ignorePaging=false&size=10&sort=1&page=1"
+    Get_url=base_url + f"api/v1/masters/floor/web/{company_id}/get-floor-list?page=1&size=10&sort=1&name=&buildingId=&ignorePaging=false"
     response_get_dep=requests.get(Get_url,headers=header_deplist)
-    if response_get_dep.status_code == 200:
+    if response_get_dep.status_code == 201:
         get_dep_json = response_get_dep.json()
         # print("Response JSON : ",json.dumps(get_dep_json,indent=4))
         print("\033[1;92m✅ Test Case ID - 001   :  TEST PASSED...! \033[0m")   
     else:
         failed_count+=1
 
-        print(f"\033[1;91m❌ Test Case ID - 001   :  Invalid Company Id  : TEST FAILED...! \033[0m") # login failed so test passed
+        print(f"\033[1;91m❌ Test Case ID - 001   :  Invalid Company ID  : TEST FAILED...! \033[0m") # login failed so test passed
 
         
 
@@ -66,18 +66,18 @@ else:
 
 
 
-# 2 : Get Department list with invalid company ID :
+# 2 : Get Floor list with invalid company ID :
 
 
-    print("\033[1;34m Get Department List with invalid company ID \033[0m")
+    print("\033[1;34m Get Floor List with invalid company ID \033[0m")
 
     invalid_company_id="68709372293ae6389032a0588"
 
     # print(" Login successful")
   
-    Get_url_invalid_company=base_url + f"api/v1/masters/department/web/{invalid_company_id}/get-department-list?isActive=&name=&ignorePaging=false&size=10&sort=1&page=1"
+    Get_url_invalid_company=base_url + f"api/v1/masters/floor/web/{invalid_company_id}/get-floor-list?page=1&size=10&sort=1&name=&buildingId=&ignorePaging=false"
     response_get_dep=requests.get(Get_url_invalid_company,headers=header_deplist)
-    if response_get_dep.status_code == 200:
+    if response_get_dep.status_code == 201:
         get_dep_json = response_get_dep.json()
         failed_count+=1
         print("\033[1;91m❌ Test Case ID - 002   :  Invalid Company Id :  TEST FAILED...!\033[0m")   
@@ -90,19 +90,19 @@ else:
 
 
 
-# 3 :  Get Department list with  Invalid API end point : 
+# 3 :  Get Floor list with  Invalid API end point : 
 
 
-    print("\033[1;34m Get Department List Invalid API end point \033[0m")
+    print("\033[1;34m Get Floor List Invalid API end point \033[0m")
 
-    invalid_api_url = base_url + f"api/v1/masters/department/web/{company_id}/get-department-list/invalid" 
+    invalid_api_url = base_url + f"api/v1/masters/floor/web/{company_id}/get-floor-list/invalid77777777" 
 
     response_invalid_APi = requests.get(invalid_api_url,headers=header_deplist)
     # print(f"Status Code: {response_invalid_APi.status_code}")
 
     # Check if response is successful or has a response code
-    if response_invalid_APi.status_code == 200:
-        # print(response_login.text,"Login with Invalid API endpoint")
+    if response_invalid_APi.status_code == 201:
+        print(response_login.text,"Login with Invalid API endpoint")
         failed_count+=1
         print("\033[91m❌ Test Case ID - 003   :  Error - Invalid API endpoint :  TEST FAILED...!\033[0m")
     else:
@@ -121,18 +121,18 @@ else:
 
 
 
-# 4 :  Get Department list with invalid HTTP method : 
+# 4 :  Get Floor list with invalid HTTP method : 
 
-    print("\033[1;34m Get Department List with Invalid HTTP Method \033[0m")
+    print("\033[1;34m Get Floor List with Invalid HTTP Method \033[0m")
 
 
     response_invalid_method = requests.put(Get_url,header_deplist)
-    if response_invalid_method.status_code != 200:
+    if response_invalid_method.status_code != 201:
         # print("\033[1;92mTest for invalid HTTP method passed!\033[0m",response_invalid_method.status_code)
         print("\033[1;92m✅ Test Case ID - 004   :  TEST PASSED...!\033[0m")
     else:
         failed_count+=1
-        print("\033[1;91m❌ Test Case ID -  004   :  Error - API should only allow PUT for login :  TEST FAILED...!\033[0m")
+        print("\033[1;91m❌ Test Case ID - 004   :  Error - API should only allow PUT for login :  TEST FAILED...!\033[0m")
 
 
 
@@ -140,17 +140,17 @@ else:
 
 
 
-# 5 : Get Department with Empty token : 
+# 5 : Get Floor  with Empty token : 
     Empty_token=""
     header_Empty = {
         "Authorization": f"Bearer {Empty_token}",
         "Content-Type": "application/json"
     }
-    print("\033[1;34m Get Deaprtment List with Empty token \033[0m")
+    print("\033[1;34m Get Floor List with Empty token \033[0m")
 
 
     response_empty_token = requests.get(Get_url,header_Empty)
-    if response_empty_token.status_code == 200:
+    if response_empty_token.status_code == 201:
         failed_count+=1
         empty_json=response_empty_token.json()
         # print("Response JSON : ",json.dumps(empty_json,indent=4))
@@ -165,9 +165,9 @@ else:
 
 
 
-# 6 : Get Department List with invalid token format : 
+# 6 : Get Floor List with invalid token format : 
 
-    print("\033[1;34m Get Department List with invalid token format \033[0m")
+    print("\033[1;34m Get Floor List with invalid token format \033[0m")
 
     invalid_token = "@1234eas%%%%%77&&&&&77"
     header_invalid_token = {
@@ -175,7 +175,7 @@ else:
         "Content-Type": "application/json"
     }
     response_get_dep=requests.get(Get_url,headers=header_invalid_token)
-    if response_get_dep.status_code != 200:
+    if response_get_dep.status_code != 201:
         print("\033[1;92m✅ Test Case ID - 006   :  TEST PASSED...!\033[0m")   
     else:
         failed_count+=1
@@ -195,59 +195,60 @@ else:
 
 
 
-# 7 :  Get Department List with Unexpected parameter values for valid params :
+# 7 :  Get Floor List with Unexpected parameter Field values for valid params :
 
-    print("\033[1;34m Get Department List with  Unexpected parameter  Field values for valid params  \033[0m")
+    print("\033[1;34m Get Floor List with  Unexpected parameter  Field values for valid params  \033[0m")
 
     unexp_params = {
-        "isActive":True,
         "page": 1,                  
         "ignorePaging":False,
         "size": 10,          
         "name":"xyz",
         "sort":1,
+        # "buildingId":None,
         "unexpectedfield":"aaaa"
        
-
     }
 
-    unexp_para_url=f"https://qa-admin.zolv.health/api/v1/masters/department/web/{company_id}/get-department-list?"
+    unexp_para_url=f"https://qa-admin.zolv.health/api/v1/masters/floor/web/{company_id}/get-floor-list?"
     response_invalidparams = requests.get(unexp_para_url,params=unexp_params,headers=header_deplist)
-    if response_invalidparams.status_code == 200:
+    if response_invalidparams.status_code in [200,201]:
         invalid_json = response_invalidparams.json()
-        # print("Response JSON : ",json.dumps(invalid_json,indent=4))
+        print("Response JSON : ",json.dumps(invalid_json,indent=4))
         token1= invalid_json.get('token',{}).get('token')
         print(f"\033[1;91m❌ Test Case ID - 007   :  Error - Un-Expected Field Format :  TEST FAILED...!\033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
         failed_count+=1
-        # print(response_invalidparams.status_code)
+        print(response_invalidparams.text)
 
     else:
         print(f"\033[1;92m✅ Test Case ID - 007   :  TEST PASSED...!\033[0m") 
+        print(response_invalidparams.text)
+        print(response_invalidparams.status_code,header_deplist)
 
 
 
 
 
 
-# 8 : Get Department list with  Valid parameter values :
+# 8 : Get Floor list with  Valid parameter values :
 
-print("\033[1;34m Get Department with  Valid parameter values  \033[0m")
+print("\033[1;34m Get Floor with  Valid parameter values  \033[0m")
 
 valid_params = {
         "page": 1,                  # negative page number (invalid)
         "ignorePaging":False,
         "size": 10,          # not expected by API
         "name":"TestDep",
+        # "buildingId":None,
         "sort":1,
-        "isActive":True
         # "search": "f",   
 
     }
 
 
-valid_para_url=f"https://qa-admin.zolv.health/api/v1/masters/department/web/{company_id}/get-department-list?"
+valid_para_url=f"https://qa-admin.zolv.health/api/v1/masters/floor/web/{company_id}/get-floor-list?"
 response_validparams = requests.get(valid_para_url,params=valid_params,headers=header_deplist)
-if response_validparams.status_code == 200:
+if response_validparams.status_code == 201:
     valid_json = response_validparams.json()
     # print("Response JSON : ",json.dumps(valid_json,indent=4))
     token1= valid_json.get('token',{}).get('token')
@@ -266,9 +267,9 @@ else:
 
 
 
-# 9 : get Department list with OMS User privilege  :
+# 9 : get Floor list with OMS User privilege  :
 
-print("\033[1;34m Get Department List with OMS User privilege  \033[0m")
+print("\033[1;34m Get Floor List with OMS User privilege  \033[0m")
 user_OMS = {"loginId":"AutotestOMS",  "password":"Smm@1234"}
 
 user_OMS_login = requests.post(login_url,json=user_OMS)
@@ -286,7 +287,7 @@ else:
         "Content-Type": "application/json"
     }
     get_OMS_user=requests.get(Get_url,headers=user_OMS_header)
-    if get_OMS_user.status_code == 200:
+    if get_OMS_user.status_code == 201:
         print(f"\033[1;91m❌ Test Case ID - 009     :  Error - OMS Privileged User :  TEST FAILED...!\033[0m") 
     else:
         print(f"\033[1;92m✅ Test Case ID - 009     :  TEST PASSED...!\033[0m") 
@@ -300,9 +301,9 @@ else:
 
 
 
-# 10 : get Department list with KDS User privilege  :
+# 10 : get Floor list with KDS User privilege  :
 
-print("\033[1;34m Get Department List with KDS User privilege  \033[0m")
+print("\033[1;34m Get Floor List with KDS User privilege  \033[0m")
 
 user_KDS_payload = {"loginId":"AutotestKDS",  "password":"Smm@1234"},
 
@@ -321,7 +322,7 @@ else:
         "Content-Type": "application/json"
     }
     get_KDS_user=requests.get(Get_url,headers=user_KDS_header)
-    if get_KDS_user.status_code == 200:
+    if get_KDS_user.status_code == 201:
         print(f"\033[1;91m❌ Test Case ID - 010     :  Error - KDS Privileged User :  TEST FAILED...!\033[0m") 
     else:
         print(f"\033[1;92m✅ Test Case ID - 010     :  TEST PASSED...!\033[0m") 
@@ -334,13 +335,13 @@ else:
 
 
 
-# 11 : get Department list with ZOLVGO User privilege  :
+# 11 : get Floor list with ZOLVGO User privilege  :
 
-print("\033[1;34m Get Department List with ZOLVGO User privilege  \033[0m")
+print("\033[1;34m Get Floor List with ZOLVGO User privilege  \033[0m")
 
-user_G0_payload = {"loginId":"AutotestZolvGo",  "password":"Smm@1234"}
+user_Go_payload = {"loginId":"AutotestZolvGo",  "password":"Smm@1234"}
 
-user_Go_login = requests.post(login_url,json=user_G0_payload)
+user_Go_login = requests.post(login_url,json=user_Go_payload)
 if user_Go_login.status_code != 200:
     print(f"\033[1;92m✅ Test Case ID - 011   :  TEST PASSED...!\033[0m") 
 else:
@@ -355,7 +356,7 @@ else:
         "Content-Type": "application/json"
     }
     get_Go_user=requests.get(Get_url,headers=user_Go_header)
-    if get_Go_user.status_code == 200:
+    if get_Go_user.status_code == 201:
         print(f"\033[1;91m❌ Test Case ID - 011    :  Error - ZolvGo Privileged User :  TEST FAILED...!\033[0m") 
     else:
         print(f"\033[1;92m✅ Test Case ID - 011    :  TEST PASSED...!\033[0m") 
@@ -368,10 +369,10 @@ else:
 
 
 
-# 12 : Get Department with after session already terminated :
+# 12 : Get Floor with after session already terminated :
 
 
-print("\033[1;34m Get Department List with after session already terminated\033[0m")
+print("\033[1;34m Get Floor List with after session already terminated\033[0m")
 
 response_login_session = requests.post(login_url, json=login_payload)
 if response_login_session.status_code != 200:
@@ -397,7 +398,7 @@ else:
         relogin_json=relogin.json()
         response_afterlogin_session = requests.get(Get_url, headers=headers_session)
 
-        if response_afterlogin_session.status_code != 200:
+        if response_afterlogin_session.status_code != 201:
             # print("\033[92m✅ Token expired or session already terminated .\033[0m")
             print(f"\033[1;92m✅Test Case ID - 012    :  TEST PASSED...!\033[0m") 
 
@@ -417,9 +418,9 @@ else:
 
 
 
-# 13 : Get Department List with disabled module ( eg .disabled the module F&B ):
+# 13 : Get Floor List with disabled module ( eg .disabled the module F&B ):
 
-print("\033[1;34m Get Department List with disabled module\033[0m")
+print("\033[1;34m Get Floor List with disabled module\033[0m")
 
 diable_module_login=requests.post(login_url,json=login_payload)
 if diable_module_login.status_code != 200:
@@ -466,11 +467,11 @@ else:
         module_update=requests.patch(base_url + f"api/v1/company/web/update-configuration/{company_id}",json=update_payload,headers=header_disable)
         if module_update.status_code == 200:
             # print("Update Success")
-            response_get_dep=requests.get(Get_url,headers=header_disable)
-            if response_get_dep.status_code == 200:
-                get_area_json = response_get_dep.json()
+            response_get_floor=requests.get(Get_url,headers=header_disable)
+            if response_get_floor.status_code == 201:
+                get_area_json = response_get_floor.json()
                 # print("Response Get Area  : ",json.dumps(get_area_json,indent=4))
-                print(f"\033[1;91m❌ Test Case ID - 012    :  Error - Get Department with disabled module :  TEST FAILED...!\033[0m") 
+                print(f"\033[1;91m❌ Test Case ID - 012    :  Error - Get Floor with disabled module :  TEST FAILED...!\033[0m") 
                 failed_count+=1
                 update_payload={
                     "modules": [
@@ -507,6 +508,13 @@ else:
 
     else:
         print("Module Listed Failed",module_get_list.status_code)
+
+
+
+
+
+
+
 
 
 

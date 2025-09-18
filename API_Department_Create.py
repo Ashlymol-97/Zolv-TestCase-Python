@@ -10,7 +10,7 @@ import base64
 
 
 failed_count=0
-total_count=18
+total_count=28
 
 base_url= "https://qa-admin.zolv.health/"
 login_url= "https://qa-admin.zolv.health/api/v1/user/login"
@@ -136,7 +136,7 @@ test_cases = [
     ("testname"+ "a" * 1000, "large input values"),         # Test Case ID - 011
     ("用户名😊", "Emoji / Unicode"),              # Test Case ID - 012
     ("' OR '1'='1", "SQL Injection Attempt"),   # Test Case ID - 013
-    ("Menu Dep", "Duplicate Value"),        # Test Case ID - 014
+    ("CSE", "Duplicate Value"),        # Test Case ID - 014
 ]
 
 

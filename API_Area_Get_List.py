@@ -13,7 +13,7 @@ login_url= "https://qa-admin.zolv.health/api/v1/user/login"
 logout_url="https://qa-admin.zolv.health/api/v1/user/logout"
 
 failed_count=0
-total_count=10
+total_count=14
 
 print("\033[1;34m GET AREA LIST  TESTCASE! Document ID: \033[0m")
 
@@ -50,6 +50,15 @@ else:
     Get_url=base_url + f"api/v1/masters/area/web/{company_id}/get-area-list?page=1&size=10&sort=1&name=&buildingId=&floorId=&moduleGroupId=&ignorePaging=false"
     response_get_dep=requests.get(Get_url,headers=header_dep)
     if response_get_dep.status_code == 200:
+    #    get_dep_json = response_get_dep.json()
+    #    if "areas" in response_get_dep:
+    #       for area in response_get_dep["areas"]:
+    #         area_id = area["id"]
+    #         building_id = area["building"]["id"]
+    #         floor_id = area["floor"]["id"]
+    
+    #         print(f"Area ID: {area_id}, Building ID: {building_id}, Floor ID: {floor_id}")
+
         get_dep_json = response_get_dep.json()
         # print("Response JSON : ",json.dumps(get_dep_json,indent=4))
         print("\033[1;92m✅ Test Case ID - 001   :  TEST PASSED...! \033[0m")   
@@ -124,7 +133,7 @@ else:
 
 
 
-# 5 :  Get Area list with invalid HTTP method : 
+# 4 :  Get Area list with invalid HTTP method : 
 
     print("\033[1;34m Get Area List with Invalid HTTP Method \033[0m")
 
@@ -133,10 +142,10 @@ else:
     response_invalid_method = requests.put(Get_url,header_dep)
     if response_invalid_method.status_code != 200:
         # print("\033[1;92mTest for invalid HTTP method passed!\033[0m",response_invalid_method.status_code)
-        print("\033[1;92m✅ Test Case ID - 005   :  TEST PASSED...!\033[0m")
+        print("\033[1;92m✅ Test Case ID - 004   :  TEST PASSED...!\033[0m")
     else:
         failed_count+=1
-        print("\033[1;91m❌ Test Case ID -  005   :  Error - API should only allow PUT for login :  TEST FAILED...!\033[0m")
+        print("\033[1;91m❌ Test Case ID -  004   :  Error - API should only allow PUT for login :  TEST FAILED...!\033[0m")
 
 
 
@@ -144,7 +153,7 @@ else:
 
 
 
-# 6 : Get Area with Empty token : 
+# 5 : Get Area with Empty token : 
     Empty_token=""
     header_Empty = {
         "Authorization": f"Bearer {Empty_token}",
@@ -158,9 +167,9 @@ else:
         failed_count+=1
         empty_json=response_empty_token.json()
         # print("Response JSON : ",json.dumps(empty_json,indent=4))
-        print("\033[1;91m❌ Test Case ID -  006   :  Empty Token :  TEST FAILED...!\033[0m")
+        print("\033[1;91m❌ Test Case ID -  005   :  Empty Token :  TEST FAILED...!\033[0m")
     else:
-        print("\033[1;92m✅ Test Case ID - 006   :  TEST PASSED...!\033[0m")
+        print("\033[1;92m✅ Test Case ID - 005   :  TEST PASSED...!\033[0m")
 
 
 
@@ -169,7 +178,7 @@ else:
 
 
 
-# 7 : Get Area List with invalid token format : 
+# 6 : Get Area List with invalid token format : 
 
     print("\033[1;34m Get Area List with invalid token format \033[0m")
 
@@ -180,11 +189,11 @@ else:
     }
     response_get_dep=requests.get(Get_url,headers=header_invalid_token)
     if response_get_dep.status_code != 200:
-        print("\033[1;92m✅ Test Case ID - 007   :  TEST PASSED...!\033[0m")   
+        print("\033[1;92m✅ Test Case ID - 006   :  TEST PASSED...!\033[0m")   
     else:
         failed_count+=1
 
-        print(f"\033[1;91m❌ Test Case ID - 007   :  Invalid Token Format :  TEST FAILED...!\033[0m") # login failed so test passed
+        print(f"\033[1;91m❌ Test Case ID - 006   :  Invalid Token Format :  TEST FAILED...!\033[0m") # login failed so test passed
 
         
 
@@ -198,7 +207,7 @@ else:
 
 
 
-# 8 :  Get Area List with Unexpected parameter values for valid params :
+# 7 :  Get Area List with Unexpected parameter values for valid params :
 
     print("\033[1;34m Get Area List with  Invalid parameter values  \033[0m")
 
@@ -221,19 +230,19 @@ else:
         invalid_json = response_invalidparams.json()
         # print("Response JSON : ",json.dumps(invalid_json,indent=4))
         token1= invalid_json.get('token',{}).get('token')
-        print(f"\033[1;91m❌ Test Case ID - 008   :  Error - Un-Expected Field Format :  TEST FAILED...!\033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
+        print(f"\033[1;91m❌ Test Case ID - 007   :  Error - Un-Expected Field Format :  TEST FAILED...!\033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
         failed_count+=1
 
 
     else:
-        print(f"\033[1;92m✅ Test Case ID - 008   :  TEST PASSED...!\033[0m") 
+        print(f"\033[1;92m✅ Test Case ID - 007   :  TEST PASSED...!\033[0m") 
 
 
 
 
 
 
-# 9 : Get Area list with  Valid parameter values :
+# 8 : Get Area list with  Valid parameter values :
 
 print("\033[1;34m Get Area with  Valid parameter values  \033[0m")
 
@@ -255,7 +264,7 @@ if response_validparams.status_code == 200:
     valid_json = response_validparams.json()
     # print("Response JSON : ",json.dumps(valid_json,indent=4))
     token1= valid_json.get('token',{}).get('token')
-    print(f"\033[1;92m✅ Test Case ID - 009   :  TEST PASSED...!\033[0m") 
+    print(f"\033[1;92m✅ Test Case ID - 008   :  TEST PASSED...!\033[0m") 
     response_valid_logout = requests.put(logout_url,headers=header_dep) 
     if response_valid_logout.status_code == 200:
         response_valid_logout.text
@@ -264,7 +273,7 @@ if response_validparams.status_code == 200:
         response_valid_logout.text
         # print("Logout Failed")
 else:
-    print(f"\033[1;91m❌ Test Case ID - 009   :  Error - Invalid Input Parameter :  TEST FAILED...!\033[0m")
+    print(f"\033[1;91m❌ Test Case ID - 008   :  Error - Invalid Input Parameter :  TEST FAILED...!\033[0m")
 
 
 
@@ -324,16 +333,16 @@ else:
 
 
 
-# 10 : get Area list with OMS User privilege  :
+# 9 : get Area list with OMS User privilege  :
 
 print("\033[1;34m Get Area OMS User privilege  \033[0m")
 user_OMS = {"loginId":"AutotestOMS",  "password":"Smm@1234"}
 
 user_OMS_login = requests.post(login_url,json=user_OMS)
 if user_OMS_login.status_code != 200:
-    print(f"\033[1;92m✅ Test Case ID - 010   :  TEST PASSED...!\033[0m") 
+    print(f"\033[1;92m✅ Test Case ID - 009   :  TEST PASSED...!\033[0m") 
 else:
-    print(f"\033[1;91m❌ Test Case ID - 010   :  TEST FAILED...!  : Error - OMS User privilege\033[0m")
+    print(f"\033[1;91m❌ Test Case ID - 009   :  TEST FAILED...!  : Error - OMS User privilege\033[0m")
 
     user_OMS_json = user_OMS_login.json()
     # print("Response JSON : ",json.dumps(user_OMS_json,indent=4))
@@ -345,9 +354,9 @@ else:
     }
     get_OMS_user=requests.get(Get_url,headers=user_OMS_header)
     if get_OMS_user.status_code == 200:
-        print(f"\033[1;91m❌ Test Case ID - 010     :  Error - OMS Privileged User :  TEST FAILED...!\033[0m") 
+        print(f"\033[1;91m❌ Test Case ID - 009     :  Error - OMS Privileged User :  TEST FAILED...!\033[0m") 
     else:
-        print(f"\033[1;92m✅ Test Case ID - 010     :  TEST PASSED...!\033[0m") 
+        print(f"\033[1;92m✅ Test Case ID - 009     :  TEST PASSED...!\033[0m") 
 
 
 
@@ -358,7 +367,7 @@ else:
 
 
 
-# 11 : get Area list with KDS User privilege  :
+# 10 : get Area list with KDS User privilege  :
 
 print("\033[1;34m Get Area KDS User privilege  \033[0m")
 
@@ -366,9 +375,9 @@ user_KDS_payload = {"loginId":"AutotestKDS",  "password":"Smm@1234"},
 
 user_KDS_login = requests.post(login_url,json=user_KDS_payload)
 if user_KDS_login.status_code != 200:
-    print(f"\033[1;92m✅ Test Case ID - 011   :  TEST PASSED...!\033[0m") 
+    print(f"\033[1;92m✅ Test Case ID - 010   :  TEST PASSED...!\033[0m") 
 else:
-    print(f"\033[1;91m❌ Test Case ID - 011   :  Error - KDS User privilege :  TEST FAILED...!\033[0m")
+    print(f"\033[1;91m❌ Test Case ID - 010   :  Error - KDS User privilege :  TEST FAILED...!\033[0m")
 
     user_KDS_json = user_KDS_login.json()
     # print("Response JSON : ",json.dumps(user_privil_json,indent=4))
@@ -380,9 +389,9 @@ else:
     }
     get_KDS_user=requests.get(Get_url,headers=user_KDS_header)
     if get_KDS_user.status_code == 200:
-        print(f"\033[1;91m❌ Test Case ID - 011     :  Error - KDS Privileged User :  TEST FAILED...!\033[0m") 
+        print(f"\033[1;91m❌ Test Case ID - 010     :  Error - KDS Privileged User :  TEST FAILED...!\033[0m") 
     else:
-        print(f"\033[1;92m✅ Test Case ID - 011     :  TEST PASSED...!\033[0m") 
+        print(f"\033[1;92m✅ Test Case ID - 010     :  TEST PASSED...!\033[0m") 
 
 
 
@@ -392,7 +401,7 @@ else:
 
 
 
-# 12 : get Area list with ZOLVGO User privilege  :
+# 11 : get Area list with ZOLVGO User privilege  :
 
 print("\033[1;34m Get Area ZOLVGO User privilege  \033[0m")
 
@@ -400,9 +409,9 @@ user_G0_payload = {"loginId":"AutotestZolvGo",  "password":"Smm@1234"}
 
 user_Go_login = requests.post(login_url,json=user_G0_payload)
 if user_Go_login.status_code != 200:
-    print(f"\033[1;92m✅ Test Case ID - 012   :  TEST PASSED...!\033[0m") 
+    print(f"\033[1;92m✅ Test Case ID - 011   :  TEST PASSED...!\033[0m") 
 else:
-    print(f"\033[1;91m❌ Test Case ID - 012 :  Error - ZOLVGO User privilege :  TEST FAILED...!\033[0m")
+    print(f"\033[1;91m❌ Test Case ID - 011 :  Error - ZOLVGO User privilege :  TEST FAILED...!\033[0m")
 
     user_Go_json = user_Go_login.json()
     # print("Response JSON : ",json.dumps(user_Go_json,indent=4))
@@ -414,9 +423,9 @@ else:
     }
     get_Go_user=requests.get(Get_url,headers=user_Go_header)
     if get_Go_user.status_code == 200:
-        print(f"\033[1;91m❌ Test Case ID - 012    :  Error - ZolvGo Privileged User :  TEST FAILED...!\033[0m") 
+        print(f"\033[1;91m❌ Test Case ID - 011    :  Error - ZolvGo Privileged User :  TEST FAILED...!\033[0m") 
     else:
-        print(f"\033[1;92m✅ Test Case ID - 012    :  TEST PASSED...!\033[0m") 
+        print(f"\033[1;92m✅ Test Case ID - 011    :  TEST PASSED...!\033[0m") 
 
 
 
@@ -426,7 +435,7 @@ else:
 
 
 
-# 13 : Get Area with after session already terminated :
+# 12 : Get Area with after session already terminated :
 
 
 print("\033[1;34m Get Area with after session already terminated\033[0m")
@@ -457,11 +466,11 @@ else:
 
         if response_afterlogin_session.status_code != 200:
             # print("\033[92m✅ Token expired or session already terminated .\033[0m")
-            print(f"\033[1;92m✅Test Case ID - 013    :  TEST PASSED...!\033[0m") 
+            print(f"\033[1;92m✅Test Case ID - 012    :  TEST PASSED...!\033[0m") 
 
         elif response_afterlogin_session.status_code == 200:
             failed_count+=1
-            print(f"\033[91m❌ Test Case ID - 013    :  Error -  Session expired :  TEST FAILED...!\033[0m") 
+            print(f"\033[91m❌ Test Case ID - 012    :  Error -  Session expired :  TEST FAILED...!\033[0m") 
         else:
             print("\033[91m❌ Unexpected response.\033[0m")
 
@@ -475,7 +484,7 @@ else:
 
 
 
-# 14 : Get Area with disabled module ( eg .disabled the module F&B ):
+# 13 : Get Area with disabled module ( eg .disabled the module F&B ):
 
 print("\033[1;34m Get Area with disabled module\033[0m")
 
@@ -528,7 +537,7 @@ else:
             if response_get_area.status_code == 200:
                 get_area_json = response_get_area.json()
                 # print("Response Get Area  : ",json.dumps(get_area_json,indent=4))
-                print(f"\033[1;91m❌ Test Case ID - 012    :  Error - Get Area with disabled module :  TEST FAILED...!\033[0m") 
+                print(f"\033[1;91m❌ Test Case ID - 013    :  Error - Get Area with disabled module :  TEST FAILED...!\033[0m") 
                 failed_count+=1
                 update_payload={
                     "modules": [
@@ -573,7 +582,7 @@ else:
 
 
 
-# 4 : Get Area list with Unexpected Parameters :
+# 14 : Get Area list with Unexpected Parameters :
 
 # 4.1 : Get Area list with Unexpected Parameters in Page Params:
 print("\033[1;34m Get Area List with Invalid Parameters \033[0m")
@@ -640,11 +649,11 @@ def invalidparams(invalid_para_url,invalid_params,test_cases,header_disable,coun
             # print("Response JSON : ",json.dumps(invalid_json,indent=4))
             token1= invalid_json.get('token',{}).get('token')
             count+=1
-            print(f"\033[91m❌ Test Case ID - 004   : {description}  :  Error - Invalid Input Format :  TEST FAILED...!\033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
+            print(f"\033[91m❌ Test Case ID - 014   : {description}  :  Error - Invalid Input Format :  TEST FAILED...!\033[0m") # login success so test failed becoz in oms logged with oms in other 3 credentials kds,go,testoms
 
         
         else:
-            print(f"\033[1;92m✅ Test Case ID - 004   : {description}  :  TEST PASSED...!\033[0m") 
+            print(f"\033[1;92m✅ Test Case ID - 014   : {description}  :  TEST PASSED...!\033[0m") 
 
 
 
